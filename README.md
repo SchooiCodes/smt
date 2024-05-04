@@ -1,1 +1,1 @@
-Schooi's multitool (I am Schooi, hello) is a compilation of some of my projects throughout the past year. It is a lightweight multitool, which has more tools than many others. There are more to come, currently it is in version 1.0
+Schooi's multitool (I am Schooi, hello) is a compilation of some of my projects throughout the past year. It is a lightweight multitool, which has more tools than many others. There are more to come, currently it is in version 1.1
