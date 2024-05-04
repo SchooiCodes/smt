@@ -13,9 +13,7 @@ Features
 
 Installation
 
-To install Schooi's Multitool, simply clone this repository:
-
-```git clone https://github.com/SchooiCodes/multitool.git```
+To install Schooi's Multitool, simply download the latest release file.
 
 Usage
 
