@@ -5,11 +5,16 @@ Schooi's Multitool is a versatile collection of utilities and tools designed to 
 
 Features
 
-- IP Geolocation
-- SMB Bruteforcing
+- IP Geolocator
+- SMB Bruteforcer
 - Tweaking
 - .zip Password Bruteforcer
 - Text to Speech
+- Windows User Manager
+- IP Logger
+- IP Stealer
+- URL Shortener
+- and many more..
 
 Installation
 
