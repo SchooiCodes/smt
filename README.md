@@ -18,13 +18,19 @@ Features
 
 Installation
 
-To install Schooi's Multitool, simply download the latest release file.
+To install Schooi's Multitool, simply [download the latest release file](https://github.com/SchooiCodes/smt/releases).
+
+Alternatively, you can use git to clone the repo:
+
+```git clone https://github.com/SchooiCodes/smt```
+
+If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/git.bat).
 
 Usage
 
 Schooi's Multitool can be run directly from the provided batch file.
 
-For detailed usage instructions and command options, refer to the documentation.
+For detailed usage instructions and command options, refer to the documentation (COMING SOON).
 
 Contributing
 
