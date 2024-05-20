@@ -7,7 +7,7 @@ set old_dir = %~dp0\Files
 set scriptpath=%cd%
 if exist "setup.bat" goto setup 
 if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\Schooi's Multitool\needed_file.schm" goto rpoint
-if NOT "%CD:~0,3%"=="C:\" if exist "%CD:~0,3%\needed_file.schm" goto rpoint
+if exist "%CD:~0,2%\needed_file.schm" goto rpoint
 goto pirated
 
 :setup
