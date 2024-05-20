@@ -101,42 +101,43 @@ echo 1. Go Back
 echo 2. Exit
 echo -----------
 echo 3. Apps
-echo 4. IP Tools
-echo 5. Performance
-echo 6. Malwarebytes Premium Reseter
-echo 7. .zip Password Cracker
-echo 8. Text To Speech
-echo 9. SMB Bruteforcer
-echo 10. User Manager
-echo 11. Schnuker
-echo 12. Driver Backupper
-echo 13. Batch File Creator
-echo 14. Backup the Registry
-echo 15. Import Registry Backups
-echo 17. Info Stealer
-echo 18. rockyou.txt Downloader
-echo 19. Windows Activator
+echo 4. Danger Zone
+echo 5. IP Tools
+echo 6. Performance
+echo 7. Fixes ^& Crackers
+echo 8. .zip Password Cracker
+echo 9. Text To Speech
+echo 10. SMB Bruteforcer
+echo 11. User Manager
+echo 12. Schnuker
+echo 13. Driver Backupper
+echo 14. Batch File Creator
+echo 15. Backup the Registry
+echo 16. Import Registry Backups
+echo 17. rockyou.txt Downloader
+echo 18. Windows Activator
 echo ?. ???
 echo.
 set /p advch=root@%username%:~$ 
 if "%advch%"=="1" cls & goto start
 if "%advch%"=="2" goto end
 if "%advch%"=="3" goto Apps
-if "%advch%"=="4" goto IPTools
-if "%advch%"=="5" goto Performance
-if "%advch%"=="6" start Malwarebytes-Premium-Reset.bat
-if "%advch%"=="7" start zicrack.bat
-if "%advch%"=="8" start speak.vbs
-if "%advch%"=="9" start SMBBruteforcer.bat
-if "%advch%"=="10" start RAUP.bat
-if "%advch%"=="11" cd Schnuker & Installation.lnk & cd ..
-if "%advch%"=="12" start db.bat
-if "%advch%"=="13" start bfc.bat
-if "%advch%"=="14" start BackupRegistry.bat
-if "%advch%"=="15" start ImportBackups.bat
-if "%advch%"=="17" start InfoFinder.bat
-if "%advch%"=="18" start rockyou.bat
-if "%advch%"=="19" start WA.bat
+if "%advch%"=="4" goto Danger
+if "%advch%"=="5" goto IPTools
+if "%advch%"=="6" goto Performance
+if "%advch%"=="7" goto fac
+if "%advch%"=="8" start zicrack.bat
+if "%advch%"=="9" start speak.vbs
+if "%advch%"=="10" start SMBBruteforcer.bat
+if "%advch%"=="11" start RAUP.bat
+if "%advch%"=="12" cd Schnuker & Installation.lnk & cd ..
+if "%advch%"=="13" start db.bat
+if "%advch%"=="14" start bfc.bat
+if "%advch%"=="15" start BackupRegistry.bat
+if "%advch%"=="16" start ImportBackups.bat
+if "%advch%"=="17" start rockyou.bat
+if "%advch%"=="18" start WA.bat
+if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
 goto AdvancedTools
@@ -151,6 +152,56 @@ REM echo I am not responsible for any damage caused by this program.
 REM set /p rpoint=Would you like to create a system restore point? (Y/N): 
 REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
+
+:apps
+cls
+call logo.bat
+echo.
+echo Apps
+echo ====
+echo Choose an app:
+echo -----------
+echo 1. Go Back
+echo -----------
+echo 2. SuperF4
+echo 3. Geek Uninstaller
+echo 4. Command Prompt
+echo 5. Powershell
+echo 6. Powershell (Installer for devices that don't have it)
+echo 7. Fastfetch
+echo 8. Git
+echo 9. Winget
+echo.
+set /p appch=root@%username%:~$ 
+if "%appch%"=="1" cls & goto AdvancedTools
+if "%appch%"=="2" start SuperF4.exe
+if "%appch%"=="3" start geek.bat
+if "%appch%"=="4" start cmd & cd %olddir%
+if "%appch%"=="5" start powershell & cd %olddir%
+if "%appch%"=="6" start pswin7.bat
+if "%appch%"=="7" start fastfetch.bat
+if "%appch%"=="8" start git.bat
+if "%appch%"=="9" start winget.bat
+goto apps
+
+:danger
+cls
+call logo.bat
+echo.
+echo Danger Zone
+echo ===========
+echo Choose a tool:
+echo ----------------
+echo 1. Go Back
+echo ----------------
+echo 2. Windows Destroyer
+echo 3. Info Stealer
+echo.
+set /p dangch=root@%username%:~$ 
+if "%dangch%"=="1" cls & goto AdvancedTools
+if "%dangch%"=="2" start WD.bat
+if "%dangch%"=="3" start InfoFinder.bat
+goto danger
 
 :IPTools
 cls
@@ -194,32 +245,24 @@ if "%perfch%"=="3" start ctt.bat
 if "%perfch%"=="4" start UPPPE.bat
 goto Performance
 
-:apps
+:fac
 cls
 call logo.bat
 echo.
-echo Apps
-echo ====
-echo Choose an app:
-echo -----------
+echo Fixes ^& Crackers
+echo ================
+echo Choose a tool:
+echo ----------------
 echo 1. Go Back
-echo -----------
-echo 2. SuperF4
-echo 3. Geek Uninstaller
-echo 4. Command Prompt
-echo 5. Powershell
-echo 6. Powershell (Installer for devices that don't have it)
-echo 7. Fastfetch
+echo ----------------
+echo 2. Malwarebytes Premium Resetter
+echo 3. "Some Settings Are Managed By Your Organization" Fixer
 echo.
-set /p appch=root@%username%:~$ 
-if "%appch%"=="1" cls & goto AdvancedTools
-if "%appch%"=="2" start SuperF4.exe
-if "%appch%"=="3" start geek.bat
-if "%appch%"=="4" start cmd & cd %olddir%
-if "%appch%"=="5" start powershell & cd %olddir%
-if "%appch%"=="6" start pswin7.bat
-if "%appch%"=="7" start fastfetch.bat
-goto apps
+set /p facch=root@%username%:~$ 
+if "%facch%"=="1" cls & goto AdvancedTools
+if "%facch%"=="2" start Malwarebyes-Premium-Reset.bat
+if "%facch%"=="3" start SSAMBYO.bat
+goto fac
 
 :info
 title [SMT ^| v1.8] Info
