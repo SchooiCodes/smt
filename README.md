@@ -37,7 +37,7 @@ For detailed usage instructions and command options, refer to the documentation 
 
 Contributing
 
-Contributions to Multitool are welcome! If you have any ideas for new features, improvements, or bug fixes, please open an issue or submit a pull request. See CONTRIBUTING.md (SOON) for more information on how to contribute.
+Contributions to SMT are welcome! If you have any ideas for new features, improvements, or bug fixes, please open an issue or submit a pull request. See CONTRIBUTING.md (SOON) for more information on how to contribute.
 
 License
 
