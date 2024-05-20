@@ -12,9 +12,12 @@ Features
 - Text to Speech
 - Windows User Manager
 - IP Logger
-- IP Stealer
+- Info Stealer
+- Windows Activator
+- Windows Destroyer
 - URL Shortener
-- and many more..
+- Various App Installers
+- and many more, all from the command line!
 
 Installation
 
@@ -24,7 +27,7 @@ Alternatively, you can use git to clone the repo:
 
 ```git clone https://github.com/SchooiCodes/smt```
 
-If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/git.bat).
+If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat).
 
 Usage
 
