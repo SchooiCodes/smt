@@ -1,4 +1,7 @@
 @echo off
+if /I "%CD:~0,1%"=="C" goto elevate
+
+:start
 title SMT ^| Setup
 echo Disclaimer:
 echo This Multitool (the "Schooi's Multitool") is provided for ethical purposes only. The creators and contributors of this tool do not condone, support, or endorse any illegal or unethical activities. The use of this tool for unauthorized access to computer systems, networks, or data is strictly prohibited and may violate local, national, and international laws.
@@ -12,13 +15,16 @@ if /I not "%agree%"=="I AGREE" exit:
 if /I "%CD:~0,1%"=="C" goto C
 goto USB
 
-:C
+:elevate
 fltmc >nul 2>&1 || (
     PowerShell Start -Verb RunAs '%0' 2> nul || (
         >nul pause && exit 1
     )
     exit 0
 )
+goto start
+
+:C
 cd /d "C:\Program Files"
 md "Schooi's Multitool" 2>nul
 cd "Schooi's Multitool"
