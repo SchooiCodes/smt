@@ -21,6 +21,8 @@ Features
 - Various App Installers
 - and many more, all from the command line!
 
+Note: You may notice that github says that 30% of this is in Python. That is not true. I wrote about 300 lines to make a Discord nukebot in python. It is more like 15%. The multitool itself and the tools are mostly written in batch and Powershell.
+
 Installation
 
 To install Schooi's Multitool, simply [download the latest release file](https://github.com/SchooiCodes/smt/releases).
