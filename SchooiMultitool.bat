@@ -1,6 +1,6 @@
 @echo off
 cls
-set vnum=2.1
+set vnum=2.0
 set version=v%vnum%
 if %~dp0=="C:\Windows\System32\" cd C:\Windows\System32
 if %~dp0=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
