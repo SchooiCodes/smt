@@ -89,6 +89,8 @@ echo 7. Create A System Restore Point (Recommended, do this before using any oth
 echo 8. URL Shortener
 echo 9. View this system's info
 echo 10. Enable/Disable Hibernation
+echo 11. Folder Organizer
+echo 12. ASCII(/ANSI) Art Generator
 echo.
 set /p ch=%username%@smt:~$ 
 if "%ch%"=="1" cls & goto start
@@ -101,6 +103,8 @@ if "%ch%"=="7" start autorespo.bat
 if "%ch%"=="8" start URLShortener.bat
 if "%ch%"=="9" start sysinfo.bat
 if "%ch%"=="10" start hibern.bat
+if "%ch%"=="11" start fo.bat
+if "%ch%"=="12" start ascii.bat
 if "%ch%"=="cd" echo %cd% & pause >nul
 set "%ch%"="nul"
 cls
@@ -131,7 +135,9 @@ echo 14. Batch File Creator
 echo 15. Backup the Registry
 echo 16. Import Registry Backups
 echo 17. rockyou.txt Downloader
-echo 18. Windows Activator
+echo 18. CLI Task Manager
+echo 19. Wi-Fi Password Shower
+echo 20. Network Speedtest
 echo ?. ???
 echo.
 set /p advch=%username%@smt:~$ 
@@ -152,7 +158,9 @@ if "%advch%"=="14" start bfc.bat
 if "%advch%"=="15" start BackupRegistry.bat
 if "%advch%"=="16" start ImportBackups.bat
 if "%advch%"=="17" start rockyou.bat
-if "%advch%"=="18" start WA.bat
+if "%advch%"=="18" start taskmanager.bat
+if "%advch%"=="19" start wifipasses.bat
+if "%advch%"=="20" start stcli.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -188,6 +196,8 @@ echo 7. Fastfetch
 echo 8. Git
 echo 9. Winget
 echo 10. Chris Titus Tool
+echo 11. Wintoys
+echo 12. Windows PC Manager
 echo.
 set /p appch=%username%@smt:~$ 
 if "%appch%"=="1" cls & goto AdvancedTools
@@ -200,6 +210,8 @@ if "%appch%"=="7" start fastfetch.bat
 if "%appch%"=="8" start git.bat
 if "%appch%"=="9" start winget.bat
 if "%appch%"=="10" start ctt.bat
+if "%appch%"=="11" start wintoys.bat
+if "%appch%"=="12" start pcm.bat
 goto apps
 
 :danger
@@ -275,11 +287,15 @@ echo 1. Go Back
 echo ----------------
 echo 2. Malwarebytes Premium Resetter
 echo 3. "Some Settings Are Managed By Your Organization" Fixer
+echo 4. Windows Activator
+echo 5. Group Policy Editor Enabler
 echo.
 set /p facch=%username%@smt:~$ 
 if "%facch%"=="1" cls & goto AdvancedTools
 if "%facch%"=="2" start Malwarebyes-Premium-Reset.bat
 if "%facch%"=="3" start SSAMBYO.bat
+if "%facch%"=="4" start WA.bat
+if "%facch%"=="5" start GPEE.bat
 goto fac
 
 :info
