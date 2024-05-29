@@ -35,7 +35,7 @@ Alternatively, you can use git to clone the repo:
 
 If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat).
 
-*Installer.bat & setup.bat in releases are obfuscated for anti-piracy reasons.
+*Installer.bat, uninstall.bat & setup.bat in releases are obfuscated for anti-piracy reasons.
 
 Usage
 -
