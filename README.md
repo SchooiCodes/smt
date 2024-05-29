@@ -1,5 +1,4 @@
-Schooi's Multitool
--------
+# Schooi's Multitool
 ![Screenshot of SMT's menu](https://github.com/SchooiCodes/file_hosting/blob/main/cmd_SA5rcDrTxw.png)
 
 I AM NOT EVEN GOING TO LIE, this is the MOST POWERFUL batch multitool I have ever seen, let alone MADE. I swear this is unbiased. 👀
