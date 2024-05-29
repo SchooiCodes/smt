@@ -5,7 +5,11 @@ title Schooi's Wi-Fi Password Viewer
 call :greet
 echo Would you like to see a list of all Wi-Fis? ([Y]es/[N]o)
 set /p list=^> 
-if /i %list%=="Y" netsh wlan show profiles
+if /i %list%=="Y" (
+	@echo on
+	netsh wlan show profile
+	@echo off
+	)
 pause >nul
 cls
 call :greet

@@ -1,9 +1,12 @@
 @echo off
+title Password Generator
 :Start2
 cls
 goto Start
 :Start
 cls
+call logo.bat
+echo.
 title Password Generator
 echo I will make you a new password. 
 echo Please write the password down somewhere in case you forget it. 
@@ -19,6 +22,8 @@ if %input%==y goto passgen if NOT goto Start2
 if %input%==Y goto passgen if NOT goto Start2
 :passgen
 cls
+call logo.bat
+echo.
 @echo off
 setlocal EnableDelayedExpansion
 set charSets=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*

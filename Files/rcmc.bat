@@ -1,4 +1,7 @@
 @echo off
+title Right Click Menu Changer
+call logo.bat
+echo.
 echo Hello! This is the right-click menu changer!
 echo Would you like to read the instructions? Type Y for Yes and N for No.
 set /p inst="[Y/N]: "
@@ -6,6 +9,7 @@ if /i "%inst%"=="Y" goto :Y
 if /i "%inst%"=="N" goto :Start
 
 :Start 
+echo.
 echo Would you like to have the old right-click menu or the Windows 11 one?
 echo Type O for old, and N for new.
 set /p menu="[O/N]: "
@@ -55,5 +59,4 @@ goto :EOF
 
 :Y
 call "Read Me.txt"
-cls
 goto :Start

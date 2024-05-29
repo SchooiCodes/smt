@@ -5,7 +5,9 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-title Computer Error Scan
+title Computer Error Scanner
+call logo.bat
+echo.
 echo Checking your computer for errors
 echo -----------------------------------------
 echo Checking Windows System File Integrity...
