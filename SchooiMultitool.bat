@@ -2,20 +2,18 @@
 cls
 set vnum=2.1
 set version=v%vnum%
-if %~dp0=="C:\Windows\System32\" cd C:\Windows\System32
-if %~dp0=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
+if "%~dp0"=="C:\Windows\System32\" cd C:\Windows\System32\
+if "%~dp0"=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
 cd Files
 FOR /F "tokens=* delims=" %%x in (color.txt) DO color %%x
 set old_dir = %~dp0\Files
 set scriptpath=%cd%
 
-:scheck
-if exist "setup.bat" goto setup 
-
 :pcheck
 REM Anti-Piracy
 if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\Schooi's Multitool\needed_file.schm" goto rpoint
 if exist "%CD:~0,2%\needed_file.schm" goto rpoint
+if exist "setup.bat" goto setup
 goto pirated
 
 :setup
@@ -55,7 +53,7 @@ echo.
 set /p choice=%username%@smt:~$ 
 if /i "%choice%"=="1" goto Tools
 if /i "%choice%"=="2" goto AdvancedTools
-if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Schooi's Multitool") & goto start
+if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="4" start restart.bat & exit
 if /i "%choice%"=="5" goto info
 if /i "%choice%"=="%username%On" @echo on & goto start
@@ -67,7 +65,9 @@ if /i "%choice%"=="99" goto history
 if /i "%choice%"=="cl" goto color 
 if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
+if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
+if /i "%choice%"=="vc" goto vc
 %choice% & pause >nul
 goto start
 
@@ -198,20 +198,28 @@ echo 9. Winget
 echo 10. Chris Titus Tool
 echo 11. Wintoys
 echo 12. Windows PC Manager
+echo 13. f.lux
+echo 14. Chrome
+echo 15. Spotify (No Ads)
+echo 16. Firefox
 echo.
 set /p appch=%username%@smt:~$ 
 if "%appch%"=="1" cls & goto AdvancedTools
-if "%appch%"=="2" start SuperF4.exe
-if "%appch%"=="3" start geek.bat
+if "%appch%"=="2" start Apps\SuperF4.bat
+if "%appch%"=="3" start Apps\geek.bat
 if "%appch%"=="4" start cmd & cd %olddir%
-if "%appch%"=="5" start powershell & cd %olddir%
-if "%appch%"=="6" start pswin7.bat
-if "%appch%"=="7" start fastfetch.bat
-if "%appch%"=="8" start git.bat
-if "%appch%"=="9" start winget.bat
-if "%appch%"=="10" start ctt.bat
-if "%appch%"=="11" start wintoys.bat
-if "%appch%"=="12" start pcm.bat
+if "%appch%"=="5" start Apps\powershell & cd %olddir%
+if "%appch%"=="6" start Apps\pswin7.bat
+if "%appch%"=="7" start Apps\fastfetch.bat
+if "%appch%"=="8" start Apps\git.bat
+if "%appch%"=="9" start Apps\winget.bat
+if "%appch%"=="10" start Apps\ctt.bat
+if "%appch%"=="11" start Apps\wintoys.bat
+if "%appch%"=="12" start Apps\pcm.bat
+if "%appch%"=="13" start Apps\flux.bat
+if "%appch%"=="14" start Apps\chrome.bat
+if "%appch%"=="15" start Apps\bts.bat
+if "%appch%"=="16" start Apps\firefox.bat
 goto apps
 
 :danger
@@ -371,6 +379,7 @@ echo pf - adds Schooi's Multitool to Program Files
 echo cl - changes the output color
 echo shutdown - shuts down your device
 echo restart - restarts your device
+echo bios - restarts to the bios
 pause >nul
 goto start
 
