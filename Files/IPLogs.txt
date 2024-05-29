@@ -1,2 +1,0 @@
-- TARGET NAME // TARGET IP ADDRESS [-] DATE / TIME  (Date and Time of Data Entry) -
-*-------------------------------------------------------------------------------*
