@@ -27,7 +27,7 @@ Note: You may notice that github says that 30% of this is in Python. That is not
 Installation
 -
 
-To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases) or [the installer](https://github.com/SchooiCodes/smt/tree/main/Installer.bat)* (RECOMMENDED).
+To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases) or [the installer](https://github.com/SchooiCodes/smt/tree/main/Installer.bat)[^1][^2] (RECOMMENDED).
 
 Alternatively, you can use git to clone the repo:
 
@@ -35,7 +35,8 @@ Alternatively, you can use git to clone the repo:
 
 If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat).
 
-*Installer.bat, uninstall.bat & setup.bat in releases are obfuscated for anti-piracy reasons.
+[^1]: Installer.bat, uninstall.bat & setup.bat in releases are obfuscated for anti-piracy reasons.
+[^2]: Because it is obfuscated, antiviruses flag it as an "exploit".
 
 Usage
 -
