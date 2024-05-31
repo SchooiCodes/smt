@@ -86,7 +86,14 @@ exit
 :7z
 goto elevate
 echo Installing 7zip...
-powershell irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex
+powershell -Command "$PSVersionTable.PSVersion.Major" > version.txt
+set /p ps_version=<version.txt
+del version.txt
+if %ps_version% GEQ 3 (
+    powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex"
+) else (
+    powershell -Command "$wc = New-Object System.Net.WebClient; $script = $wc.DownloadString('https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1'); Invoke-Expression $script"
+)
 goto start
 
 :logo
