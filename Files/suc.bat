@@ -1,4 +1,5 @@
 @echo off
+cd %~dp0
 fltmc >nul 2>&1 || (
     PowerShell Start -Verb RunAs '%0' 2> nul || (
         >nul pause && exit 1

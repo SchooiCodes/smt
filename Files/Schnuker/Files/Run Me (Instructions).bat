@@ -14,5 +14,6 @@ start "" "https://www.python.org/downloads/windows/"
 goto :EOF
 
 :PYTHON_DOES_EXIST
+pip install discord
 start Schnuker.cmd
 goto :EOF
