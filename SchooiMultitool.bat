@@ -1,6 +1,6 @@
 @echo off
 cls
-set vnum=2.1
+set vnum=2.2
 set version=v%vnum%
 if "%~dp0"=="C:\Windows\System32\" cd C:\Windows\System32\
 if "%~dp0"=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
@@ -138,6 +138,7 @@ echo 17. rockyou.txt Downloader
 echo 18. CLI Task Manager
 echo 19. Wi-Fi Password Shower
 echo 20. Network Speedtest
+echo 21. Website Blocker
 echo ?. ???
 echo.
 set /p advch=%username%@smt:~$ 
@@ -161,6 +162,7 @@ if "%advch%"=="17" start rockyou.bat
 if "%advch%"=="18" start taskmanager.bat
 if "%advch%"=="19" start wifipasses.bat
 if "%advch%"=="20" start stcli.bat
+if "%advch%"=="21" start hfb.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -191,17 +193,19 @@ echo 2. SuperF4
 echo 3. Geek Uninstaller
 echo 4. Command Prompt
 echo 5. Powershell
-echo 6. Powershell (Installer for devices that don't have it)
-echo 7. Fastfetch
-echo 8. Git
-echo 9. Winget
-echo 10. Chris Titus Tool
-echo 11. Wintoys
-echo 12. Windows PC Manager
-echo 13. f.lux
-echo 14. Chrome
-echo 15. Spotify (No Ads)
-echo 16. Firefox
+echo 6. Powershell 7
+echo 7. Powershell (Installer for devices that don't have it)
+echo 8. Fastfetch
+echo 9. Git
+echo 10. Winget
+echo 11. Chris Titus Tool
+echo 12. Wintoys
+echo 13. Windows PC Manager
+echo 14. f.lux
+echo 15. Chrome
+echo 16. Spotify (No Ads)
+echo 17. Firefox
+echo 18. 7zip
 echo.
 set /p appch=%username%@smt:~$ 
 if "%appch%"=="1" cls & goto AdvancedTools
@@ -209,17 +213,19 @@ if "%appch%"=="2" start Apps\SuperF4.bat
 if "%appch%"=="3" start Apps\geek.bat
 if "%appch%"=="4" start cmd & cd %olddir%
 if "%appch%"=="5" start Apps\powershell & cd %olddir%
-if "%appch%"=="6" start Apps\pswin7.bat
-if "%appch%"=="7" start Apps\fastfetch.bat
-if "%appch%"=="8" start Apps\git.bat
-if "%appch%"=="9" start Apps\winget.bat
-if "%appch%"=="10" start Apps\ctt.bat
-if "%appch%"=="11" start Apps\wintoys.bat
-if "%appch%"=="12" start Apps\pcm.bat
-if "%appch%"=="13" start Apps\flux.bat
-if "%appch%"=="14" start Apps\chrome.bat
-if "%appch%"=="15" start Apps\bts.bat
-if "%appch%"=="16" start Apps\firefox.bat
+if "%appch%"=="6" start Apps\ps7.bat
+if "%appch%"=="7" start Apps\pswin7.bat
+if "%appch%"=="8" start Apps\fastfetch.bat
+if "%appch%"=="9" start Apps\git.bat
+if "%appch%"=="10" start Apps\winget.bat
+if "%appch%"=="11" start Apps\ctt.bat
+if "%appch%"=="12" start Apps\wintoys.bat
+if "%appch%"=="13" start Apps\pcm.bat
+if "%appch%"=="14" start Apps\flux.bat
+if "%appch%"=="15" start Apps\chrome.bat
+if "%appch%"=="16" start Apps\bts.bat
+if "%appch%"=="17" start Apps\firefox.bat
+if "%appch%"=="18" start Apps\7z.bat
 goto apps
 
 :danger
