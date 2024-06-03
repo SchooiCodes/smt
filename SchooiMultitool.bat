@@ -68,7 +68,8 @@ if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
 if /i "%choice%"=="vc" goto vc
-%choice% & pause >nul
+if NOT "%choice%"=="" %choice%
+if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
@@ -163,6 +164,7 @@ if "%advch%"=="18" start taskmanager.bat
 if "%advch%"=="19" start wifipasses.bat
 if "%advch%"=="20" start stcli.bat
 if "%advch%"=="21" start hfb.bat
+if "%advch%"=="22" start nsl.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -398,5 +400,4 @@ fltmc >nul 2>&1 || (
 )
 
 :end
-pause >nul
 exit
