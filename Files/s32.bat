@@ -1,4 +1,5 @@
 @echo off
+cd %~dp0
 title Schooi's Multitool
 fltmc >nul 2>&1 || (
     echo( && echo   [33m# Administrator privileges are required. && echo([0m
@@ -8,8 +9,9 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-cd %~dp0
 :disclaimer
+cd %~dp0
+cls
 call logo.bat
 cd ..
 echo.
