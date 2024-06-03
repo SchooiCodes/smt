@@ -140,6 +140,8 @@ echo 18. CLI Task Manager
 echo 19. Wi-Fi Password Shower
 echo 20. Network Speedtest
 echo 21. Website Blocker
+echo 22. NS Lookupper
+echo 23. Internet Route Tracer
 echo ?. ???
 echo.
 set /p advch=%username%@smt:~$ 
@@ -165,6 +167,7 @@ if "%advch%"=="19" start wifipasses.bat
 if "%advch%"=="20" start stcli.bat
 if "%advch%"=="21" start hfb.bat
 if "%advch%"=="22" start nsl.bat
+if "%advch%"=="23" start trt.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
