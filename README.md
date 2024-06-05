@@ -3,7 +3,7 @@
 
 I AM NOT EVEN GOING TO LIE, this is the MOST POWERFUL batch multitool I have ever seen, let alone MADE. I swear this is unbiased. 👀
 
-Schooi's Multitool is a versatile collection of OVER 60 utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
+Schooi's Multitool is a versatile collection of OVER 70 utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
 
 Features
 -
