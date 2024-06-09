@@ -1,4 +1,10 @@
 @echo off
+if "%1"=="-debug" @echo on
+if "%1"=="--debug" @echo on
+if "%1"=="-h" goto help
+if "%1"=="--h" goto help
+if "%1"=="-help" goto help
+if "%1"=="--help" goto help
 cls
 set vnum=2.2
 set version=v%vnum%
@@ -404,3 +410,19 @@ fltmc >nul 2>&1 || (
 
 :end
 exit
+
+:help
+echo.
+echo Schooi's Multitool is a multitool created to compile many utilities that can be used by advanced Windows users.
+echo.
+echo Arguments:
+echo.
+echo  -debug ,--debug           Enters debug mode
+echo.
+echo -h, --h                Prints this manual
+echo -help, --help
+echo.
+echo Disclaimers:
+echo - There are secret commands you can access by typing "sc" in the main menu.
+echo - If any app installers or tools don't work, please contact me on github: https://github.com/SchooiCodes/smt/issues
+echo.
