@@ -1,9 +1,17 @@
+<p align="center"><img src="https://github.com/SchooiCodes/file_hosting/blob/main/SMT_v2.1_734x384.png"></p>
+
+<p align="center">
+    <img src="https://img.shields.io/github/commit-activity/w/SchooiCodes/smt" alt="GitHub commit activity">
+    <img src="https://img.shields.io/github/v/tag/SchooiCodes/smt" alt="GitHub Version">
+    <img src="https://img.shields.io/github/downloads/SchooiCodes/smt/total" alt="GitHub Downloads (all assets, all releases)">
+    <img src="https://img.shields.io/github/license/SchooiCodes/smt" alt="GitHub License">
+</p>
+
 # Schooi's Multitool
-![Screenshot of SMT's menu](https://github.com/SchooiCodes/file_hosting/blob/main/cmd_SA5rcDrTxw.png)
 
-I AM NOT EVEN GOING TO LIE, this is the MOST POWERFUL batch multitool I have ever seen, let alone MADE. I swear this is unbiased. 👀
+I AM NOT EVEN GOING TO LIE, this is the MOST POWERFUL batch multitool I **have ever seen**, let alone **MADE**. I swear, this is unbiased. 👀
 
-Schooi's Multitool is a versatile collection of OVER 70 utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
+Schooi's Multitool is a versatile collection of **OVER 70** utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
 
 Features
 -
@@ -23,6 +31,11 @@ Features
 - and many more, all from the command line!
 
 Note: You may notice that github says that 30% of this is in Python. That is not true. I wrote about 300 lines to make a Discord nukebot in python. It is more like 15%. The multitool itself and the tools are mostly written in batch and Powershell.
+
+Requirements
+-
+
+No libraries required, since this is made in batch. The only requirement is Windows 10+
 
 Installation
 -
