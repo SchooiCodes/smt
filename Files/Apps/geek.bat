@@ -9,19 +9,26 @@ echo.
 echo Installing..
 choco /? 1>nul
 if NOT %ERRORLEVEL% EQU 0 goto :choco
-if NOT exist C:\ProgramData\chocolatey\lib\geekuninstaller\ goto geek
-if NOT exist geeke.exe xcopy /y C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe %~dp0
+if NOT exist C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe goto geek
+set SCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
+echo Set oWS = WScript.CreateObject("WScript.Shell") >> %SCRIPT%
+echo sLinkFile = "%USERPROFILE%\Desktop\Geek Uninstaller.lnk" >> %SCRIPT%
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
+echo oLink.TargetPath = "C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe" >> %SCRIPT%
+echo oLink.Save >> %SCRIPT%
+cscript /nologo %SCRIPT%
+del %SCRIPT%
 echo Starting..
+cd C:\ProgramData\chocolatey\lib\geekuninstaller\tools\
 geek.exe
 timeout /t 10 >nul
 exit
 
 :geek
 echo Downloading geek uninstaller..
-choco install geekuninstaller -y
-echo Moving geek uninstaller to Schooi's Multitool's folder..
-xcopy /y C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe %~dp0
+choco install geekuninstaller -y]
 echo Starting..
+cd C:\ProgramData\chocolatey\lib\geekuninstaller\tools\
 geek.exe
 timeout /t 10 >nul
 exit
