@@ -4,11 +4,7 @@
 ------   (@schooi.)                    ------
 ---------------------------------------------
 
-
 Hello, this is Schooi, the creator of Right-Click Menu Changer.
-
 This is ONLY for Windows 11
-
-This program makes changes to the registry, which is why a folder named "Registry Backups" is created by the script. Inside of it, you will find a backup of your registry.
-
-To load the backup, run the "Import Backups.bat" file inside the "Components" folder.
+This program makes changes to the registry, which is why which is why you should back it up just in case, using the "RB.bat" file..
+To load the backup, run the "IB.bat" file.
