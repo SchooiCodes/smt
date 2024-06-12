@@ -165,8 +165,8 @@ if "%advch%"=="11" start RAUP.bat
 if "%advch%"=="12" cd Schnuker & Installation.lnk & cd ..
 if "%advch%"=="13" start db.bat
 if "%advch%"=="14" start bfc.bat
-if "%advch%"=="15" start BackupRegistry.bat
-if "%advch%"=="16" start ImportBackups.bat
+if "%advch%"=="15" start BR.bat
+if "%advch%"=="16" start IB.bat
 if "%advch%"=="17" start rockyou.bat
 if "%advch%"=="18" start taskmanager.bat
 if "%advch%"=="19" start wifipasses.bat
