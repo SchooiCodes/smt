@@ -1,4 +1,5 @@
 @echo off
+title sethc Trick Applier
 goto elevate
 
 :start
