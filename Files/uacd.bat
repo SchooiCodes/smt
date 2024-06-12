@@ -1,4 +1,5 @@
 @echo off
+title UAC Disabler
 cd %~dp0
 set arg=
 
@@ -15,7 +16,7 @@ fltmc >nul 2>&1 || (
 :start
 call logo.bat
 echo.
-echo UAC Bypasser
+echo UAC Disabler
 echo =========
 echo Disclaimer: This only disables UAC. To undo changes, goto cmd and run "%~dp0uacd.bat --revert"
 echo Changing registry values:
