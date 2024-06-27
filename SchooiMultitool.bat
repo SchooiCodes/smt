@@ -609,7 +609,7 @@ echo  Schooi's Multitool is a multitool created to compile many utilities that c
 echo.
 echo  Arguments:
 echo.
-echo  -debug ,--debug           Enters debug if exist "config\mode.ini" mode
+echo  -debug ,--debug           Enters debug mode
 echo.
 echo  -h, --h                   Prints this manual
 echo  -help, --help
