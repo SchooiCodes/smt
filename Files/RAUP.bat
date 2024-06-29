@@ -1,6 +1,20 @@
 @echo off
+title Elevation Required
+echo.
+echo Elevation Required
+fltmc >nul 2>&1 || (
+    PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
+        >nul pause && exit 1
+    )
+    exit 0
+)
+cd %~dp0
+title User Manager
+
 :main
 cls
+call logo.bat
+echo.
 echo Welcome to the user password resetter!
 echo -------------------------------------------
 echo What would you like to do?

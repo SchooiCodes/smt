@@ -38,7 +38,7 @@ xcopy /y SchooiMultitool.bat "C:\Windows\system32\SchooiMultitool.bat"
 cd C:\Windows\System32
 break>SMT.bat
 echo @echo off >> SMT.bat
-echo start SchooiMultitool >> SMT.bat
+echo start SchooiMultitool %%1 >> SMT.bat
 echo exit >> SMT.bat
 cd %scriptpath%
 cd ..

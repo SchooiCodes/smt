@@ -9,7 +9,8 @@ echo.
 echo sethc Trick Applier
 echo ============
 echo This will apply the sethc trick, which is a trick that allows you to access cmd from the Windows Logon screen, giving you "nt authority\system" access.
-echo When this program finishes and after a restart, you will be able to press SHIFT 5 times on the logon screen to access cmd.
+echo When this program finishes and after a restart, you will be able to press SHIFT 5 times on the logon screen to access the command prompt with system priveleges.
+echo DISCLAIMER: Sometimes, this works only after a restart. If you log off and try to access cmd using this trick it may spawn it in the background.
 echo Press any key to start the operation..
 pause >nul
 cd %WINDIR%\System32
