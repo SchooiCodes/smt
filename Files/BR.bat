@@ -2,6 +2,8 @@
 title Registry Backupper
 call logo.bat
 echo.
+echo Registry Backupper
+echo ==================
 setlocal
 
 echo Where would you like the backups to be saved? (Full path required eg. C:\Users\user\Desktop)
