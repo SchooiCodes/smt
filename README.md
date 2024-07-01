@@ -39,6 +39,9 @@ No libraries required, since this is made in batch. The only requirement is Wind
 
 Installation
 -
+> [!NOTE]
+> The installer and some other scripts of SMT get flagged by Antiviruses like Windows Defender and Malwarebytes. I suggest you disable real time protection on your antivirus.
+> See a VirusTotal scan [here](https://www.virustotal.com/gui/file/d914d16a3d1b97e0ab84d20e5f53b9b1b0540e87cb31ec92947f4eae97e4eb58/detection).
 
 To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases) or [the installer](https://github.com/SchooiCodes/smt/tree/main/Installer.bat)[^1][^2] (RECOMMENDED).
 
