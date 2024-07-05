@@ -185,7 +185,7 @@ if "%advch%"=="8" start zicrack.bat
 if "%advch%"=="9" start speak.vbs
 if "%advch%"=="10" start SMBBruteforcer.bat
 if "%advch%"=="11" start RAUP.bat
-if "%advch%"=="12" cd Schnuker & Installation.lnk & cd ..
+if "%advch%"=="12" cd Schnuker & start install.bat & cd..
 if "%advch%"=="13" start db.bat
 if "%advch%"=="14" start bfc.bat
 if "%advch%"=="15" start BR.bat
@@ -495,6 +495,8 @@ echo %Bright_CYAN%pf%RESET% - adds Schooi's Multitool to Program Files
 echo %Bright_CYAN%cl%RESET% - changes the output color
 echo %Bright_CYAN%tcon%RESET% - enables terminal text coloring
 echo %Bright_CYAN%tcoff%RESET% - disables terminal text coloring
+echo %Bright_CYAN%mdon%RESET% - enables automatic window resizing
+echo %Bright_CYAN%mdoff%RESET% - disables automatic window resizing
 echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
