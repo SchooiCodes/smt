@@ -23,5 +23,5 @@ pip install discord >nul
 pip install colorama >nul
 pip install asyncio >nul
 echo Starting...
-start Schnuker.py
+py Schnuker.py
 exit
