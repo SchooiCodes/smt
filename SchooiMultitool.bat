@@ -116,7 +116,8 @@ echo 9. View this system's info
 echo 10. Enable/Disable Hibernation
 echo 11. Folder Organizer
 echo 12. ASCII(/ANSI) Art Generator
-echo 13. Account Logger
+echo 13. ASCII(/ANSI) Art Gradient Generator
+echo 14. Credentials Storer
 echo.
 set /p ch=%username%@smt:~$ 
 if "%ch%"=="1" cls & goto start
@@ -131,7 +132,8 @@ if "%ch%"=="9" start sysinfo.bat
 if "%ch%"=="10" start hibern.bat
 if "%ch%"=="11" start fo.bat
 if "%ch%"=="12" start ascii.bat
-if "%ch%"=="13" start creds.bat
+if "%ch%"=="13" start gradients.bat
+if "%ch%"=="14" start creds.bat
 if "%ch%"=="cd" echo %cd% & pause >nul
 set "%ch%"="nul"
 cls
@@ -576,7 +578,7 @@ if %color%==0f (
 	set "Bright_White=[97m"
 	set "RESET=[97m"
 	)
-goto start
+goto pcheck
 
 :tcoff
 set "WHITE="
