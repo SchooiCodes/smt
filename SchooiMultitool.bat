@@ -173,6 +173,7 @@ echo 22. NS Lookupper
 echo 23. Internet Route Tracer
 echo 24. UAC Disabler
 echo 25. sethc Trick Applier
+echo 26. Time Freezer
 echo ?. ???
 echo.
 set /p advch=%username%@smt:~$ 
@@ -201,6 +202,7 @@ if "%advch%"=="22" start nsl.bat
 if "%advch%"=="23" start trt.bat
 if "%advch%"=="24" start uacd.bat
 if "%advch%"=="25" start sct.bat
+if "%advch%"=="26" start tf.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
