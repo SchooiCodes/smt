@@ -58,5 +58,5 @@ pause
 goto :EOF
 
 :Y
-call "Read Me.txt"
+type "rcmcreadme.txt"
 goto :Start
