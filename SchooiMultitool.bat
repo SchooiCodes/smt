@@ -86,9 +86,9 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
-if /i "%choice%"=="tcon" echo NUL >> config\ae.ini & call :tc
+if /i "%choice%"=="tcon" copy /y NUL config\ae.ini >NUL & call :tc
 if /i "%choice%"=="tcoff" del config\ae.ini & call :tcoff
-if /i "%choice%"=="mdon" echo NUL >> config\mode.ini & goto start
+if /i "%choice%"=="mdon" copy /y NUL config\mode.ini >NUL & goto start
 if /i "%choice%"=="mdoff" del config\mode.ini >nul & mode con cols=120 lines=30
 if /i "%choice%"=="credits" goto credits
 if NOT "%choice%"=="" %choice%
@@ -535,7 +535,6 @@ fltmc >nul 2>&1 || (
 )
 
 :tc
-echo NUL >> config\ae.ini
 if %color%==07 (
 	set "WHITE=[97m"
 	set "Black=[30m"
@@ -580,7 +579,7 @@ if %color%==0f (
 	set "Bright_White=[97m"
 	set "RESET=[97m"
 	)
-goto pcheck
+goto start
 
 :tcoff
 set "WHITE="

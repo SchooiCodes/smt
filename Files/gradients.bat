@@ -40,24 +40,7 @@ set "l5=echo ^<escape^>[38;5;218m%l5%"
 echo Please paste the sixth line of your ASCII art: 
 set /p l6=^> 
 set "l6=echo ^<escape^>[38;5;219m%l6%^<escape^>[0m"
-echo.
-echo Commands for the gradient
-echo (Replace ^<escape^> in each line with the escape character, which will be provided to you)
-echo ------------------------------------------------------------------------------------------------------
-echo chcp 65001 ^>nul
-echo %l1%
-echo %l2%
-echo %l3%
-echo %l4%
-echo %l5%
-echo %l6%
-echo chcp 437 ^>nul
-echo ------------------------------------------------------------------------------------------------------
-echo.
-echo Would you like to copy the escape character? [y]/[N]
-set /p copyesc=^> 
-if /i "%copyesc%"=="y" @Set /P "="<NUL|Clip
-goto start
+call :scags
 
 :gtbb
 echo.
@@ -79,24 +62,7 @@ set "l5=echo ^<escape^>[38;5;50m%l5%"
 echo Please paste the sixth line of your ASCII art: 
 set /p l6=^> 
 set "l6=echo ^<escape^>[38;5;51m%l6%^<escape^>[0m"
-echo.
-echo Commands for the gradient
-echo (Replace ^<escape^> in each line with the escape character, which will be provided to you)
-echo ------------------------------------------------------------------------------------------------------
-echo chcp 65001 ^>nul
-echo %l1%
-echo %l2%
-echo %l3%
-echo %l4%
-echo %l5%
-echo %l6%
-echo chcp 437 ^>nul
-echo ------------------------------------------------------------------------------------------------------
-echo.
-echo Would you like to copy the escape character? [y]/[N]
-set /p copyesc=^> 
-if /i "%copyesc%"=="y" @Set /P "="<NUL|Clip
-goto start
+call :scags
 
 :dbtp
 echo.
@@ -118,24 +84,7 @@ set "l5=echo ^<escape^>[38;5;177m%l5%"
 echo Please paste the sixth line of your ASCII art: 
 set /p l6=^> 
 set "l6=echo ^<escape^>[38;5;213m%l6%^<escape^>[0m"
-echo.
-echo Commands for the gradient
-echo (Replace ^<escape^> in each line with the escape character, which will be provided to you)
-echo ------------------------------------------------------------------------------------------------------
-echo chcp 65001 ^>nul
-echo %l1%
-echo %l2%
-echo %l3%
-echo %l4%
-echo %l5%
-echo %l6%
-echo chcp 437 ^>nul
-echo ------------------------------------------------------------------------------------------------------
-echo.
-echo Would you like to copy the escape character? [y]/[N]
-set /p copyesc=^> 
-if /i "%copyesc%"=="y" @Set /P "="<NUL|Clip
-goto start
+call :scags
 
 :rtp
 echo.
@@ -157,24 +106,7 @@ set "l5=echo ^<escape^>[38;5;200m%l5%"
 echo Please paste the sixth line of your ASCII art: 
 set /p l6=^> 
 set "l6=echo ^<escape^>[38;5;201m%l6%^<escape^>[0m"
-echo.
-echo Commands for the gradient
-echo (Replace ^<escape^> in each line with the escape character, which will be provided to you)
-echo ------------------------------------------------------------------------------------------------------
-echo chcp 65001 ^>nul
-echo %l1%
-echo %l2%
-echo %l3%
-echo %l4%
-echo %l5%
-echo %l6%
-echo chcp 437 ^>nul
-echo ------------------------------------------------------------------------------------------------------
-echo.
-echo Would you like to copy the escape character? [y]/[N]
-set /p copyesc=^> 
-if /i "%copyesc%"=="y" @Set /P "="<NUL|Clip
-goto start
+call :scags
 
 :gty
 echo.
@@ -196,9 +128,12 @@ set "l5=echo ^<escape^>[38;5;190m%l5%"
 echo Please paste the sixth line of your ASCII art: 
 set /p l6=^> 
 set "l6=echo ^<escape^>[38;5;226m%l6%^<escape^>[0m"
+call :scags
+
+:scags
 echo.
 echo Commands for the gradient
-echo (Replace ^<escape^> in each line with the escape character, which will be provided to you)
+echo (Replace ^<escape^> in each line with the escape character, which will be provided to you later in the script)
 echo ------------------------------------------------------------------------------------------------------
 echo chcp 65001 ^>nul
 echo %l1%
