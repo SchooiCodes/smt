@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/SchooiCodes/file_hosting/blob/main/SMT_v2.1_734x384.png"></p>
+<p align="center"><img src="https://github.com/SchooiCodes/file_hosting/blob/main/SMT_v2.3_734x377.png"></p>
 
 <p align="center">
     <img src="https://img.shields.io/github/commit-activity/w/SchooiCodes/smt" alt="GitHub commit activity">
