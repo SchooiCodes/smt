@@ -360,6 +360,18 @@ if "%facch%"=="5" start GPEE.bat
 goto fac
 
 :info
+setlocal enabledelayedexpansion
+dir /s | findstr "File(s)">>temp.txt
+set lastLine=
+set toolCount=
+for /f "tokens=* delims=" %%a in (temp.txt) do set lastLine=%%a
+for /f "tokens=1 delims= " %%b in ("!lastLine!") do set toolCount=%%b
+del temp.txt
+set /a toolcount=%toolCount%-1
+echo %toolcount%>>toolnum.txt
+endlocal
+FOR /F "tokens=* delims=" %%x in (toolnum.txt) DO set toolcount=%%x
+del toolnum.txt
 if exist "config\mode.ini" mode con cols=80 lines=26
 title [SMT ^| %version%] Info
 cls
@@ -372,6 +384,7 @@ echo Development started May 2024
 echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
 echo Don't make changes and say this script is your own!
 echo Also credit me if you use this for any social media!
+echo I had a lot of fun making this! (Yes, all %toolCount% tools)
 echo Fun Fact: Almost all the tools are made by me!
 echo.
 echo https://github.com/SchooiCodes/smt
