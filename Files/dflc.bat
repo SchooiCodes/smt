@@ -30,3 +30,4 @@ echo Would you like to see a more detailed analysis?
 choice /c YN /t 30 /D Y /N /M "[Y/N] >"
 if %ERRORLEVEL% EQU 1 type "%TEMP%\cloc.txt"
 pause >nul
+exit
