@@ -538,6 +538,12 @@ echo %CYAN%Malwarebytes Premium Resetter%RESET% - %GREEN%Scut1ny%RESET%
 echo %CYAN%Windows Activator%RESET% - %GREEN%massgravel%RESET%
 echo %CYAN%Group Policy Editor Enabler%RESET% - %GREEN%majorgeeks.com%RESET%
 echo %CYAN%Mystery (in advanced tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
+echo.
+echo AI Generated:
+echo %CYAN%Folder Organizer%RESET%
+echo %CYAN%Clipboard Manager%RESET%
+echo %CYAN%Screenshot Tool%RESET%
+echo %CYAN%File Integrity Checker%RESET%
 pause >nul
 goto start
 
