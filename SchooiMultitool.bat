@@ -69,7 +69,7 @@ chcp 65001 >nul
 echo %CYAN%┌────────────────────┬──────┬──────────────────┐%RESET%
 echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET% %version% %CYAN%│%RESET% Made by @schooi. %CYAN%│%RESET%
 echo %CYAN%└────────────────────┴──────┴──────────────────┘%RESET%
-echo Hello, %username%. What would you like to do?
+echo Hello, %BRIGHT_BLUE%%username%%RESET%. What would you like to do?
 echo 1. Go to the tools
 echo 2. Go to the advanced tools
 echo 3. Edit this script
@@ -661,7 +661,9 @@ echo.
 echo  -32, --32                 Adds SMT to the path
 echo.
 echo  -pf, --pf                 Adds SMT to program files and creates a shortcut on the desktop
+echo.
 echo  Disclaimers:
+echo.
 echo  -There are secret commands you can access by typing "sc" in the main menu.
 echo  -If any app installers or tools don't work, please contact me on github: https://github.com/SchooiCodes/smt/issues
 echo.

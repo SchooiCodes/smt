@@ -1,4 +1,4 @@
-@echo on
+@echo off
 cd %~dp0
 color 0f
 title Directory Line Counter ^| v1.0
@@ -20,14 +20,15 @@ echo Please enter the name of the directory whose files' lines of code you would
 set /p dir=^> 
 if not exist %dir% echo "%dir%" doesn't exist, are you sure you typed it correctly? & timeout /t 5 >nul & cls & goto 1
 cloc %dir%>>"%TEMP%\temp.txt"
-for /f "tokens=* delims= " %%a in ("%TEMP%\temp.txt") do echo %%a | findstr "SUM:">>"%TEMP%\sum.txt"
-for /f "tokens=5 delims= " %%a in ("%TEMP%\temp.txt") do set "lines=%%a"
+for /f "tokens=* delims=" %%a in ('type %TEMP%\temp.txt') do echo %%a | findstr "SUM">>"%TEMP%\sum.txt"
+for /f "tokens=5 delims= " %%x in (%TEMP%\sum.txt) do set "lines=%%x
 echo.
-del "%TEMP%\temp.txt" >nul
-del "%TEMP%\sum.txt" >nul
 echo Lines of code in that directory: [92m%lines%[97m
 echo Would you like to see a more detailed analysis?
 choice /c YN /t 30 /D Y /N /M "[Y/N] >"
-if %ERRORLEVEL% EQU 1 type "%TEMP%\cloc.txt"
+echo.
+if %ERRORLEVEL% EQU 1 type "%TEMP%\temp.txt"
 pause >nul
-exit
+del "%TEMP%\temp.txt" >nul
+del "%TEMP%\sum.txt" >nul
+goto 1
