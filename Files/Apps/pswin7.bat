@@ -1,4 +1,7 @@
 @echo off
+title Powershell Installer
+call logo.bat
+echo.
 echo Installing PowerShell on Windows 7...
 echo.
 

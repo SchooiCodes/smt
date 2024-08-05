@@ -1,4 +1,4 @@
-@echo off
+@echo on
 cd %~dp0
 color 0f
 title Directory Line Counter ^| v1.0

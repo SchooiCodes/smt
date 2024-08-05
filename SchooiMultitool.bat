@@ -1,5 +1,5 @@
 @echo off
-pushd %~dp0
+cd /d %~dp0
 if "%1"=="-debug" @echo on
 if "%1"=="--debug" @echo on
 if "%1"=="-rp" start Files\autorespo.bat & exit
@@ -14,15 +14,16 @@ if "%1"=="-h" goto help
 if "%1"=="--h" goto help
 if "%1"=="-help" goto help
 if "%1"=="--help" goto help
-popd
 cls
 set vnum=2.3
 set version=v%vnum%
 if "%~dp0"=="C:\Windows\System32\" cd C:\Windows\System32\
 if "%~dp0"=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
 cd Files
-FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x & set color=%%x
-call :tc
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do set resizing=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do set coloring=%%x
+if %coloring%==true call :tc
 REM if exist config\ae.ini set "RESET=[97m" & set "WHITE=[97m" & set "LIGHT_GREY=[0m" & set "BRIGHT_CYAN=[96m" & set "CYAN=[36m"
 REM if NOT exist config\ae.ini set "RESET=" & set "WHITE=" & set "LIGHT_GREY=" & set "BRIGHT_CYAN=" & set "CYAN="
 set old_dir = %~dp0\Files
@@ -38,6 +39,8 @@ goto pirated
 :setup
 title [SMT ^| %version%] Setup
 call logo.bat
+echo.
+echo Setup
 echo ===============================
 echo First time running, setup needed...
 start setup.bat
@@ -46,18 +49,18 @@ cls
 goto pcheck
 
 :rpoint
-if exist "config\mode.ini" mode con cols=75 lines=17
+if %resizing%==true mode con cols=75 lines=17
 title [SMT ^| %version%] Restore Point
 cls
 call logo.bat
 echo.
-echo I, Schooi, am NOT responsible for any damage caused by this program. 
-set /p rpoint=Would you like to create a system restore point? (Y/N): 
+echo I, Schooi, am %BRIGHT_RED%NOT%RESET% responsible for any damage caused by this program. 
+set /p rpoint=Would you like to create a %CYAN%system restore point%RESET%? (%BRIGHT_GREEN%Y%RESET%/%BRIGHT_RED%N%RESET%): 
 if /i "%rpoint%"=="Y" start autorespo.bat
 cls
 
 :start
-if exist "config\mode.ini" mode con cols=80 lines=24
+if %resizing%==true mode con cols=80 lines=24
 FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -90,17 +93,17 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
-if /i "%choice%"=="tcon" copy /y NUL config\ae.ini >NUL & call :tc
-if /i "%choice%"=="tcoff" del config\ae.ini & call :tcoff
-if /i "%choice%"=="mdon" copy /y NUL config\mode.ini >NUL & goto start
-if /i "%choice%"=="mdoff" del config\mode.ini >nul & mode con cols=120 lines=30
+if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul & call :tc
+if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set resizing=true & goto start
+if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="credits" goto credits
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
-if exist "config\mode.ini" mode con cols=80 lines=32
+if %resizing%==true mode con cols=80 lines=32
 cls
 call logo.bat
 title [SMT ^| %version%] Tools
@@ -144,7 +147,7 @@ cls
 goto Tools
 
 :advancedtools
-if exist "config\mode.ini" mode con cols=80 lines=45
+if %resizing%==true mode con cols=80 lines=45
 title [SMT ^| %version%] Advanced Tools
 cls
 call logo.bat
@@ -226,7 +229,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if exist "config\mode.ini" mode con cols=80 lines=39
+if %resizing%==true mode con cols=80 lines=39
 cls
 call logo.bat
 echo.
@@ -276,7 +279,7 @@ if "%appch%"=="18" start Apps\7z.bat
 goto apps
 
 :danger
-if exist "config\mode.ini" mode con cols=80 lines=25
+if %resizing%==true mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -298,7 +301,7 @@ if "%dangch%"=="4" start dsf.bat
 goto danger
 
 :IPTools
-if exist "config\mode.ini" mode con cols=80 lines=25
+if %resizing%==true mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -320,7 +323,7 @@ if "%ipch%"=="4" start pinger.bat
 goto IPTools
 
 :Performance
-if exist "config\mode.ini" mode con cols=80 lines=25
+if %resizing%==true mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -342,7 +345,7 @@ if "%perfch%"=="4" start UPPPE.bat
 goto Performance
 
 :fac
-if exist "config\mode.ini" mode con cols=80 lines=26
+if %resizing%==true mode con cols=80 lines=26
 cls
 call logo.bat
 echo.
@@ -366,8 +369,8 @@ if "%facch%"=="5" start GPEE.bat
 goto fac
 
 :info
-@if not "%~dp0"=="C:\Windows\System32\" if not "%~dp0"=="C:\Program Files\Schooi's Multitool\" if NOT "%calced%==1" call :calctools
-if exist "config\mode.ini" mode con cols=80 lines=26
+@if not "%~dp0"=="C:\Windows\System32\" if not "%~dp0"=="C:\Program Files\Schooi's Multitool\" if NOT "%calced%"=="1" call :calctools
+if %resizing%==true mode con cols=80 lines=26
 title [SMT ^| %version%] Info
 cls
 call logo.bat
@@ -380,7 +383,8 @@ echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
 echo Don't make changes and say this script is your own!
 echo Also credit me if you use this for any social media!
 @if not "%~dp0"=="C:\Windows\System32\" if not "%~dp0"=="C:\Program Files\Schooi's Multitool\" echo I had a lot of fun making this! (Yes, all %toolCount% tools)
-echo Fun Fact: Almost all the tools are made by me!
+echo Fun Fact: Almost all the tools are made by me! 
+echo (Type "credits" in the main menu for credits)
 echo.
 echo https://github.com/SchooiCodes/smt
 echo (c) Schooi 2024
@@ -401,9 +405,10 @@ echo %toolcount%>>toolnum.txt
 endlocal
 FOR /F "tokens=* delims=" %%x in (toolnum.txt) DO set toolcount=%%x
 del toolnum.txt
+goto info
 
 :history
-if exist "config\mode.ini" mode con cols=80 lines=45
+if %resizing%==true mode con cols=80 lines=45
 title [SMT ^| %version%] Command History
 cls
 call logo.bat
@@ -415,7 +420,7 @@ pause >nul
 goto start
 
 :pirated
-if exist "config\mode.ini" mode con cols=80 lines=16
+if %resizing%==true mode con cols=80 lines=16
 if exist setup.bat goto setup
 title [SMT ^| %version%] Pirated!
 call logo.bat
@@ -429,7 +434,7 @@ exit
 ::goto start
 
 :color
-if exist "config\mode.ini" mode con cols=100 lines=26
+if %resizing%==true mode con cols=100 lines=26
 set cl=
 cls
 call logo.bat
@@ -441,7 +446,7 @@ set /p cl=^>
 break>config\color.ini
 if /i "%cl%"=="O" (
 	color 07
-	echo 07 >> config\color.ini
+	call ini.bat /i hex /s TerminalColor /v 07 config\settings.ini
 	if exist config\ae.ini (
 		set "WHITE=[97m"
 		set "Black=[30m"
@@ -469,7 +474,7 @@ if /i "%cl%"=="O" (
 	)
 if /i "%cl%"=="N" (
 	color 0f
-	echo 0f >> config\color.ini
+	call ini.bat /i hex /s TerminalColor /v 0f config\settings.ini
 	if exist config\ae.ini (
 		set "WHITE=[97m"
 		set "Black=[30m"
@@ -497,7 +502,7 @@ if /i "%cl%"=="N" (
 	)
 if /i "%cl%"=="GB" goto start
 set /p cc=Custom Color: 
-echo %cc% >> config\color.ini
+call ini.bat /i hex /s TerminalColor /v %cc% config\settings.ini
 color %cc%
 set "WHITE="
 set "Bright_GREY="
@@ -508,7 +513,7 @@ timeout 3 >nul
 goto start
 
 :secrets
-if exist "config\mode.ini" mode con cols=80 lines=30
+if %resizing%==true mode con cols=80 lines=30
 cls
 call logo.bat
 echo.
@@ -533,7 +538,7 @@ pause >nul
 goto start
 
 :credits
-if exist "config\mode.ini" mode con cols=80 lines=24
+if %resizing%==true mode con cols=80 lines=24
 cls
 call logo.bat
 echo.
@@ -546,6 +551,7 @@ echo %CYAN%Malwarebytes Premium Resetter%RESET% - %GREEN%Scut1ny%RESET%
 echo %CYAN%Windows Activator%RESET% - %GREEN%massgravel%RESET%
 echo %CYAN%Group Policy Editor Enabler%RESET% - %GREEN%majorgeeks.com%RESET%
 echo %CYAN%Mystery (in advanced tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
+echo %CYAN%INI File Reader (used for settings)%RESET% - %GREEN%rojo on StackOverflow %YELLOW%(%WHITE%https://bit.ly/3WAxCXz%YELLOW%)%RESET%
 echo.
 echo AI Generated:
 echo %CYAN%Folder Organizer%RESET%
@@ -608,7 +614,7 @@ if %color%==0f (
 	set "Bright_White=[97m"
 	set "RESET=[97m"
 	)
-goto start
+goto rpoint
 
 :tcoff
 set "WHITE="
@@ -631,7 +637,7 @@ set "Bright_Purple="
 set "Bright_Yellow="
 set "Bright_White="
 set "RESET="
-del config\ae.ini 2>nul
+call ini.bat /i hex /s TerminalColoring /v false config\settings.ini
 goto start
 
 :end

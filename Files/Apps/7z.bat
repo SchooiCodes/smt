@@ -3,7 +3,7 @@ title 7zip Installer
 goto elevate
 
 :start
-cd %~dp0
+cd /d %~dp0
 call logo.bat
 echo.
 echo 7zip Installer

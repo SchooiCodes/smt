@@ -6,7 +6,7 @@ fltmc >nul 2>&1 || (
     exit 0
 )
 title Wintoys Installer
-cd %~dp0
+cd /d %~dp0
 call logo.bat
 echo.
 echo Checking for winget...

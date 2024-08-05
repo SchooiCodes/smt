@@ -2,7 +2,7 @@
 
 :start
 title Powershell 7 Installer
-cd %~dp0
+cd /d %~dp0
 call logo.bat
 echo.
 echo Powershell 7 (pwsh) Installer
