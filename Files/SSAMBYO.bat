@@ -5,7 +5,10 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
+cd /d %~dp0
 title SSAMBYO Fixer*
+call logo.bat
+echo.
 echo "Some Settings Are Managed By Your Organization" Fixer
 echo =======================================================
 echo Starting..

@@ -5,7 +5,7 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-cd %~dp0
+cd /d %~dp0
 title SMB Bruteforcer - by Schooi
 call logo.bat
 echo.

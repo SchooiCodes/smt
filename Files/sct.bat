@@ -3,7 +3,7 @@ title sethc Trick Applier
 goto elevate
 
 :start
-cd %~dp0
+cd /d %~dp0
 call logo.bat
 echo.
 echo sethc Trick Applier

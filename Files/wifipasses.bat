@@ -15,7 +15,7 @@ cls
 call :greet
 echo Please enter the name of the Wi-Fi whose password you would like to see:
 set /p wifi=^> 
-netsh wlan show profile name= "%wifi%" key=clear
+netsh wlan show profile name="%wifi%" key=clear
 pause
 goto start
 
