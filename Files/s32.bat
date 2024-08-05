@@ -1,21 +1,20 @@
 @echo off
-cd %~dp0
 title Schooi's Multitool
 fltmc >nul 2>&1 || (
-    echo( && echo   [33m# Administrator privileges are required. && echo([0m
-    PowerShell Start -Verb RunAs '%0' 2> nul || (
-        echo   [33m# Right-click on the script and select "Run as administrator".[0m
-        >nul pause && exit 1
+	echo This script is not elevated!
+	echo Requesting Admin permissions..
+    PowerShell -Command "Start-Process PowerShell -ArgumentList 'Start-Process -Verb RunAs \"%~f0\"' -NoNewWindow " 2>nul || (
+        >nul pause && exit /b 1
     )
-    exit 0
+    exit
 )
+goto disclaimer
+
 :disclaimer
-cd %~dp0
+cd /d %~dp0
 cls
 call logo.bat
-cd ..
 echo.
-echo This doesn't work well on USBs!
 echo DISCLAIMER:
 echo When you want to run SMT (the system32 version) you will need to know these things.
 echo 1. When you run SMT from the Run dialog or CMD, you may need to run it as admin. (CTRL + SHIFT + ENTER for the Run dialog and you need to run cmd as admin for cmd)
@@ -28,21 +27,19 @@ echo.
 echo Would you like to add Schooi's Multitool to PATH (system32, so that you can access SMT from the command line)? (Y/N)
 set /p 32=^> 
 if "%32%"=="N" exit
-set scriptpath=%~dp0
-cd %scriptpath%
-cd ..
-echo Current Directory: %cd%
-echo Type f when prompted
-pause
-xcopy /y SchooiMultitool.bat "C:\Windows\system32\SchooiMultitool.bat"
-cd C:\Windows\System32
+cd /d ..
+echo.
+copy /y SchooiMultitool.bat "C:\Windows\system32\SchooiMultitool.bat" >nul
+cd /d C:\Windows\System32
 break>SMT.bat
 echo @echo off >> SMT.bat
 echo start SchooiMultitool %%1 >> SMT.bat
 echo exit >> SMT.bat
-cd %scriptpath%
+cd /d %~dp0
 cd ..
-IF NOT EXIST "C:\Windows\system32\Files" md "C:\Windows\system32\Files"
-xcopy /y "Files" "C:\Windows\system32\Files\" /s
+IF NOT EXIST "C:\Windows\system32\Files" md "C:\Windows\system32\Files" 
+xcopy /y "Files" "C:\Windows\system32\Files\" /s /q >nul
+if ERRORLEVEL 0 echo Success!
+if NOT ERRORLEVEL 0 echo Error!
 pause >nul
 exit
