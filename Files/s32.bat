@@ -39,6 +39,7 @@ cd /d %~dp0
 cd ..
 IF NOT EXIST "C:\Windows\system32\Files" md "C:\Windows\system32\Files" 
 xcopy /y "Files" "C:\Windows\system32\Files\" /s /q >nul
+icacls C:\Windows\System32\Files\* /grant %USERNAME%:F >nul
 if ERRORLEVEL 0 echo Success!
 if NOT ERRORLEVEL 0 echo Error!
 pause >nul
