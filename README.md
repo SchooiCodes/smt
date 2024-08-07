@@ -69,7 +69,7 @@ Contributions to SMT are welcome! If you have any ideas for new features, improv
 License
 -
 
-SMT is not licensed.
+SMT uses the MIT liscense, find more [here](https://github.com/SchooiCodes/smt/blob/main/LICENSE.md).
 
 Acknowledgements
 
