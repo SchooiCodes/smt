@@ -69,10 +69,10 @@ Contributions to SMT are welcome! If you have any ideas for new features, improv
 License
 -
 
-SMT is not licensed.
+SMT uses the MIT liscense, find more [here](https://github.com/SchooiCodes/smt/blob/main/LICENSE.md).
 
 Acknowledgements
+-
 
 - Multitool is built using Batch.
-- If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself, not thetitle ordescription
-- You may not redistribute this.
+- If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself, not the title or description
