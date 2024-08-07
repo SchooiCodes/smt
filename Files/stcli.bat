@@ -37,5 +37,6 @@ call %~dp0logo.bat
 echo.
 speedtest.exe
 pause >nul
-cd "%olddir%"
+cd %~dp0
+rd /s /q ooklacli
 exit
