@@ -75,4 +75,4 @@ Acknowledgements
 -
 
 - Multitool is built using Batch.
-- If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself, not the title or description
+- If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself or the title, ***not*** the description
