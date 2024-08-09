@@ -1,5 +1,4 @@
-ÿþ&cls
-@echo on
+@echo off
 set old_dir=%~dp0
 if /I "%CD:~0,1%"=="C" goto elevate
 

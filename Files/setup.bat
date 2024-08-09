@@ -1,4 +1,3 @@
-ÿþ&cls
 @echo off
 if /I "%CD:~0,1%"=="C" goto elevate
 
