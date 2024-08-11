@@ -76,3 +76,5 @@ Acknowledgements
 
 - Multitool is built using Batch.
 - If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself or the title, ***not*** the description
+
+![Repobeats Analytics](https://repobeats.axiom.co/api/embed/f1c55495f7862d043d4f8ec42fa49c91704ca110.svg "Repobeats analytics image")
