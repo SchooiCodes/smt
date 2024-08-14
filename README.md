@@ -40,19 +40,15 @@ No libraries required, since this is made in batch. The only requirement is Wind
 Installation
 -
 > [!NOTE]
-> The installer and some other scripts of SMT get flagged by Antiviruses like Windows Defender and Malwarebytes. I suggest you disable real time protection on your antivirus.
 > See a VirusTotal scan [here](https://www.virustotal.com/gui/file/d914d16a3d1b97e0ab84d20e5f53b9b1b0540e87cb31ec92947f4eae97e4eb58/detection).
 
-To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases) or [the installer](https://github.com/SchooiCodes/smt/tree/main/Installer.bat)[^1][^2] (RECOMMENDED).
+To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases/latest) or [the installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe) (UPDATED & RECOMMENDED).
 
 Alternatively, you can use git to clone the repo:
 
 ```git clone https://github.com/SchooiCodes/smt```
 
 If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat).
-
-[^1]: Installer.bat, uninstall.bat & setup.bat in releases are obfuscated for anti-piracy reasons.
-[^2]: Because it is obfuscated, antiviruses flag it as an "exploit".
 
 Usage
 -
@@ -74,7 +70,7 @@ SMT uses the MIT liscense, find more [here](https://github.com/SchooiCodes/smt/b
 Acknowledgements
 -
 
-- Multitool is built using Batch.
+- SMT is built using Batch.
 - If you plan on using this for any social media, please credit me. Credits to me must be easily visible, and they must be in the video itself or the title, ***not*** the description
 ‎‎‎‎‎‎‎‎‎
 ‎
