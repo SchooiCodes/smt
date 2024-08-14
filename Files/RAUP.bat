@@ -8,7 +8,7 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-cd /d %~dp0
+cd /d "%~dp0"
 title User Manager
 
 :main

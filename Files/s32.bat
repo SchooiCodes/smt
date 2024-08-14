@@ -3,7 +3,7 @@ title Schooi's Multitool
 fltmc >nul 2>&1 || (
 	echo This script is not elevated!
 	echo Requesting Admin permissions..
-    PowerShell -Command "Start-Process PowerShell -ArgumentList 'Start-Process -Verb RunAs \"%~f0\"' -NoNewWindow " 2>nul || (
+    PowerShell -Command "Start-Process PowerShell -ArgumentList 'Start-Process -Verb RunAs "%0"' -NoNewWindow " 2>nul || (
         >nul pause && exit /b 1
     )
     exit
@@ -11,7 +11,7 @@ fltmc >nul 2>&1 || (
 goto disclaimer
 
 :disclaimer
-cd /d %~dp0
+cd /d "%~dp0"
 cls
 call logo.bat
 echo.
@@ -35,7 +35,7 @@ break>SMT.bat
 echo @echo off >> SMT.bat
 echo start SchooiMultitool %%1 >> SMT.bat
 echo exit >> SMT.bat
-cd /d %~dp0
+cd /d "%~dp0"
 cd ..
 IF NOT EXIST "C:\Windows\system32\Files" md "C:\Windows\system32\Files" 
 xcopy /y "Files" "C:\Windows\system32\Files\" /s /q >nul

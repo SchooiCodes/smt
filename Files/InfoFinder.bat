@@ -3,7 +3,7 @@ title Info Grabber v1.0
 echo Info Grabber - Saving..
 echo ================
 echo.
-cd %~dp0
+cd /d "%~dp0"
 md GrabbedInfo >nul 2>&1
 cd GrabbedInfo
 set olddir=%cd%

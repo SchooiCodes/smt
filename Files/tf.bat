@@ -5,7 +5,7 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-cd /d %~dp0
+cd /d "%~dp0"
 title Time Freeze
 call logo.bat
 echo.

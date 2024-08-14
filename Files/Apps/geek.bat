@@ -2,7 +2,7 @@
 goto elevate
 
 :start
-cd /d %~dp0
+cd /d "%~dp0"
 title Geek Uninstaller Installation
 call logo.bat
 echo.

@@ -3,7 +3,7 @@ if /I "%CD:~0,1%"=="C" goto elevate
 
 :start
 title SMT ^| Setup
-cd %~dp0
+cd /d "%~dp0"
 call logo.bat
 echo.
 echo Disclaimer:

@@ -1,5 +1,5 @@
 @echo off
-cd %~dp0
+cd /d "%~dp0"
 color 0f
 title Directory Line Counter ^| v1.0
 cloc 1>nul 2>&1

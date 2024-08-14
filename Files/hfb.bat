@@ -2,7 +2,7 @@
 goto elevate
 
 :start
-cd %~dp0
+cd /d "%~dp0"
 cls
 call logo.bat
 title Website Blocker
@@ -17,7 +17,7 @@ goto start
 
 :block
 cls
-cd %~dp0
+cd /d "%~dp0"
 call logo.bat
 title Website Blocker
 echo.

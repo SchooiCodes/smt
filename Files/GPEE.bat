@@ -10,7 +10,7 @@ fltmc >nul 2>&1 || (
 )
 echo Press any key to start..
 pause >nul
-cd /d %~dp0 
+cd /d "%~dp0" 
 
 dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt 
 dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt 

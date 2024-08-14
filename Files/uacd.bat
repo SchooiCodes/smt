@@ -1,6 +1,6 @@
 @echo off
 title UAC Disabler
-cd /d %~dp0
+cd /d "%~dp0"
 set arg=
 
 if "%1"=="--revert" set arg=--revert

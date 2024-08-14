@@ -1,5 +1,5 @@
 @echo off
-cd %~dp0
+cd /d "%~dp0"
 title Restore Point Creator
 fltmc >nul 2>&1 || (
 	echo This script is not elevated!
