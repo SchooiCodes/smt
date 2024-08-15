@@ -1,5 +1,9 @@
 @echo off
 cd /d %~dp0
+echo echo %~dp0 | findstr "Program Files" >nul
+if %ERRORLEVEL% EQU 0 set found=true
+echo echo %~dp0 | findstr "System32" >nul
+if %ERRORLEVEL% EQU 0 set found=true
 if "%1"=="-debug" @echo on
 if "%1"=="--debug" @echo on
 if "%1"=="-rp" start Files\autorespo.bat & exit
@@ -17,16 +21,12 @@ if "%1"=="--help" goto help
 cls
 set vnum=2.3
 set version=v%vnum%
-if "%~dp0"=="C:\Windows\System32\" cd C:\Windows\System32\
-if "%~dp0"=="C:\Program Files\Schooi's Multitool\" cd "C:\Program Files\Schooi's Multitool\"
 cd Files
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do set resizing=%%x
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do set coloring=%%x
-if %coloring%==true call :tc
-REM if exist config\ae.ini set "RESET=[97m" & set "WHITE=[97m" & set "LIGHT_GREY=[0m" & set "BRIGHT_CYAN=[96m" & set "CYAN=[36m"
-REM if NOT exist config\ae.ini set "RESET=" & set "WHITE=" & set "LIGHT_GREY=" & set "BRIGHT_CYAN=" & set "CYAN="
-set old_dir = %~dp0\Files
+if "%coloring%"=="true" call :tc
+REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
 :pcheck
@@ -369,8 +369,12 @@ if "%facch%"=="4" start GPEE.bat
 goto fac
 
 :info
-@if not "%~dp0"=="C:\Windows\System32\" if not "%~dp0"=="C:\Program Files\Schooi's Multitool\" if NOT "%calced%"=="1" call :calctools
-if %resizing%==true mode con cols=80 lines=26
+echo echo %~dp0 | findstr "Program Files" >nul
+if %ERRORLEVEL% EQU 0 set found=true
+echo echo %~dp0 | findstr "System32" >nul
+if %ERRORLEVEL% EQU 0 set found=true
+if not "%found%"=="true" if not "%calced%"=="1" call :calctools
+if "%resizing%"=="true" mode con cols=80 lines=26
 title [SMT ^| %version%] Info
 cls
 call logo.bat
@@ -382,7 +386,7 @@ echo Development started May 2024
 echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
 echo Don't make changes and say this script is your own!
 echo Also credit me if you use this for any social media!
-@if not "%~dp0"=="C:\Windows\System32\" if not "%~dp0"=="C:\Program Files\Schooi's Multitool\" echo I had a lot of fun making this! (Yes, all %toolCount% tools)
+if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCount% tools)
 echo Fun Fact: Almost all the tools are made by me! 
 echo (Type "credits" in the main menu for credits)
 echo.
@@ -662,7 +666,7 @@ echo  --restore-point
 echo.
 echo  -32, --32                 Adds SMT to the path
 echo.
-echo  -pf, --pf                 Adds SMT to program files and creates a shortcut on the desktop
+echo  -pf, --pf                 Adds SMT to program files and creates a shortcut on the desktop (old, use exe installer instead)
 echo.
 echo  Disclaimers:
 echo.
