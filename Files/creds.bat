@@ -12,7 +12,8 @@ echo 2. View all saved accounts
 echo 3. Change an account's credentials
 set /p choice=^> 
 if %choice%==1 goto add
-if %choice%==2 goto view
+if %choice%==2 if exist accs.txt goto view
+if %choice%==2 if not exist accs.txt echo You haven't saved any passwords yet. & pause >nul
 if %choice%==3 goto mod
 goto start
 
@@ -31,7 +32,8 @@ set /p pass=^>
 echo Is this correct? ([Y]es/[N]o) ^| Type: %type%, Username: %user%, Password: %pass%
 set /p confirmation=^> 
 if /i %confirmation%==N cls & echo Please try again. & goto add
-echo Type: %type%, Username: %user%, Password: %pass%>>accs.txt
+if not exist accs.txt echo Type     ^|     Username     ^|     Password>>accs.txt & echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=>>accs.txt
+echo %type%     ^|     %user%     ^|     %pass%>>accs.txt
 echo Success!
 pause
 goto start
@@ -41,6 +43,7 @@ cls
 call logo.bat
 echo Saved Accounts:
 echo ================
+echo.
 type accs.txt
 echo.
 pause
