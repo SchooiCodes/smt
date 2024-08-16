@@ -182,6 +182,7 @@ echo 22. UAC Disabler
 echo 23. sethc Trick Applier
 echo 24. Time Freezer
 echo 25. Directory File Line Counter
+echo 26. Google Extension Manifest V2 Extender
 echo ?. ???
 echo.
 set /p advch=%username%@smt:~$ 
@@ -212,6 +213,7 @@ if "%advch%"=="22" start uacd.bat
 if "%advch%"=="23" start sct.bat
 if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
+if "%advch%"=="26" start exmv2ae.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
