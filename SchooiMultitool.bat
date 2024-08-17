@@ -25,7 +25,9 @@ cd Files
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do set resizing=%%x
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do set coloring=%%x
-if "%coloring%"=="true" call :tc
+for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
+if "%WINDOWSVER%" GEQ "10" if "%coloring%"=="true" call :tc
+if "%WINDOWSVER%" LEQ "6" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
@@ -49,7 +51,7 @@ cls
 goto pcheck
 
 :rpoint
-if %resizing%==true mode con cols=75 lines=16
+if "%resizing%"=="true" mode con cols=75 lines=16
 title [SMT ^| %version%] Restore Point
 cls
 call logo.bat
@@ -60,7 +62,7 @@ if /i "%rpoint%"=="Y" start autorespo.bat
 cls
 
 :start
-if %resizing%==true mode con cols=80 lines=24
+if "%resizing%"=="true" mode con cols=80 lines=24
 FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -103,7 +105,7 @@ if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
-if %resizing%==true mode con cols=80 lines=33
+if "%resizing%"=="true" mode con cols=80 lines=33
 cls
 call logo.bat
 title [SMT ^| %version%] Tools
@@ -147,7 +149,7 @@ cls
 goto Tools
 
 :advancedtools
-if %resizing%==true mode con cols=80 lines=47
+if "%resizing%"=="true" mode con cols=80 lines=47
 title [SMT ^| %version%] Advanced Tools
 cls
 call logo.bat
@@ -231,7 +233,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if %resizing%==true mode con cols=80 lines=39
+if "%resizing%"=="true" mode con cols=80 lines=39
 cls
 call logo.bat
 echo.
@@ -281,7 +283,7 @@ if "%appch%"=="17" start Apps\7z.bat
 goto apps
 
 :danger
-if %resizing%==true mode con cols=80 lines=25
+if "%resizing%"=="true" mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -303,7 +305,7 @@ if "%dangch%"=="3" start dsf.bat
 goto danger
 
 :IPTools
-if %resizing%==true mode con cols=80 lines=25
+if "%resizing%"=="true" mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -325,7 +327,7 @@ if "%ipch%"=="3" start pinger.bat
 goto IPTools
 
 :Performance
-if %resizing%==true mode con cols=80 lines=25
+if "%resizing%"=="true" mode con cols=80 lines=25
 cls
 call logo.bat
 echo.
@@ -347,7 +349,7 @@ if "%perfch%"=="3" start UPPPE.bat
 goto Performance
 
 :fac
-if %resizing%==true mode con cols=80 lines=26
+if "%resizing%"=="true" mode con cols=80 lines=26
 cls
 call logo.bat
 echo.
@@ -414,7 +416,7 @@ del toolnum.txt
 goto info
 
 :history
-if %resizing%==true mode con cols=80 lines=45
+if "%resizing%"=="true" mode con cols=80 lines=45
 title [SMT ^| %version%] Command History
 cls
 call logo.bat
@@ -426,7 +428,7 @@ pause >nul
 goto start
 
 :pirated
-if %resizing%==true mode con cols=80 lines=16
+if "%resizing%"=="true" mode con cols=80 lines=16
 if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\Schooi's Multitool\needed_file.schm" goto rpoint
 if exist "%CD:~0,2%\needed_file.schm" goto rpoint
 if exist "setup.bat" goto setup
@@ -442,7 +444,7 @@ exit
 ::goto start
 
 :color
-if %resizing%==true mode con cols=100 lines=26
+if "%resizing%"=="true" mode con cols=100 lines=26
 set cl=
 cls
 call logo.bat
@@ -521,7 +523,7 @@ timeout 3 >nul
 goto start
 
 :secrets
-if %resizing%==true mode con cols=80 lines=30
+if "%resizing%"=="true" mode con cols=80 lines=30
 cls
 call logo.bat
 echo.
@@ -546,7 +548,7 @@ pause >nul
 goto start
 
 :credits
-if %resizing%==true mode con cols=80 lines=24
+if "%resizing%"=="true" mode con cols=80 lines=24
 cls
 call logo.bat
 echo.
