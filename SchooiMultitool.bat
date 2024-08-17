@@ -260,7 +260,7 @@ echo 16. Firefox
 echo 17. 7zip
 echo.
 set /p appch=%username%@smt:~$ 
-if /i "%ch%"=="B" cls & goto AdvancedTools
+if /i "%appch%"=="B" cls & goto AdvancedTools
 if "%appch%"=="1" start Apps\SuperF4.bat
 if "%appch%"=="2" start Apps\geek.bat
 if "%appch%"=="3" start cmd & cd %olddir%
@@ -364,7 +364,7 @@ echo 4. Group Policy Editor Enabler
 echo.
 set /p facch=%username%@smt:~$ 
 if /i "%facch%"=="B" cls & goto AdvancedTools
-if "%facch%"=="1" start Malwarebyes-Premium-Reset.bat
+if "%facch%"=="1" start Malwarebytes-Premium-Reset.bat
 if "%facch%"=="2" start SSAMBYO.bat
 if "%facch%"=="3" start WA.bat
 if "%facch%"=="4" start GPEE.bat
