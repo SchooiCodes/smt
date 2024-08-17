@@ -26,8 +26,8 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing 
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do set coloring=%%x
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
-if "%WINDOWSVER%" GEQ "10" if "%coloring%"=="true" call :tc
-if "%WINDOWSVER%" LEQ "6" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" call :tc
+if %WINDOWSVER% LEQ 6 call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
@@ -647,7 +647,7 @@ set "Bright_Purple="
 set "Bright_Yellow="
 set "Bright_White="
 set "RESET="
-call ini.bat /i hex /s TerminalColoring /v false config\settings.ini
+call ini.bat /i hex /s TerminalTextColoring /v false config\settings.ini
 goto start
 
 :end
