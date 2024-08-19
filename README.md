@@ -46,7 +46,7 @@ To install Schooi's Multitool, simply download [the latest release file](https:/
 
 Alternatively, you can use git to clone the repo:
 
-```git clone https://github.com/SchooiCodes/smt```
+`git clone https://github.com/SchooiCodes/smt`
 
 If you don't have git, [check this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat).
 
