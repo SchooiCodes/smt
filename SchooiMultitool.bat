@@ -439,10 +439,6 @@ echo Don't pirate my scripts!
 pause >nul
 exit
 
-:::rpoint
-::start autorespo.bat
-::goto start
-
 :color
 if "%resizing%"=="true" mode con cols=100 lines=26
 set cl=
