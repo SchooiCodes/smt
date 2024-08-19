@@ -15,10 +15,10 @@ if not exist "%TEMP%\inputs.bat" (
 	echo set /p l6=>>%TEMP%\inputs.bat
 )
 cls
-title Gradient Maker ^| v1.0
+title Gradient Maker ^| v1.2
 call :logo
 echo.
-echo Gradient Maker v1.0
+echo Gradient Maker v1.2
 echo ====================
 echo Would you like to make [38;5;214mg[38;5;215mr[38;5;215ma[38;5;216md[38;5;217mi[38;5;218me[38;5;218mn[38;5;219mt[38;5;219ms[97m or use [94mstatic colors[97m? {G/S}
 set /p type=^> 
@@ -27,10 +27,10 @@ if /i "%type%"=="s" goto static
 
 :static
 cls
-title Gradient Maker ^| v1.0
+title Gradient Maker ^| v1.2
 call :logo
 echo.
-echo Gradient Maker v1.0
+echo Gradient Maker v1.2
 echo ====================
 echo ONLY 6 LINE ASCII ART IS SUPPORTED!
 echo TO GENERATE 6 LINE ASCII ART: https://bit.ly/6linetallascii
