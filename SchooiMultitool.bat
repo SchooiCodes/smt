@@ -1,4 +1,4 @@
-@echo off
+@echo on
 cd /d %~dp0
 echo echo %~dp0 | findstr "Program Files" >nul
 if %ERRORLEVEL% EQU 0 set found=true
