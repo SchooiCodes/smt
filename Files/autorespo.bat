@@ -12,6 +12,7 @@ fltmc >nul 2>&1 || (
 call logo.bat
 echo.
 echo Creating restore point...
+REM Uncomment these lines if you want to use script downloading for restore point creation
 REM powershell -Command "iwr -useb https://schooicodes.github.io/file_hosting/autorespo.ps1 | iex"
 if not exist autorespo.ps1 type ar.txt>>autorespo.ps1
 powershell -Command "iex .\autorespo.ps1"

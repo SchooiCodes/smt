@@ -373,10 +373,6 @@ if "%facch%"=="4" start GPEE.bat
 goto fac
 
 :info
-echo echo %~dp0 | findstr "Program Files" >nul
-if %ERRORLEVEL% EQU 0 set found=true
-echo echo %~dp0 | findstr "System32" >nul
-if %ERRORLEVEL% EQU 0 set found=true
 if not "%found%"=="true" if not "%calced%"=="1" call :calctools
 if "%resizing%"=="true" mode con cols=80 lines=26
 title [SMT ^| %version%] Info
