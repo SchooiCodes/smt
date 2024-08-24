@@ -374,7 +374,6 @@ goto fac
 
 :info
 if not "%found%"=="true" if not "%calced%"=="1" call :calctools
-if %WINDOWSVER% GEQ 10 start /MIN powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri 'https://schooicodes.github.io/file_hosting/heart.ico' -OutFile $env:USERPROFILE'\Downloads\heart.ico' -UseBasicParsing; Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $notify = New-Object System.Windows.Forms.NotifyIcon; $iconPath = Join-Path $env:USERPROFILE 'Downloads\heart.ico'; $notify.Icon = New-Object System.Drawing.Icon($iconPath); $notify.BalloonTipTitle = 'Thank you!'; $notify.BalloonTipText = 'Thanks for using SMT! <3'; $notify.Visible = $true; $notify.ShowBalloonTip(10000); Start-Sleep -Seconds 10; $notify.Dispose();" & del "%USERPROFILE%\Downloads\heart.ico"
 if "%resizing%"=="true" mode con cols=80 lines=26
 title [SMT ^| %version%] Info
 cls
