@@ -27,10 +27,10 @@ call logo.bat
 echo.
 echo Starting SMT..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_GREEN%+%RESET%] Checking for text coloring..)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo %RESET%[%BRIGHT_RED%-%RESET%] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_GREEN%+%RESET%] Checking for automatic window resizing.. & set resizing=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
@@ -81,7 +81,7 @@ echo 3. Edit this script
 echo 4. Restart this script (to apply any changes)
 echo 5. View info about this script
 echo.
-set /p choice=%username%@smt:~$ 
+set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%choice%"=="1" goto Tools
 if /i "%choice%"=="2" goto AdvancedTools
 if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
@@ -131,7 +131,7 @@ echo 10. ASCII(/ANSI) Art Generator
 echo 11. ASCII(/ANSI) Art Gradient Generator
 echo 12. Credentials Storer
 echo.
-set /p ch=%username%@smt:~$ 
+set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%ch%"=="B" cls & goto start
 if /i "%ch%"=="E" goto end
 if "%ch%"=="1" start PasswordGenerator.bat
@@ -190,7 +190,7 @@ echo 25. Directory File Line Counter
 echo 26. Google Extension Manifest V2 Extender
 echo ?. ???
 echo.
-set /p advch=%username%@smt:~$ 
+set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%advch%"=="B" cls & goto start
 if /i "%advch%"=="E" goto end
 if "%advch%"=="1" goto Apps
@@ -264,7 +264,7 @@ echo 15. Spotify (No Ads)
 echo 16. Firefox
 echo 17. 7zip
 echo.
-set /p appch=%username%@smt:~$ 
+set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
 if "%appch%"=="1" start Apps\SuperF4.bat
 if "%appch%"=="2" start Apps\geek.bat
@@ -300,7 +300,7 @@ echo 1. Windows Destroyer
 echo 2. Info Stealer
 echo 3. Disk Space Filler
 echo.
-set /p dangch=%username%@smt:~$ 
+set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
 if "%dangch%"=="1" start WD.bat
 if "%dangch%"=="2" start InfoFinder.bat
@@ -322,7 +322,7 @@ echo 1. IP Logger
 echo 2. IP Geolocator
 echo 3. IP Pinger
 echo.
-set /p ipch=%username%@smt:~$ 
+set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
 if "%ipch%"=="1" start IPLog.bat
 if "%ipch%"=="2" start IPGeolocator.exe
@@ -344,7 +344,7 @@ echo 1. Windows Performance Options
 echo 2. Chris Titus Tool
 echo 3. Ultimate Performance Power Plan Enabler
 echo.
-set /p perfch=%username%@smt:~$ 
+set /p perfch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%perfch%"=="B" cls & goto AdvancedTools
 if "%perfch%"=="1" start %windir%\system32\systempropertiesperformance.exe
 if "%perfch%"=="2" start apps\ctt.bat
@@ -367,7 +367,7 @@ echo 2. "Some Settings Are Managed By Your Organization" Fixer
 echo 3. Windows Activator
 echo 4. Group Policy Editor Enabler
 echo.
-set /p facch=%username%@smt:~$ 
+set /p facch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%facch%"=="B" cls & goto AdvancedTools
 if "%facch%"=="1" start Malwarebytes-Premium-Reset.bat
 if "%facch%"=="2" start SSAMBYO.bat
