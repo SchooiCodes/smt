@@ -1,4 +1,5 @@
 @echo off
+for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 cd /d %~dp0
 echo echo %~dp0 | findstr "Program Files" >nul
 if %ERRORLEVEL% EQU 0 set found=true
@@ -22,12 +23,14 @@ cls
 set vnum=2.3
 set version=v%vnum%
 cd Files
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do set resizing=%%x
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do set coloring=%%x
-for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" call :tc
-if %WINDOWSVER% LEQ 6 call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+call logo.bat
+echo.
+echo Starting SMT..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_GREEN%+%RESET%] Checking for text coloring..)
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
+if %WINDOWSVER% LEQ 6 echo %RESET%[%BRIGHT_RED%-%RESET%] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_GREEN%+%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
@@ -616,7 +619,7 @@ if %color%==0f (
 	set "Bright_White=[97m"
 	set "RESET=[97m"
 	)
-goto rpoint
+goto :EOF
 
 :tcoff
 set "WHITE="
@@ -640,7 +643,7 @@ set "Bright_Yellow="
 set "Bright_White="
 set "RESET="
 call ini.bat /i hex /s TerminalTextColoring /v false config\settings.ini
-goto start
+goto :EOF
 
 :end
 exit
