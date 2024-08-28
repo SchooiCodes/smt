@@ -20,7 +20,7 @@ if "%1"=="--h" goto help
 if "%1"=="-help" goto help
 if "%1"=="--help" goto help
 cls
-set vnum=2.2
+set vnum=2.3
 set version=v%vnum%
 cd Files
 call logo.bat
@@ -37,7 +37,6 @@ for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
 			copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 			powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
 			"%TEMP%\SMTSetup.exe"
-			pause
 			rd /s /q "%TEMP%\SMT" >nul
 			echo [+] SMT was updated, please start the script again to continue.
 			timeout /t 5 /NOBREAK >nul
