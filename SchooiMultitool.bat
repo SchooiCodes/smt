@@ -27,7 +27,7 @@ call logo.bat
 echo.
 echo Starting SMT..
 echo [~] Checking for updates...
-powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/version -OutFile %TEMP%\version"
+powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
 for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
 	if NOT "%%a"=="%version%" (
 		echo [-] %%a update available! 
