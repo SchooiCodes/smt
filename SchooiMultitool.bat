@@ -26,6 +26,22 @@ cd Files
 call logo.bat
 echo.
 echo Starting SMT..
+echo [~] Checking for updates...
+powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/version -OutFile %TEMP%\version"
+for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+	if NOT "%%a"=="%version%" (
+		echo [-] %%a update available! 
+		choice /C YN /N /t 30 /D Y /M "[~] Would you like to install it now? [Y/N] " 
+		if ERRORLEVEL 1 (
+			if not exist "%TEMP%\smt" md "%TEMP%\smt" 
+			copy /y NUL "%TEMP%\SMT\SkipMSGBox" 
+			)
+		powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+		"%TEMP%\SMTSetup.exe"
+		pause
+		)
+	if "%%a"=="%version%" echo [+] SMT is up to date.
+	)	
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
