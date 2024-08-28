@@ -20,7 +20,7 @@ if "%1"=="--h" goto help
 if "%1"=="-help" goto help
 if "%1"=="--help" goto help
 cls
-set vnum=2.3
+set vnum=2.2
 set version=v%vnum%
 cd Files
 call logo.bat
@@ -34,11 +34,15 @@ for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
 		choice /C YN /N /t 30 /D Y /M "[~] Would you like to install it now? [Y/N] " 
 		if ERRORLEVEL 1 (
 			if not exist "%TEMP%\smt" md "%TEMP%\smt" 
-			copy /y NUL "%TEMP%\SMT\SkipMSGBox" 
+			copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+			powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+			"%TEMP%\SMTSetup.exe"
+			pause
+			rd /s /q "%TEMP%\SMT" >nul
+			echo [+] SMT was updated, please start the script again to continue.
+			timeout /t 5 /NOBREAK >nul
+			exit
 			)
-		powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
-		"%TEMP%\SMTSetup.exe"
-		pause
 		)
 	if "%%a"=="%version%" echo [+] SMT is up to date.
 	)	
