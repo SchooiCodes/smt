@@ -29,4 +29,3 @@ echo Would you like to restart your pc to apply these changes? ([Y]es)([N]o)
 set /p choice=^> 
 if /i %choice%=="Y" shutdown -r -t 0
 if /i %choice%=="N" exit
-exit

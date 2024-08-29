@@ -237,7 +237,7 @@ if "%advch%"=="22" start uacd.bat
 if "%advch%"=="23" start sct.bat
 if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
-if "%advch%"=="26" start emv2ae.bat
+if "%advch%"=="26" start exmv2ae.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
