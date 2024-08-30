@@ -1,8 +1,6 @@
 @echo off
 title Password Generator
-:Start2
-cls
-goto Start
+
 :Start
 cls
 call logo.bat
@@ -18,15 +16,16 @@ echo Generate password? (Y/N)
 echo Input your choice
 set input=
 set /p input= Choice: 
-if %input%==y goto passgen if NOT goto Start2
-if %input%==Y goto passgen if NOT goto Start2
+if %input%==y goto passgen if NOT goto Start
+if %input%==Y goto passgen if NOT goto Start
+
 :passgen
 cls
 call logo.bat
 echo.
 @echo off
 setlocal EnableDelayedExpansion
-set charSets=!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*
+set charSets=!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 set count=0
 
 set /a countRaw=4+(%random%)%%20

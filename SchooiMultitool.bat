@@ -1,4 +1,5 @@
 @echo off
+set "github= https://github.com/SchooiCodes/smt"
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 cd /d %~dp0
 echo echo %~dp0 | findstr "Program Files" >nul
@@ -19,6 +20,8 @@ if "%1"=="-h" goto help
 if "%1"=="--h" goto help
 if "%1"=="-help" goto help
 if "%1"=="--help" goto help
+if "%1"=="-hide" set "github=."
+if "%1"=="--hide" set "github=."
 cls
 set vnum=2.3
 set version=v%vnum%
@@ -26,29 +29,30 @@ cd Files
 call logo.bat
 echo.
 echo Starting SMT..
-echo [~] Checking for updates...
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc 
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
+if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates...
 powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
 for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
 	if NOT "%%a"=="%version%" (
-		echo [-] %%a update available! 
-		choice /C YN /N /t 30 /D Y /M "[~] Would you like to install it now? [Y/N] " 
+		echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
+		choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
 		if ERRORLEVEL 1 (
 			if not exist "%TEMP%\smt" md "%TEMP%\smt" 
 			copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 			powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
 			"%TEMP%\SMTSetup.exe"
 			rd /s /q "%TEMP%\SMT" >nul
-			echo [+] SMT was updated, please start the script again to continue.
+			echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
 			timeout /t 5 /NOBREAK >nul
 			exit
 			)
 		)
-	if "%%a"=="%version%" echo [+] SMT is up to date.
+	if "%%a"=="%version%" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
 	)	
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
-if %WINDOWSVER% LEQ 6 echo %RESET%[%BRIGHT_RED%-%RESET%] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
@@ -412,7 +416,7 @@ if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCou
 echo Fun Fact: Almost all the tools are made by me! 
 echo (Type "credits" in the main menu for credits)
 echo.
-echo https://github.com/SchooiCodes/smt
+echo%GITHUB%
 echo (c) Schooi 2024
 pause >nul
 goto start
