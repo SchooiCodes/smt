@@ -34,32 +34,39 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColor
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc 
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
-echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates...
-powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
-for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-	if NOT "%%a"=="%version%" (
-		echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
-		choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
-		if ERRORLEVEL 1 (
-			if not exist "%TEMP%\smt" md "%TEMP%\smt" 
-			copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-			powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
-			"%TEMP%\SMTSetup.exe"
-			rd /s /q "%TEMP%\SMT" >nul
-			echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
-			timeout /t 5 /NOBREAK >nul
-			exit
+echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
+ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
+if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%+%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
+if "%internet%"=="c" (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
+	powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+		if NOT "%%a"=="%version%" (
+			echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
+			choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
+			if ERRORLEVEL 1 (
+				if not exist "%TEMP%\smt" md "%TEMP%\smt" 
+				copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+				powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+				"%TEMP%\SMTSetup.exe"
+				rd /s /q "%TEMP%\SMT" >nul
+				echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
+				timeout /t 5 /NOBREAK >nul
+				exit
+				)
 			)
-		)
-	if "%%a"=="%version%" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
-	)	
+		if "%%a"=="%version%" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
+	)
+)	
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
+if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
+timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 
 :pcheck
 REM Anti-Piracy
-if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\Schooi's Multitool\needed_file.schm" goto rpoint
+if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\SMT\needed_file.schm" goto rpoint
 if exist "%CD:~0,2%\needed_file.schm" goto rpoint
 if exist "setup.bat" goto setup
 goto pirated
