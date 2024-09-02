@@ -52,9 +52,12 @@ async def call_logo():
 
     for line, color in zip(schnuker_logo, colors):
         print(color_text(line, color))
-    print(f"""
-Logged in as {client.user}
-Prefix: > or . | Commands: nuke, kickall (ka), massban (mb), spamchannels (sc), delchannels (dc), rolespam (rs), delroles (dr), ownerspam (osp), status, guildname (gn), restart, stop, spam, prefix (p), commands (cmds)""")
+    print(f"""Logged in as {client.user}""")
+    permissions = 8  # Administrator permissions
+    client_id = client.user.id
+    invite_link = f"https://discord.com/oauth2/authorize?client_id={client_id}&scope=bot&permissions={permissions}"
+    print(f"""Invite link: {invite_link}""")
+    print(f"""Prefix: > or . | Commands: nuke, kickall (ka), massban (mb), spamchannels (sc), delchannels (dc), rolespam (rs), delroles (dr), ownerspam (osp), status, guildname (gn), restart, stop, spam, prefix (p), commands (cmds)""")
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
