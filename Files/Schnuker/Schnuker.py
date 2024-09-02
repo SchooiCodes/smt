@@ -1,5 +1,6 @@
 import discord
 import subprocess
+import aiohttp
 import os
 from discord.ext import commands
 from colorama import Fore, init
@@ -15,6 +16,14 @@ global allow_commands
 allow_commands = False
 
 client = commands.Bot(command_prefix=[".", ">"], intents=discord.Intents.all())
+
+@client.event
+async def on_ready():
+    global session
+    session = aiohttp.ClientSession(headers={
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0'
+    })  
+    await call_logo()
 
 async def call_logo():
     await client.change_presence(activity=discord.Game("with nukes"))
@@ -46,10 +55,6 @@ async def call_logo():
     print(f"""
 Logged in as {client.user}
 Prefix: > or . | Commands: nuke, kickall (ka), massban (mb), spamchannels (sc), delchannels (dc), rolespam (rs), delroles (dr), ownerspam (osp), status, guildname (gn), restart, stop, spam, prefix (p), commands (cmds)""")
-
-@client.event
-async def on_ready():
-    await call_logo()
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
