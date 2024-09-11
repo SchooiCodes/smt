@@ -56,8 +56,9 @@ if "%internet%"=="c" (
 					exit
 					)
 				)
+			if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
 			)
-		if "%%a"=="%version%" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
+		)
 	)
 )	
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
