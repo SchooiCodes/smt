@@ -41,18 +41,20 @@ if "%internet%"=="c" (
 	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
 	powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
 	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-		if NOT "%%a"=="%version%" (
-			echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
-			choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
-			if ERRORLEVEL 1 (
-				if not exist "%TEMP%\smt" md "%TEMP%\smt" 
-				copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-				powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
-				"%TEMP%\SMTSetup.exe"
-				rd /s /q "%TEMP%\SMT" >nul
-				echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
-				timeout /t 5 /NOBREAK >nul
-				exit
+		for /f "tokens=* delims=" %%b in (config\version) do (
+			if NOT "%%a"=="%%b" (
+				echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
+				choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
+				if ERRORLEVEL 1 (
+					if not exist "%TEMP%\smt" md "%TEMP%\smt" 
+					copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+					powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+					"%TEMP%\SMTSetup.exe"
+					rd /s /q "%TEMP%\SMT" >nul
+					echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
+					timeout /t 5 /NOBREAK >nul
+					exit
+					)
 				)
 			)
 		if "%%a"=="%version%" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
