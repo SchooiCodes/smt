@@ -66,13 +66,14 @@ if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window r
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
+goto rpoint
 
-:pcheck
-REM Anti-Piracy
-if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\SMT\needed_file.schm" goto rpoint
-if exist "%CD:~0,2%\needed_file.schm" goto rpoint
-if exist "setup.bat" goto setup
-goto pirated
+REM :rpoint
+REM REM Anti-Piracy
+REM if "%CD:~0,3%"=="C:\" if exist "C:\Program Files\SMT\needed_file.schm" goto rpoint
+REM if exist "%CD:~0,2%\needed_file.schm" goto rpoint
+REM if exist "setup.bat" goto setup
+REM goto pirated
 
 :setup
 title [SMT ^| %version%] Setup
@@ -84,7 +85,7 @@ echo First time running, setup needed...
 start setup.bat
 pause >nul
 cls
-goto pcheck
+goto rpoint
 
 :rpoint
 if "%resizing%"=="true" mode con cols=75 lines=16
