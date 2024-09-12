@@ -44,8 +44,8 @@ if "%internet%"=="c" (
 		for /f "tokens=* delims=" %%b in (config\version) do (
 			if NOT "%%a"=="%%b" (
 				echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
-				choice /C YN /N /t 30 /D Y /M "%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] " 
-				if ERRORLEVEL 1 (
+				set /p installnow=%RESET%[%BRIGHT_YELLOW%~%RESET%] Would you like to install it now? [Y/N] 
+				if /i "%installnow%"=="y" (
 					if not exist "%TEMP%\smt" md "%TEMP%\smt" 
 					copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 					powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
@@ -179,6 +179,7 @@ if "%ch%"=="9" start fo.bat
 if "%ch%"=="10" start ascii.bat
 if "%ch%"=="11" start gradients.bat
 if "%ch%"=="12" start creds.bat
+if "%ch%"=="13" start sut.bat
 if "%ch%"=="cd" echo %cd% & pause >nul
 set "%ch%"="nul"
 cls
@@ -427,6 +428,7 @@ echo Fun Fact: Almost all the tools are made by me!
 echo (Type "credits" in the main menu for credits)
 echo.
 echo%GITHUB%
+echo https://youtube.com/@SchooiYT
 echo (c) Schooi 2024
 pause >nul
 goto start

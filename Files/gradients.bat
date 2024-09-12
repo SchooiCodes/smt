@@ -193,7 +193,7 @@ echo ONLY 6 LINE ASCII ART IS SUPPORTED!
 echo TO GENERATE 6 LINE ASCII ART: https://bit.ly/6linetallascii
 echo Which color would you like it to be?
 echo [1] [38;5;214mOrange[97m --^> [38;5;219mPink[97m, [2] [38;5;40mGreen[97m --^> [38;5;45mBright Blue[97m, [3] [38;5;33mBlue[97m --^> [38;5;213mPink[97m [4] [38;5;196mRed[97m --^> [38;5;201mPink[97m [5] [38;5;46mGreen[97m --^> [38;5;226mYellow[97m
-echo [6] [38;5;51mBlue[97m -^> [38;5;226mYellow[97m, [7] [38;2;135;206;250mLight Blue[97m -^> [38;2;35;106;200mBlue[97m
+echo [6] [38;5;51mBlue[97m -^> [38;5;226mYellow[97m, [7] [38;2;135;206;250mLight Blue[97m -^> [38;2;35;106;200mBlue[97m, [8] [38;5;226mYellow --^> [38;5;196mRed[97m
 set /p choice=^> 
 if %choice%==1 goto otp
 if %choice%==2 goto gtbb
@@ -202,6 +202,7 @@ if %choice%==4 goto rtp
 if %choice%==5 goto gty
 if %choice%==6 goto bty
 if %choice%==7 goto bbtb
+if %choice%==8 goto fire
 goto gradients
 
 
@@ -273,6 +274,16 @@ set "l3=echo ^<escape^>[38;2;95;166;230m%l3%"
 set "l4=echo ^<escape^>[38;2;75;146;220m%l4%"
 set "l5=echo ^<escape^>[38;2;55;126;210m%l5%"
 set "l6=echo ^<escape^>[38;2;35;106;200m%l6%^<escape^>[0m"
+call :scags
+
+:fire
+call "%TEMP%\inputs.bat"
+set "l1=echo ^<escape^>[38;5;226m%l1%"
+set "l2=echo ^<escape^>[38;5;220m%l2%"
+set "l3=echo ^<escape^>[38;5;214m%l3%"
+set "l4=echo ^<escape^>[38;5;208m%l4%"
+set "l5=echo ^<escape^>[38;5;202m%l5%"
+set "l6=echo ^<escape^>[38;5;196m%l6%^<escape^>[0m"
 call :scags
 
 :scags
