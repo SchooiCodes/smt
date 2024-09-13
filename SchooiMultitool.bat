@@ -332,14 +332,16 @@ echo %CYAN%┌────────────┐%RESET%
 echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
 echo %CYAN%└────────────┘%RESET%
 echo 1. Windows Destroyer
-echo 2. Info Stealer
-echo 3. Disk Space Filler
+echo 2. Info Stealer (OLD)
+echo 3. Info Stealer Generator (NEW)
+echo 4. Disk Space Filler
 echo.
 set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
 if "%dangch%"=="1" start WD.bat
 if "%dangch%"=="2" start InfoFinder.bat
-if "%dangch%"=="3" start dsf.bat
+if "%dangch%"=="3" start isg.bat
+if "%dangch%"=="4" start dsf.bat
 goto danger
 
 :IPTools

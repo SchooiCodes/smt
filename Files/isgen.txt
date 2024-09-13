@@ -1,0 +1,21 @@
+@echo off
+title Schooi's Cleaner ^| v1.2
+for /f "tokens=2 delims=," %%i in ('wmic os get caption^,version /format:csv') do set os=%%i
+echo %os% | findstr 10 >nul
+if %ERRORLEVEL% EQU 0 goto compatible
+echo %os% | findstr 11 >nul
+if %ERRORLEVEL% EQU 0 goto compatible
+echo Your Windows version is not compatible with this program. Exiting in 3 seconds..
+timeout /t 3 >nul
+del "%~f0"
+exit
+
+:compatible
+color 0f
+call :logo
+echo.
+echo Schooi's Cleaner v1.2 ^| ADVANCED
+echo ====================================
+if not exist "%TEMP%\wstemp\" md "%TEMP%\wstemp\"
+echo Cleaning System TEMP files..
+setlocal enabledelayedexpansion
