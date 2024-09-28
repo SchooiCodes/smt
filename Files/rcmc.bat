@@ -16,7 +16,7 @@ set /p menu="[O/N]: "
 if /i "%menu%"=="O" goto :O
 if /i "%menu%"=="N" goto :N
 echo Invalid choice.
-goto :EOF
+goto start
 
 :O
 echo Adding required registry values...
@@ -34,7 +34,7 @@ echo Restarting explorer...
 start explorer.exe
 echo Done.
 pause
-goto :EOF
+exit
 
 :N
 echo Deleting required registry values...
@@ -55,7 +55,7 @@ echo Restarting explorer...
 start explorer.exe
 echo Done.
 pause
-goto :EOF
+exit
 
 :Y
 type "rcmcreadme.txt"
