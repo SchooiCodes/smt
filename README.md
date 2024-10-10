@@ -22,8 +22,8 @@ Features
 - .zip Password Bruteforcer
 - Text to Speech
 - Windows User Manager
-- IP Logger
-- Info Stealer
+- Info Stealer Generator (!)
+- Windows Password Cracker (using WSL)
 - Windows Activator
 - Windows Destroyer
 - URL Shortener
@@ -42,7 +42,7 @@ Installation
 > [!NOTE]
 > See a VirusTotal scan [here](https://www.virustotal.com/gui/file/d914d16a3d1b97e0ab84d20e5f53b9b1b0540e87cb31ec92947f4eae97e4eb58/detection).
 
-To install Schooi's Multitool, simply download [the latest release file](https://github.com/SchooiCodes/smt/releases/latest) or [the installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe) (UPDATED & RECOMMENDED).
+To install Schooi's Multitool, simply download [the latest release zip archive](https://github.com/SchooiCodes/smt/releases/latest) or [the installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe) (UPDATED & RECOMMENDED).
 
 Alternatively, you can use git to clone the repo:
 
