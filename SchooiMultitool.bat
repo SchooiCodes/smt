@@ -220,7 +220,7 @@ echo 19. Website Blocker
 echo 20. NS Lookupper
 echo 21. Internet Route Tracer
 echo 22. UAC Disabler
-echo 23. sethc Trick Applier
+echo 23. utilman Trick Applier
 echo 24. Time Freezer
 echo 25. Directory File Line Counter
 echo 26. Google Extension Manifest V2 Extender
@@ -252,7 +252,7 @@ if "%advch%"=="19" start hfb.bat
 if "%advch%"=="20" start nsl.bat
 if "%advch%"=="21" start trt.bat
 if "%advch%"=="22" start uacd.bat
-if "%advch%"=="23" start sct.bat
+if "%advch%"=="23" start uta.bat
 if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
 if "%advch%"=="26" start emv2ae.bat
