@@ -8,7 +8,7 @@ call logo.bat
 echo.
 echo utilman Trick Applier
 echo ============
-echo This will apply the sethc trick, which is a trick that allows you to access cmd from the Windows Logon screen, giving you "nt authority\system" access.
+echo This will apply the utilman trick, which is a trick that allows you to access cmd from the Windows Logon screen, giving you "nt authority\system" access.
 echo When this program finishes and after a restart, you will be able to press the accessibility options on the logon screen to access the command prompt with system priveleges.
 echo Press any key to start the operation..
 pause >nul
