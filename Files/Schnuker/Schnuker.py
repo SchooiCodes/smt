@@ -57,7 +57,7 @@ async def call_logo():
     client_id = client.user.id
     invite_link = f"https://discord.com/oauth2/authorize?client_id={client_id}&scope=bot&permissions={permissions}"
     print(f"""Invite link: {invite_link}""")
-    print(f"""Prefix: > or . | Commands: nuke, kickall (ka), massban (mb), spamchannels (sc), delchannels (dc), rolespam (rs), delroles (dr), ownerspam (osp), status, guildname (gn), restart, stop, spam, prefix (p), commands (cmds)""")
+    print(f"""Prefix: > or . | Commands: nuke, kickall (ka), massban (mb), spamchannels (sc), delchannels (dc), rolespam (rs), delroles (dr), ownerspam (osp), status, guildname (gn), msguser, spamuser, restart, stop, spam, prefix (p), commands (cmds)""")
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -306,6 +306,39 @@ async def ownerspam(ctx):
                 else:
                     print(f"Console | Error sending message to the owner: {e}")
                     break
+                    
+@client.command()
+async def mu(ctx, user_id: int, *, message: str):
+    await msguser(ctx, user_id, message)
+                    
+@client.command()
+async def su(ctx, user_id: int, *, message: str):
+    await spamuser(ctx, user_id, message)
+
+@client.command()
+async def msguser(ctx, user_id: int, *, message: str):
+    await ctx.message.delete()
+    user = await client.fetch_user(user_id)
+    try:
+        await user.send(message)
+        print(f"Console | Message sent to '{user.name}'")
+    except discord.Forbidden:
+        print("Console | There is insufficient permission to send a message to this user.")
+    except discord.HTTPException as e:
+        print(f"Console | Failed to send a message: {str(e)}")
+        
+@client.command()
+async def spamuser(ctx, user_id: int, *, message: str):
+    await ctx.message.delete()
+    user = await client.fetch_user(user_id)
+    while True:
+        try:
+            await user.send(message)
+            print(f"Console | Message sent to '{user.name}'")
+        except discord.Forbidden:
+            print("Console | There is insufficient permission to send a message to this user.")
+        except discord.HTTPException as e:
+            print(f"Console | Failed to send a message: {str(e)}")
 
 @client.command()
 async def osp(ctx):

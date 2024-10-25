@@ -1,4 +1,11 @@
 @echo off
+fltmc >nul 2>&1 || (
+    PowerShell Start -Verb RunAs '%0' %arg% 2> nul || (
+        >nul pause && exit 1
+    )
+    exit 0
+)
+cd /d %~dp0
 call ..\logo.bat
 echo.
 title ScHnuKEr ^| 2.0 ~ iNiTIalIzInG
