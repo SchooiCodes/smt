@@ -51,7 +51,7 @@ if "%internet%"=="c" (
 					powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
 					"%TEMP%\SMTSetup.exe"
 					rd /s /q "%TEMP%\SMT" >nul
-					echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT was updated, please start the script again to continue.
+					echo [+] SMT was updated, please start the script again to continue.
 					timeout /t 5 /NOBREAK >nul
 					exit
 					)
