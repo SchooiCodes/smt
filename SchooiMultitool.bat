@@ -34,6 +34,9 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColor
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat 
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
+FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set policy=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
+if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
+if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%+%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
@@ -105,9 +108,9 @@ title SMT ^| %version%
 cls
 call logo.bat
 chcp 65001 >nul
-echo %CYAN%┌────────────────────┬──────┬──────────────────┐%RESET%
-echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET% %version% %CYAN%│%RESET% Made by @schooi. %CYAN%│%RESET%
-echo %CYAN%└────────────────────┴──────┴──────────────────┘%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────────────┬──────┬──────────────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET% %version% %CYAN%│%RESET% Made by @schooi. %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────────────┴──────┴──────────────────┘%RESET%
 echo Hello, %BRIGHT_BLUE%%username%%RESET%. What would you like to do?
 echo 1. Go to the tools
 echo 2. Go to the advanced tools
