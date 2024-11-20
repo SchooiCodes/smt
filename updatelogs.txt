@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:39:49.17c1256
+SMT Update logs for update ID d22:42:01.64c1298
 
-Fixed rejecting updates not working with *some* help from chatgpt (thanks lmao)
+Removed an empty line (urgh chatgpt you are causing OCD deep within me)
 
 Made with love by Schooi <3
 
