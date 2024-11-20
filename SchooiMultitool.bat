@@ -65,29 +65,31 @@ echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
 if "%internet%"=="c" (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
-	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-		for /f "tokens=* delims=" %%b in (config\version) do (
-			if NOT "%%a"=="%%b" (
-				echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
-				choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] " 
-				if ERRORLEVEL 1 (
-					if not exist "%TEMP%\smt" md "%TEMP%\smt" 
-					copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
-					"%TEMP%\SMTSetup.exe"
-					rd /s /q "%TEMP%\SMT" >nul
-					echo [+] SMT was updated, please start the script again to continue.
-					timeout /t 5 /NOBREAK >nul
-					exit
-					)
-				)
-			if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
-			)
-		)
-	)
-)	
+    echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+    for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+        for /f "tokens=* delims=" %%b in (config\version) do (
+            if NOT "%%a"=="%%b" (
+                echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
+                choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] " 
+                if ERRORLEVEL 2 (
+                    echo [+] Update skipped. Continuing...
+                ) else (
+                    if not exist "%TEMP%\smt" md "%TEMP%\smt" 
+                    copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+                    "%TEMP%\SMTSetup.exe"
+                    rd /s /q "%TEMP%\SMT" >nul
+                    echo [+] SMT was updated, please start the script again to continue.
+                    timeout /t 5 /NOBREAK >nul
+                    exit
+                )
+            )
+            if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
+        )
+    )
+)
+
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
 timeout /t 3 /NOBREAK >nul
@@ -164,6 +166,7 @@ if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v fa
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set resizing=true & goto start
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="credits" goto credits
+if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & pause & goto start
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
