@@ -1,7 +1,9 @@
 @echo off
+set elevate=true
 set "github= https://github.com/SchooiCodes/smt"
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 cd /d %~dp0
+set found=false
 echo echo %~dp0 | findstr "Program Files" >nul
 if %ERRORLEVEL% EQU 0 set found=true
 echo echo %~dp0 | findstr "System32" >nul
@@ -12,6 +14,8 @@ if "%1"=="-rp" start Files\autorespo.bat & exit
 if "%1"=="--rp" start Files\autorespo.bat & exit
 if "%1"=="-restore-point" start Files\autorespo.bat & exit
 if "%1"=="--restore-point" start Files\autorespo.bat & exit
+if "%1"=="-noadmin" set elevate=false
+if "%1"=="--noadmin" set elevate=false
 if "%1"=="-32" start Files\s32.bat & exit
 if "%1"=="--32" start Files\s32.bat & exit
 if "%1"=="-pf" start Files\pf.bat & exit
@@ -29,6 +33,20 @@ cd Files
 call logo.bat
 echo.
 echo Starting SMT..
+if "%elevate%"=="true" (
+	if "%found%"=="true" (
+		fltmc >nul 2>&1 || (
+			echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is installed in an admin folder! Restarting as admin..
+			PowerShell Start -Verb RunAs '%0' 2> nul || (
+				>nul pause && exit 1
+			)
+			exit 0
+		)
+		echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is installed in an admin folder, but is already running as admin. Continuing..
+	)
+	if "%found%"=="false" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is not installed in an admin folder, continuing without escalation..	
+	set found=false
+)
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat 
@@ -37,12 +55,18 @@ if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text colori
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set policy=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
 if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
+if "%inpath%"=="false " for /f "tokens=3" %%a in ('reg query "HKCU\Environment" /v Path') do set OLD_DATA=%%a 
+if "%inpath%"=="false " reg add "HKCU\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f 
+if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul 
+if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
+if "%inpath%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
-if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%+%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
+if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
 if "%internet%"=="c" (
 	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-	powershell -Command "irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
 	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
 		for /f "tokens=* delims=" %%b in (config\version) do (
 			if NOT "%%a"=="%%b" (
@@ -51,7 +75,7 @@ if "%internet%"=="c" (
 				if ERRORLEVEL 1 (
 					if not exist "%TEMP%\smt" md "%TEMP%\smt" 
 					copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-					powershell -Command "irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
 					"%TEMP%\SMTSetup.exe"
 					rd /s /q "%TEMP%\SMT" >nul
 					echo [+] SMT was updated, please start the script again to continue.
@@ -145,16 +169,13 @@ if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
-if "%resizing%"=="true" mode con cols=80 lines=33
+if "%resizing%"=="true" mode con cols=80 lines=34
 cls
 call logo.bat
 title [SMT ^| %version%] Tools
 echo.
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%│%RESET% E. Exit    %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :egbo
 echo 1. Password Generator
 echo 2. Right Click Menu Changer
 echo 3. Command-Line Game
@@ -191,16 +212,13 @@ cls
 goto Tools
 
 :advancedtools
-if "%resizing%"=="true" mode con cols=80 lines=47
+if "%resizing%"=="true" mode con cols=80 lines=49
 title [SMT ^| %version%] Advanced Tools
 cls
 call logo.bat
 echo.
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%│%RESET% E. Exit    %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :egbo
 echo 1. Apps
 echo 2. Danger Zone
 echo 3. IP Tools
@@ -284,9 +302,7 @@ echo.
 echo Apps
 echo ====
 echo Choose an app:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :gbo
 echo 1. SuperF4
 echo 2. Geek Uninstaller
 echo 3. Command Prompt
@@ -327,16 +343,14 @@ if "%appch%"=="17" start Apps\7z.bat
 goto apps
 
 :danger
-if "%resizing%"=="true" mode con cols=80 lines=25
+if "%resizing%"=="true" mode con cols=80 lines=26
 cls
 call logo.bat
 echo.
 echo Danger Zone
 echo ===========
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :gbo
 echo 1. Windows Destroyer
 echo 2. Info Stealer (OLD)
 echo 3. Info Stealer Generator (NEW)
@@ -358,9 +372,7 @@ echo.
 echo IP Tools
 echo ======
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :gbo
 echo 1. IP Logger
 echo 2. IP Geolocator
 echo 3. IP Pinger
@@ -380,9 +392,7 @@ echo.
 echo Performance
 echo ==========
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :gbo
 echo 1. Windows Performance Options
 echo 2. Chris Titus Tool
 echo 3. Ultimate Performance Power Plan Enabler
@@ -402,9 +412,7 @@ echo.
 echo Fixes ^& Crackers
 echo ================
 echo Choose a tool:
-echo %CYAN%┌────────────┐%RESET%
-echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-echo %CYAN%└────────────┘%RESET%
+call :gbo
 echo 1. Malwarebytes Premium Resetter
 echo 2. "Some Settings Are Managed By Your Organization" Fixer
 echo 3. Windows Activator
@@ -419,8 +427,8 @@ if "%facch%"=="4" start GPEE.bat
 goto fac
 
 :info
-if not "%found%"=="true" if not "%calced%"=="1" call :calctools
-if "%resizing%"=="true" mode con cols=80 lines=26
+if not "%calced%"=="1" call :calctools
+if "%resizing%"=="true" mode con cols=80 lines=29
 title [SMT ^| %version%] Info
 cls
 call logo.bat
@@ -432,7 +440,7 @@ echo Development started May 2024
 echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
 echo Don't make changes and say this script is your own!
 echo Also credit me if you use this for any social media!
-if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCount% tools)
+if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCount% batch tools)
 echo Fun Fact: Almost all the tools are made by me! 
 echo (Type "credits" in the main menu for credits)
 echo.
@@ -445,17 +453,17 @@ goto start
 :calctools
 set calced=1
 setlocal enabledelayedexpansion
-dir /s | findstr "File(s)">>temp.txt
+dir /s *.bat | findstr "File(s)">"%TEMP%\temp.txt"
 set lastLine=
 set toolCount=
-for /f "tokens=* delims=" %%a in (temp.txt) do set lastLine=%%a
+for /f "tokens=* delims=" %%a in ('type "%TEMP%\temp.txt"') do set lastLine=%%a
 for /f "tokens=1 delims= " %%b in ("!lastLine!") do set toolCount=%%b
-del temp.txt
+del "%TEMP%\temp.txt"
 set /a toolcount=%toolCount%-1
-echo %toolcount%>>toolnum.txt
+echo %toolcount%>>"%TEMP%\toolnum.txt"
 endlocal
-FOR /F "tokens=* delims=" %%x in (toolnum.txt) DO set toolcount=%%x
-del toolnum.txt
+FOR /F "tokens=* delims=" %%x in ('type "%TEMP%\toolnum.txt"') DO set toolcount=%%x
+del "%TEMP%\toolnum.txt"
 goto info
 
 :history
@@ -572,13 +580,24 @@ echo %CYAN%File Integrity Checker%RESET%
 pause >nul
 goto start
 
-:elevate
-fltmc >nul 2>&1 || (
-    PowerShell Start -Verb RunAs '%0' 2> nul || (
-        >nul pause && exit 1
-    )
-    exit 0
-)
+:egbo
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% E. Exit    %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────┘%RESET%
+if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
+if NOT %WINDOWSVER% GEQ 10 echo E. Exit
+goto :EOF
+
+:gbo
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────┘%RESET%
+if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
+goto :EOF
+
+REM :elevate
+REM goto :EOF
 
 :end
 exit
@@ -601,6 +620,8 @@ echo.
 echo  -32, --32                 Adds SMT to the path
 echo.
 echo  -pf, --pf                 Adds SMT to program files and creates a shortcut on the desktop (old, use exe installer instead)
+echo.
+echo  -noadmin, --noadmin       Runs SMT without admin if it is installed in an admin folder (e.g. Program Files)
 echo.
 echo  Disclaimers:
 echo.
