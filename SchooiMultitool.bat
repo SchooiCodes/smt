@@ -51,7 +51,7 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\s
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat 
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
-if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
+if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set policy=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
 if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
@@ -77,7 +77,7 @@ if "%internet%"=="c" (
                 ) else (
                     if not exist "%TEMP%\smt" md "%TEMP%\smt" 
                     copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm -useb https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
+                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
                     "%TEMP%\SMTSetup.exe"
                     rd /s /q "%TEMP%\SMT" >nul
                     echo [+] SMT was updated, please start the script again to continue.

@@ -1,14 +1,20 @@
 @echo off
 cd /d "%~dp0"
 title Restore Point Creator
+REM fltmc >nul 2>&1 || (
+    REM PowerShell -Command "Start-Process PowerShell -ArgumentList 'Start-Process -Verb RunAs "%0"' -NoNewWindow " 2>nul || (
+        REM >nul pause && exit /b 1
+    REM )
+    REM exit
+REM )
 fltmc >nul 2>&1 || (
-	echo This script is not elevated!
-	echo Requesting Admin permissions..
-    PowerShell -Command "Start-Process PowerShell -ArgumentList 'Start-Process -Verb RunAs "%0"' -NoNewWindow " 2>nul || (
-        >nul pause && exit /b 1
-    )
-    exit
-)
+			echo This script is not elevated!
+			echo Requesting Admin permissions..
+			PowerShell Start -Verb RunAs '%0' 2> nul || (
+				>nul pause && exit 1
+			)
+			exit 0
+		)
 call logo.bat
 echo.
 echo Creating restore point...
@@ -26,5 +32,6 @@ powershell -Command "iex .\autorespo.ps1"
 ::    echo Error! Errorlevel: %errorlevel%
 ::)
 echo Press any key to exit.
+del autorespo.ps1
 pause >nul
 exit
