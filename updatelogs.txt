@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:36:40.92c4126
+SMT Update logs for update ID d21:24:49.20c2675
 
-Updated restore points using a bugged elevation method
+Updated restore points using a bugged elevation method (Recompilation)
 
 Made with love by Schooi <3
 
