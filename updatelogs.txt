@@ -1,6 +1,6 @@
-SMT Update logs for update ID d21:24:49.20c2675
+SMT Update logs for update ID d15:39:29.00c1191
 
-Updated restore points using a bugged elevation method (Recompilation)
+Finally fixed the installed not working due to revamp of my installer compiler and adding update logs
 
 Made with love by Schooi <3
 
