@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:39:29.00c1191
+SMT Update logs for update ID d15:46:55.97c2784
 
-Finally fixed the installed not working due to revamp of my installer compiler and adding update logs
+Made the IP Geolocator download Newtonsoft.Json to effectively reduce SMT's size by 90% lol
 
 Made with love by Schooi <3
 

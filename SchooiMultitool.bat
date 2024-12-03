@@ -382,7 +382,7 @@ echo.
 set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
 if "%ipch%"=="1" start IPLog.bat
-if "%ipch%"=="2" start IPGeolocator.exe
+if "%ipch%"=="2" start IPGeolocatorDL.bat
 if "%ipch%"=="3" start pinger.bat
 goto IPTools
 
