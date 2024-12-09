@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:46:55.97c2784
+SMT Update logs for update ID d22:29:32.93c3013
 
-Made the IP Geolocator download Newtonsoft.Json to effectively reduce SMT's size by 90% lol
+Added even more backwards compatibility (automatic tls 1.2 when using irm)
 
 Made with love by Schooi <3
 

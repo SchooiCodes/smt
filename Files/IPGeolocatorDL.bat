@@ -5,7 +5,7 @@ echo.
 echo Downloading needed files..
 echo ==========================
 if not exist Newtonsoft.Json.Dll echo Downloading Newtonsoft.Json..
-if not exist Newtonsoft.Json.Dll powershell -Command "irm https://schooicodes.github.io/file_hosting/Newtonsoft.Json.dll -outfile Newtonsoft.Json.Dll"
+if not exist Newtonsoft.Json.Dll powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://schooicodes.github.io/file_hosting/Newtonsoft.Json.dll -outfile Newtonsoft.Json.Dll"
 echo Done.
 start "" IPGeolocator.exe
 pause
