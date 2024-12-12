@@ -248,6 +248,7 @@ echo 24. Time Freezer
 echo 25. Directory File Line Counter
 echo 26. Google Extension Manifest V2 Extender
 echo 27. Windows Password Cracker (using WSL)
+echo 28. Bootable USB Creator (using Ventoy)
 echo ?. ???
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -280,6 +281,7 @@ if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
 if "%advch%"=="26" start emv2ae.bat
 if "%advch%"=="27" start pc.bat
+if "%advch%"=="28" start busb.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls

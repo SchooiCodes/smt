@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:29:32.93c3013
+SMT Update logs for update ID d22:43:26.10c2732
 
-Added even more backwards compatibility (automatic tls 1.2 when using irm)
+Added a bootable USB creator (Ventoy)
 
 Made with love by Schooi <3
 
