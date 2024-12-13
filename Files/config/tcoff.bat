@@ -18,5 +18,5 @@ set "Bright_Purple="
 set "Bright_Yellow="
 set "Bright_White="
 set "RESET="
-call ini.bat /i hex /s TerminalTextColoring /v false config\settings.ini
+REM call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini
 goto :EOF

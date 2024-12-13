@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:43:26.10c2732
+SMT Update logs for update ID d18:36:14.17c3166
 
-Added a bootable USB creator (Ventoy)
+Commented old code remnants (to note remove them), updated coloring system, fixed bugs, added more debugging related things, updated busbc.bat
 
 Made with love by Schooi <3
 

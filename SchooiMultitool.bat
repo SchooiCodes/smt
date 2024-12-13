@@ -49,7 +49,7 @@ if "%elevate%"=="true" (
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat 
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set policy=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
@@ -57,6 +57,7 @@ if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powe
 if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 if "%inpath%"=="false " for /f "tokens=3" %%a in ('reg query "HKCU\Environment" /v Path') do set OLD_DATA=%%a 
+if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
 if "%inpath%"=="false " reg add "HKCU\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f 
 if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul 
 if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
@@ -128,7 +129,7 @@ cls
 
 :start
 if "%resizing%"=="true" mode con cols=80 lines=24
-FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
+REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
 call logo.bat
@@ -504,34 +505,35 @@ echo Current Color: %color%
 echo Would you like to change to the %WHITE%old%RESET% color, the %BRIGHT_WHITE%new%RESET% color or go back? (O/N/GB)
 echo You can also choose a custom color (check color /? in cmd), just leave the choice blank.
 set /p cl=^> 
-break>config\color.ini
+REM break>config\color.ini
 if /i "%cl%"=="O" (
 	color 07
-	call ini.bat /i hex /s TerminalColor /v 07 config\settings.ini
-	if exist config\ae.ini (
-		set "RESET=[0m"
-		)
+	call ini.bat /i hex /s TerminalColor /v 07 config\settings.ini >nul 2>&1
+	call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul 2>&1
+	call config\tc.bat
+	REM if exist config\ae.ini (
+		REM set "RESET=[0m"
+		REM )
 	set color=07
 	goto start
 	)
 if /i "%cl%"=="N" (
 	color 0f
-	call ini.bat /i hex /s TerminalColor /v 0f config\settings.ini
-	if exist config\ae.ini (
-		set "RESET=[97m"
-		)
+	call ini.bat /i hex /s TerminalColor /v 0f config\settings.ini >nul 2>&1
+	call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul 2>&1
+	call config\tc.bat
+	REM if exist config\ae.ini (
+		REM set "RESET=[97m"
+		REM )
 	set color=0f
 	goto start
 	)
 if /i "%cl%"=="GB" goto start
 set /p cc=Custom Color: 
-call ini.bat /i hex /s TerminalColor /v %cc% config\settings.ini
+call ini.bat /i hex /s TerminalColor /v %cc% config\settings.ini >nul 2>&1
 color %cc%
-set "WHITE="
-set "Bright_GREY="
-set "Bright_CYAN="
-set "CYAN="
-set "RESET="
+call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1
+call config\tcoff.bat
 timeout 3 >nul
 goto start
 
