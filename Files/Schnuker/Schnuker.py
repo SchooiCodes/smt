@@ -362,8 +362,8 @@ async def restart(ctx):
 
 @client.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Command not found. Use >cmds to list all available commands.")
+    if isinstance(error, discord.ext.commands.errors.CommandNotFound):
+        print("Error | Command not found. Use >cmds to list all available commands.")
     else:
         raise error
 

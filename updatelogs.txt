@@ -1,6 +1,6 @@
-SMT Update logs for update ID d18:36:14.17c3166
+SMT Update logs for update ID d23:44:07.94c9865
 
-Commented old code remnants (to note remove them), updated coloring system, fixed bugs, added more debugging related things, updated busbc.bat
+Updated Schnuker, added obfuscation and fixed some things in the info stealer
 
 Made with love by Schooi <3
 
