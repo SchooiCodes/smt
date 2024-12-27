@@ -4,8 +4,7 @@ if /I "%CD:~0,1%"=="C" goto elevate
 :start
 title SMT ^| Setup
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Disclaimer:
 echo Schooi's Multitool (otherwise known as "SMT") is provided for ethical purposes only. The creators and contributors of this tool do not condone, support, or endorse any illegal or unethical activities. The use of this tool for unauthorized access to computer systems, networks, or data is strictly prohibited and may violate local, national, and international laws.
 echo By accessing, downloading, or using this tool, you agree to use it responsibly and lawfully. You acknowledge that any misuse of this tool, including but not limited to unauthorized access, data theft, or disruption of services, may result in legal consequences and civil liability.

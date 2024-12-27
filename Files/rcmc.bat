@@ -1,7 +1,6 @@
 @echo off
 title Right Click Menu Changer
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Hello! This is the right-click menu changer!
 echo Would you like to read the instructions? Type Y for Yes and N for No.
 set /p inst="[Y/N]: "

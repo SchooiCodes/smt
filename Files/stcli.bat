@@ -1,7 +1,6 @@
 @echo off
 title Speedtest CLI
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo   Ookla Speedtest CLI
 echo ==========================
 if exist ooklacli\speedtest.exe echo Starting.. & goto start

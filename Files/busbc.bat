@@ -12,8 +12,7 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColor
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 cls
 title Bootable USB Creator - Ventoy
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Bootable USB Creator (Ventoy)
 echo ===============================
 echo This script will make you a bootable USB.

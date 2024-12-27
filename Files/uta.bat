@@ -4,8 +4,7 @@ goto elevate
 
 :start
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo utilman Trick Applier
 echo ============
 echo This will apply the utilman trick, which is a trick that allows you to access cmd from the Windows Logon screen, giving you "nt authority\system" access.

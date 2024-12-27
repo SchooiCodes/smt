@@ -1,7 +1,6 @@
 @echo off
 title Firefox Needed File Downloader
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Downloading needed files..
 echo ==========================
 if not exist firefox_.bat echo Downloading firefox_.bat..

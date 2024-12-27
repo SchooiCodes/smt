@@ -1,7 +1,6 @@
 @echo off
 title Windows PC Manager Installer
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Windows PC Manager Installer
 echo =============================
 echo Downloading..

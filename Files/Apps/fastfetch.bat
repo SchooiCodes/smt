@@ -1,8 +1,7 @@
 @echo off
 title Fastfetch Installer
 
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Fastfetch Installer
 echo ====================
 powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"

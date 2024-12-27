@@ -11,8 +11,7 @@ goto 1
 
 :1
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Directory Line Counter (using AlDanial's cloc)
 echo ==============================================
 echo [93mCLOC[97m: [94mgithub.com/AlDanial/cloc[97m

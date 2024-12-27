@@ -5,8 +5,7 @@ goto is
 
 :IS 
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Info Stealer Generator
 echo =======================
 echo I AM NOT RESPONSIBLE FOR ANYTHING CAUSED BY THIS SCRIPT.

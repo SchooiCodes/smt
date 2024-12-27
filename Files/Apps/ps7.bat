@@ -3,8 +3,7 @@
 :start
 title Powershell 7 Installer
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Powershell 7 (pwsh) Installer
 echo ================================
 echo Checking for winget...

@@ -1,6 +1,5 @@
 @echo off
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Generating needed file..
 echo Dim message, sapi > speak.vbs
 echo message=InputBox("What do you want me to say?","Speak to Me") >> speak.vbs

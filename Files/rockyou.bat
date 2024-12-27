@@ -1,6 +1,5 @@
 @echo off
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 title Downloading rockyou.txt...
 set /p DownloadDir=Where would you like to save rockyou.txt? (Type a dot and hit enter to download it here) ^| ^> 
 if NOT exist "%DownloadDir%" mkdir "%DownloadDir%"

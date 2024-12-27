@@ -2,8 +2,7 @@
 
 :start
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 title Internet Route Tracer
 echo Internet Route Tracer
 echo ======================

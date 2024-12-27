@@ -1,7 +1,6 @@
 @echo off
 title IP Geolocator Needed Files Downloader
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Downloading needed files..
 echo ==========================
 if not exist Newtonsoft.Json.Dll echo Downloading Newtonsoft.Json..

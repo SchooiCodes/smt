@@ -7,8 +7,7 @@ fltmc >nul 2>&1 || (
 )
 cd /d "%~dp0"
 title Time Freeze
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Time Freeze
 echo ============
 echo Inspired by @endermanch

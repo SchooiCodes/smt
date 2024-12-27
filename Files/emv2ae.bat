@@ -6,8 +6,7 @@ fltmc >nul 2>&1 || (
     exit 0
 )
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Extension Manifest V2 Availability Extender
 echo ============================================
 echo Google is planning to change the manifest of extensions, in a desperate try to get rid of uBlock and such adblockers.

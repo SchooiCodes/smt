@@ -1,6 +1,5 @@
 @echo off
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 title Winget Installer
 echo Winget Installer
 echo ================

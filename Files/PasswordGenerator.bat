@@ -3,8 +3,7 @@ title Password Generator
 
 :Start
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 title Password Generator
 echo I will make you a new password. 
 echo Please write the password down somewhere in case you forget it. 
@@ -21,8 +20,7 @@ if %input%==Y goto passgen if NOT goto Start
 
 :passgen
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 @echo off
 setlocal EnableDelayedExpansion
 set charSets=!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*!@#$%^&*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789

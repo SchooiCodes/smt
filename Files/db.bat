@@ -7,8 +7,7 @@ fltmc >nul 2>&1 || (
 )
 title Driver Backupper ^| v1.0
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Driver Backupper
 echo =============
 echo Please enter the export location (the place where the backups will be stored. I recommend you give this script an empty folder)

@@ -1,7 +1,6 @@
 @echo off
 title URL Shortener by Schooi
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo URL SHORTENER
 echo ---------------------
 set /p url= Enter the URL to shorten: 

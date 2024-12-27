@@ -1,7 +1,6 @@
 @echo off
 title System Info
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo System Info:
 systeminfo
 pause >nul

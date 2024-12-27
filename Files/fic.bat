@@ -4,8 +4,7 @@ title File Integrity Checker
 
 :menu
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo File Integrity Checker
 echo ======================
 echo 1. Generate File Hash

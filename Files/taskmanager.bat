@@ -3,8 +3,7 @@ title Schooi's CLI Task Manager
 
 :start
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo ===========================
 echo        Task Manager
 echo ===========================
@@ -21,8 +20,7 @@ goto start
 
 :tasklist
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo ===========================
 echo       Process Lister
 echo ===========================
@@ -34,8 +32,7 @@ goto start
 
 :taskkill
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo ===========================
 echo       Process Killer
 echo ===========================
@@ -48,8 +45,7 @@ goto start
 
 :taskstart
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo ===========================
 echo       Process Starter
 echo ===========================

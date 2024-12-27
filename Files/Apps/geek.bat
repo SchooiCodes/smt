@@ -4,8 +4,7 @@ goto elevate
 :start
 cd /d "%~dp0"
 title Geek Uninstaller Installation
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Installing..
 choco /? 1>nul
 if NOT %ERRORLEVEL% EQU 0 goto :choco

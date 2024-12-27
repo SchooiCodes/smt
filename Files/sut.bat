@@ -4,8 +4,7 @@ cd /d "%~dp0"
 
 :main
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Schooi's School Utilities (nice)
 echo ================================
 echo 1. Game websites
@@ -18,8 +17,7 @@ goto main
 
 :web
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Game Websites
 echo =================
 echo B. Go back
@@ -36,8 +34,7 @@ goto web
 
 :pranks
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Pranks
 echo ==========
 echo B. Back

@@ -1,7 +1,6 @@
 @echo off
 title Registry Backupper
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Registry Backupper
 echo ==================
 setlocal

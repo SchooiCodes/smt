@@ -3,8 +3,7 @@ setlocal enabledelayedexpansion
 
 :start
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Which directory would you like to organize?
 set /p dir=^> 
 echo Organizing files in %dir%

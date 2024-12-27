@@ -4,8 +4,7 @@ setlocal enabledelayedexpansion
 
 :menu
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo DNS Changer
 echo ===========
 echo 1. Set DNS to Google

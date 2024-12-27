@@ -3,8 +3,7 @@
 :start
 cls
 title Account Password Logger
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Account Picker
 echo =================
 echo 1. Add an account
@@ -19,8 +18,7 @@ goto start
 
 :add
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo DISCLAIMER: Your credentials will not be encrypted, do not store them in plain sight.
 echo.
 echo Please enter the type of the account (Google, YouTube, GitHub etc.)
@@ -51,8 +49,7 @@ goto start
 
 :mod
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Starting notepad..
 notepad accs.txt
 pause

@@ -7,8 +7,7 @@ fltmc >nul 2>&1 || (
 )
 cd /d "%~dp0"
 title SMB Bruteforcer - by Schooi
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo SMB Bruteforcer
 echo.
 set /p ip=Console ^| Enter IP Address: 

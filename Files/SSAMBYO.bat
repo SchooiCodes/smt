@@ -7,8 +7,7 @@ fltmc >nul 2>&1 || (
 )
 cd /d "%~dp0"
 title SSAMBYO Fixer*
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo "Some Settings Are Managed By Your Organization" Fixer
 echo =======================================================
 echo Starting..

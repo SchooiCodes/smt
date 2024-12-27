@@ -1,7 +1,6 @@
 @echo off
 title ZIP Cracker ^| v1.0
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Schooi's ZIP cracker v1.0
 echo ---------------------------
 if not exist "C:\Program Files\7-Zip" (

@@ -4,8 +4,7 @@ setlocal enabledelayedexpansion
 
 :menu
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Screenshot Tool
 echo ===============
 echo 1. Capture Screenshot

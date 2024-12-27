@@ -1,6 +1,5 @@
 @echo off
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo f.lux Installer
 echo ================
 echo Downloading..

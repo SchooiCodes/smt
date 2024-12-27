@@ -13,8 +13,7 @@ if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 cls
 title Windows Password Cracker ~ WSL
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo %BRIGHT_BLUE%Windows%RESET% Password Cracker
 echo =========================
 set /p mode=Select a mode ([%BRIGHT_RED%V%RESET%]ictim Machine/[%BRIGHT_GREEN%A%RESET%]ttacker's Machine) ^> 

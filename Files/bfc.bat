@@ -2,8 +2,7 @@
 
 :start
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 title Batch file creator by Schooi
 echo Batch file creator
 echo ===================

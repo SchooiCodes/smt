@@ -10,8 +10,7 @@ fltmc >nul 2>&1 || (
     exit
 )
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Would you like to add Schooi's Multitool to Program Files? (Y/N)
 set /p pf=^> 
 if "%pf%"=="N" exit

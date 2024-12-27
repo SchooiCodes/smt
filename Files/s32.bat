@@ -13,8 +13,7 @@ goto disclaimer
 :disclaimer
 cd /d "%~dp0"
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo DISCLAIMER:
 echo When you want to run SMT (the system32 version) you will need to know these things.
 echo 1. When you run SMT from the Run dialog or CMD, you may need to run it as admin. (CTRL + SHIFT + ENTER for the Run dialog and you need to run cmd as admin for cmd)

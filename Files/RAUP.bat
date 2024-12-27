@@ -14,8 +14,7 @@ title User Manager
 
 :main
 cls
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Welcome to the user manager!
 echo -------------------------------------------
 echo What would you like to do?

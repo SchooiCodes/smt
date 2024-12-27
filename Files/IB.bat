@@ -1,7 +1,6 @@
 @echo off
 title Registry Backup Importer
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Registry Backup Importer
 echo ========================
 echo This script will import the registry backups.

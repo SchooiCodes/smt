@@ -14,8 +14,7 @@ fltmc >nul 2>&1 || (
 )
 
 :start
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo UAC Disabler
 echo =========
 echo Disclaimer: This only disables UAC. To undo changes, goto cmd and run "%~dp0uacd.bat --revert"

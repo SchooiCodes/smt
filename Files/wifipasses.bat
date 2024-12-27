@@ -22,7 +22,6 @@ goto start
 :greet
 cls
 cd %~dp0
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Wi-Fi Password Viewer
 echo ======================

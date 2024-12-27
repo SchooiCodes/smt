@@ -1,8 +1,7 @@
 @echo off
 title git Installer
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo Installing Git...
 echo =====================
 echo.

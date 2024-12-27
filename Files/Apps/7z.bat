@@ -4,8 +4,7 @@ goto elevate
 
 :start
 cd /d "%~dp0"
-call logo.bat
-echo.
+if exist logo.bat call logo.bat & echo.
 echo 7zip Installer
 echo ===============
 echo Installing 7zip...
