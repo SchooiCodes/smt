@@ -282,7 +282,7 @@ if "%advch%"=="24" start tf.bat
 if "%advch%"=="25" start dflc.bat
 if "%advch%"=="26" start emv2ae.bat
 if "%advch%"=="27" start pc.bat
-if "%advch%"=="28" start busb.bat
+if "%advch%"=="28" start busbc.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -363,7 +363,7 @@ echo 4. Disk Space Filler
 echo.
 set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
-if "%dangch%"=="1" start WD.bat
+if "%dangch%"=="1" start WDDL.bat
 if "%dangch%"=="2" start InfoFinder.bat
 if "%dangch%"=="3" start isg.bat
 if "%dangch%"=="4" start dsf.bat

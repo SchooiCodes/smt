@@ -1,6 +1,6 @@
-SMT Update logs for update ID d23:44:07.94c9865
+SMT Update logs for update ID d20:36:41,81c7614
 
-Updated Schnuker, added obfuscation and fixed some things in the info stealer
+Made WD get downloaded, same thing with firefox.bat, updated ISG and fixed names in SchooiMultitool.bat
 
 Made with love by Schooi <3
 

