@@ -1,6 +1,6 @@
-SMT Update logs for update ID d20:49:03,24c1003
+SMT Update logs for update ID d11:48:36,36c2243
 
-Finally made the tools check if the logo.bat file exists to avoid the file not found error when using them on their own
+Made an exclusion get added when updating SMT to avoid unjustified detection of the Installer
 
 Made with love by Schooi <3
 

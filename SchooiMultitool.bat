@@ -78,8 +78,9 @@ if "%internet%"=="c" (
                 ) else (
                     if not exist "%TEMP%\smt" md "%TEMP%\smt" 
                     copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMTSetup.exe" 
-                    "%TEMP%\SMTSetup.exe"
+					start /WAIT "" add_exclusion.bat
+					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
+					"%TEMP%\SMT\SMTSetup.exe"
                     rd /s /q "%TEMP%\SMT" >nul
                     echo [+] SMT was updated, please start the script again to continue.
                     timeout /t 5 /NOBREAK >nul
