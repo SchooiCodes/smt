@@ -1,6 +1,6 @@
-SMT Update logs for update ID d13:28:06,11c2535
+SMT Update logs for update ID d13:45:10.11c2869
 
-Added a telegram installer and made the mystery clean up after it is done
+Added `ProgressPreference = 'SilentlyContinue';` before `irm` commands because for some reason it makes the downloads WAY faster _\_(?)_/_
 
 Made with love by Schooi <3
 

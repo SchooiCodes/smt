@@ -67,7 +67,7 @@ ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
 if "%internet%"=="c" (
     echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
     for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
         for /f "tokens=* delims=" %%b in (config\version) do (
             if NOT "%%a"=="%%b" (
@@ -79,7 +79,7 @@ if "%internet%"=="c" (
                     if not exist "%TEMP%\smt" md "%TEMP%\smt" 
                     copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 					start /WAIT "" add_exclusion.bat
-					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
+					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
 					"%TEMP%\SMT\SMTSetup.exe"
                     rd /s /q "%TEMP%\SMT" >nul
                     echo [+] SMT was updated, please start the script again to continue.

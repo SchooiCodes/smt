@@ -12,7 +12,7 @@ powershell -Command "$PSVersionTable.PSVersion.Major" > version.txt
 set /p ps_version=<version.txt
 del version.txt
 if %ps_version% GEQ 3 (
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex"
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex"
 ) else (
     powershell -Command "$wc = New-Object System.Net.WebClient; $script = $wc.DownloadString('https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1'); Invoke-Expression $script"
 )

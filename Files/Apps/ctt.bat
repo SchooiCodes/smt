@@ -5,5 +5,5 @@ fltmc >nul 2>&1 || (
     )
     exit 0
 )
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irm -useb https://christitus.com/win | iex"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://christitus.com/win | iex"
 exit

@@ -28,8 +28,8 @@ set /p user=^>
 echo Please enter a password for "%user%" 
 set /p pass=^> 
 echo Is this correct? ([Y]es/[N]o) ^| Type: %type%, Username: %user%, Password: %pass%
-set /p conf[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irmation=^> 
-if /i %conf[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; irmation%==N cls & echo Please try again. & goto add
+set /p confirmation=^> 
+if /i %confirmation%==N cls & echo Please try again. & goto add
 if not exist accs.txt echo Type     ^|     Username     ^|     Password>>accs.txt & echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=>>accs.txt
 echo %type%     ^|     %user%     ^|     %pass%>>accs.txt
 echo Success!
