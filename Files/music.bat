@@ -13,6 +13,6 @@ set "file=music.mp3"
 tasklist /FI "WindowTitle eq Get rickrolled!" > "%TEMP%\running.txt"
 for /f "tokens=* delims=" %%a in (%TEMP%\running.txt) do (
 	set line=%%a
-	if "%line%"=="INFO: No tasks are running which match the specified criteria." taskkill /f /im cscript.exe & exit
+	if "%line%"=="INFO: No tasks are running which match the specified criteria." taskkill /f /im cscript.exe & del music.mp3 & del sound.vbs & del start.vbs & exit
 )
 goto loop
