@@ -1,6 +1,6 @@
-SMT Update logs for update ID d13:45:10.11c2869
+SMT Update logs for update ID d19:09:33.28c1564
 
-Added `ProgressPreference = 'SilentlyContinue';` before `irm` commands because for some reason it makes the downloads WAY faster _\_(?)_/_
+Added new installation methods (no detection!) [400th COMMIT SPECIAL!]
 
 Made with love by Schooi <3
 

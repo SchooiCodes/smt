@@ -1,5 +1,10 @@
 @echo off
-goto elevate
+fltmc >nul 2>&1 || (
+    PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
+        >nul pause && exit 1
+    )
+    exit 0
+)
 
 :start
 cd /d "%~dp0"
@@ -25,7 +30,7 @@ exit
 
 :geek
 echo Downloading geek uninstaller..
-choco install geekuninstaller -y]
+choco install geekuninstaller -y
 echo Starting..
 cd C:\ProgramData\chocolatey\lib\geekuninstaller\tools\
 geek.exe
@@ -39,11 +44,4 @@ powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.Service
 PowerShell -Command "Start-Process '%0'
 exit /b 0
 
-:elevate
-fltmc >nul 2>&1 || (
-    PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
-        >nul pause && exit 1
-    )
-    exit 0
-)
-goto start
+
