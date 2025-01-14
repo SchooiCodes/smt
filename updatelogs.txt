@@ -1,6 +1,6 @@
-SMT Update logs for update ID d21:06:51.28c1311
+SMT Update logs for update ID d22:56:18.61c1784
 
-Added more badges to the readme (MOREEE)
+Added a Malwarebytes installer
 
 Made with love by Schooi <3
 

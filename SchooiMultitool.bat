@@ -327,6 +327,7 @@ echo 15. Spotify (No Ads)
 echo 16. Firefox
 echo 17. 7zip
 echo 18. Telegram
+echo 19. Malwarebytes
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -348,6 +349,7 @@ if "%appch%"=="15" start Apps\bts.bat
 if "%appch%"=="16" start Apps\firefox.bat
 if "%appch%"=="17" start Apps\7z.bat
 if "%appch%"=="18" start Apps\telegram.bat
+if "%appch%"=="19" start Apps\mbam.bat
 goto apps
 
 :danger
