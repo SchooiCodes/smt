@@ -1,8 +1,11 @@
 <p align="center"><img src="https://github.com/SchooiCodes/file_hosting/blob/main/SMT_v2.3_734x377.png"></p>
 
 <p align="center">
+	<img src="https://img.shields.io/github/languages/top/SchooiCodes/smt" alt="GitHub top language">
     <img src="https://img.shields.io/github/commit-activity/w/SchooiCodes/smt" alt="GitHub commit activity">
     <img src="https://img.shields.io/github/v/tag/SchooiCodes/smt" alt="GitHub Version">
+	<img src="https://img.shields.io/github/commits-since/SchooiCodes/smt/latest" alt="GitHub commits since tagged version">
+	<img src="https://img.shields.io/github/languages/code-size/SchooiCodes/smt" alt="GitHub code size in bytes">
     <img src="https://img.shields.io/github/downloads/SchooiCodes/smt/total" alt="GitHub Downloads (all assets, all releases)">
     <img src="https://img.shields.io/github/license/SchooiCodes/smt" alt="GitHub License">
 </p>

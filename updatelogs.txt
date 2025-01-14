@@ -1,6 +1,6 @@
-SMT Update logs for update ID d19:09:33.28c1564
+SMT Update logs for update ID d21:06:51.28c1311
 
-Added new installation methods (no detection!) [400th COMMIT SPECIAL!]
+Added more badges to the readme (MOREEE)
 
 Made with love by Schooi <3
 
