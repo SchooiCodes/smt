@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:56:18.61c1784
+SMT Update logs for update ID d22:44:59.48c8512
 
-Added a Malwarebytes installer
+Updated geek.bat and implemented irm to it to avoid bugs with choco needing signout, 250th commit special
 
 Made with love by Schooi <3
 
