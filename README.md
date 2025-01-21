@@ -66,7 +66,7 @@ If you have Github Desktop or git installed, you can use `git` to clone the repo
 git clone https://github.com/SchooiCodes/smt
 ```
 
-If you don't have git, check [this script](https://github.com/SchooiCodes/smt/blob/main/Files/git.bat) out.
+If you don't have git, check [this script](https://github.com/SchooiCodes/smt/blob/main/Files/Apps/git.bat) out.
 
 Usage
 -
@@ -90,8 +90,6 @@ Acknowledgements
 
 - SMT is built using Batch.
 - If you plan on using this for any social media, please credit me. Read the [license](LICENSE.md) for more information
-‎‎‎‎‎‎‎‎‎
-‎
 
 ![Repobeats Analytics](https://repobeats.axiom.co/api/embed/f1c55495f7862d043d4f8ec42fa49c91704ca110.svg "Repobeats analytics image")
 

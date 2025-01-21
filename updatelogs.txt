@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:44:59.48c8512
+SMT Update logs for update ID d22:47:09.87c8937
 
-Updated geek.bat and implemented irm to it to avoid bugs with choco needing signout, 250th commit special
+More irm optimizations and iwr replacements
 
 Made with love by Schooi <3
 
