@@ -8,5 +8,6 @@ powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.Security
 echo Installing..
 start /WAIT "" "%TEMP%\teleinstaller.exe"
 echo Done!
+del "%TEMP%\teleinstaller.exe" >nul
 pause >nul
 exit

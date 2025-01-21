@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:47:09.87c8937
+SMT Update logs for update ID d23:00:09.35c1100
 
-More irm optimizations and iwr replacements
+Updated a few installers and added a Notepad++ one (man it is so easy to add new ones)
 
 Made with love by Schooi <3
 

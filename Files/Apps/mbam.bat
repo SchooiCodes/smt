@@ -8,5 +8,6 @@ powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.Security
 echo Installing..
 start /WAIT "" "%TEMP%\mbaminstaller.exe"
 echo Done!
+del "%TEMP%\mbaminstaller.exe" >nul
 pause >nul
 exit
