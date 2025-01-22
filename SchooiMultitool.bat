@@ -144,6 +144,7 @@ echo 2. Go to the advanced tools
 echo 3. Edit this script
 echo 4. Restart this script (to apply any changes)
 echo 5. View info about this script
+echo 6. View credits
 echo.
 set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%choice%"=="1" goto Tools
@@ -151,6 +152,7 @@ if /i "%choice%"=="2" goto AdvancedTools
 if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="4" start restart.bat & exit
 if /i "%choice%"=="5" goto info
+if /i "%choice%"=="6" goto credits
 if /i "%choice%"=="%username%On" @echo on & goto start
 if /i "%choice%"=="%username%Off" @echo off & goto start
 if /i "%choice%"=="sc" goto secrets
@@ -166,7 +168,6 @@ if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v tru
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set resizing=true & goto start
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
-if /i "%choice%"=="credits" goto credits
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & pause & goto start
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
@@ -179,24 +180,27 @@ call logo.bat
 title [SMT ^| %version%] Tools
 echo.
 echo Choose a tool:
-call :egbo
-echo 1. Password Generator
-echo 2. Right Click Menu Changer
-echo 3. Command-Line Game
-echo 4. Scan Computer for Errors
-echo 5. Create A System Restore Point
-echo 6. URL Shortener
-echo 7. View this system's info
-echo 8. Enable/Disable Hibernation
-echo 9. Folder Organizer
-echo 10. ASCII(/ANSI) Art Generator
-echo 11. ASCII(/ANSI) Art Gradient Generator
-echo 12. Credentials Storer
-echo 13. School Utilities
+call :esgbo
+echo 1. Password Generator %findstring%
+echo 2. Right Click Menu Changer %findstring%
+echo 3. Command-Line Game %findstring%
+echo 4. Scan Computer for Errors %findstring%
+echo 5. Create A System Restore Point %findstring%
+echo 6. URL Shortener %findstring%
+echo 7. View this system's info %findstring%
+echo 8. Enable/Disable Hibernation %findstring%
+echo 9. Folder Organizer %findstring%
+echo 10. ASCII(/ANSI) Art Generator %findstring%
+echo 11. ASCII(/ANSI) Art Gradient Generator %findstring%
+echo 12. Credentials Storer %findstring%
+echo 13. School Utilities %findstring%
 echo.
 set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ch%"=="B" cls & goto start
 if /i "%ch%"=="E" goto end
+if /i "%ch%"=="C" set findstring=
+if "%ch%"=="/" set /p "findstring=Enter search term: "
+if "%ch%"=="/" set findstring=^| find /I "%findstring%"
 if "%ch%"=="1" start PasswordGenerator.bat
 if "%ch%"=="2" start rcmc.bat
 if "%ch%"=="3" start CommandLineGame.bat
@@ -222,40 +226,43 @@ cls
 call logo.bat
 echo.
 echo Choose a tool:
-call :egbo
-echo 1. Apps
-echo 2. Danger Zone
-echo 3. IP Tools
-echo 4. Performance
-echo 5. Fixes ^& Crackers
-echo 6. .zip Password Cracker
-echo 7. Text To Speech
-echo 8. SMB Bruteforcer
-echo 9. User Manager
-echo 10. Schnuker
-echo 11. Driver Backupper
-echo 12. Batch File Creator
-echo 13. Backup the Registry
-echo 14. Import Registry Backups
-echo 15. rockyou.txt Downloader
-echo 16. CLI Task Manager
-echo 17. Wi-Fi Password Shower
-echo 18. Network Speedtest
-echo 19. Website Blocker
-echo 20. NS Lookupper
-echo 21. Internet Route Tracer
-echo 22. UAC Disabler
-echo 23. utilman Trick Applier
-echo 24. Time Freezer
-echo 25. Directory File Line Counter
-echo 26. Google Extension Manifest V2 Extender
-echo 27. Windows Password Cracker (using WSL)
-echo 28. Bootable USB Creator (using Ventoy)
-echo ?. ???
+call :esgbo
+echo 1. Apps %findstring%
+echo 2. Danger Zone %findstring%
+echo 3. IP Tools %findstring%
+echo 4. Performance %findstring%
+echo 5. Fixes and Crackers %findstring%
+echo 6. .zip Password Cracker %findstring%
+echo 7. Text To Speech %findstring%
+echo 8. SMB Bruteforcer %findstring%
+echo 9. User Manager %findstring%
+echo 10. Schnuker %findstring%
+echo 11. Driver Backupper %findstring%
+echo 12. Batch File Creator %findstring%
+echo 13. Backup the Registry %findstring%
+echo 14. Import Registry Backups %findstring%
+echo 15. rockyou.txt Downloader %findstring%
+echo 16. CLI Task Manager %findstring%
+echo 17. Wi-Fi Password Shower %findstring%
+echo 18. Network Speedtest %findstring%
+echo 19. Website Blocker %findstring%
+echo 20. NS Lookupper %findstring%
+echo 21. Internet Route Tracer %findstring%
+echo 22. UAC Disabler %findstring%
+echo 23. utilman Trick Applier %findstring%
+echo 24. Time Freezer %findstring%
+echo 25. Directory File Line Counter %findstring%
+echo 26. Google Extension Manifest V2 Extender %findstring%
+echo 27. Windows Password Cracker (using WSL) %findstring%
+echo 28. Bootable USB Creator (using Ventoy) %findstring%
+echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%advch%"=="B" cls & goto start
+if /i "%advch%"=="B" set findstring= & cls & goto start
 if /i "%advch%"=="E" goto end
+if /i "%advch%"=="C" set findstring=
+if "%advch%"=="/" set /p "findstring=Enter search term: "
+if "%advch%"=="/" set findstring=^| find /I "%findstring%"
 if "%advch%"=="1" goto Apps
 if "%advch%"=="2" goto Danger
 if "%advch%"=="3" goto IPTools
@@ -308,30 +315,33 @@ echo.
 echo Apps
 echo ====
 echo Choose an app:
-call :gbo
-echo 1. SuperF4
-echo 2. Geek Uninstaller
-echo 3. Command Prompt
-echo 4. Powershell
-echo 5. Powershell 7
-echo 6. Powershell (Installer for devices that don't have it)
-echo 7. Fastfetch
-echo 8. Git
-echo 9. Winget
-echo 10. Chris Titus Tool
-echo 11. Wintoys
-echo 12. Windows PC Manager
-echo 13. f.lux
-echo 14. Chrome
-echo 15. Spotify (No Ads)
-echo 16. Firefox
-echo 17. 7zip
-echo 18. Telegram
-echo 19. Malwarebytes
-echo 20. Notepad++
+call :sgbo
+echo 1. SuperF4 %findstring%
+echo 2. Geek Uninstaller %findstring%
+echo 3. Command Prompt %findstring%
+echo 4. Powershell %findstring%
+echo 5. Powershell 7 %findstring%
+echo 6. Powershell (Installer for devices that don't have it) %findstring%
+echo 7. Fastfetch %findstring%
+echo 8. Git %findstring%
+echo 9. Winget %findstring%
+echo 10. Chris Titus Tool %findstring%
+echo 11. Wintoys %findstring%
+echo 12. Windows PC Manager %findstring%
+echo 13. f.lux %findstring%
+echo 14. Chrome %findstring%
+echo 15. Spotify (No Ads) %findstring%
+echo 16. Firefox %findstring%
+echo 17. 7zip %findstring%
+echo 18. Telegram %findstring%
+echo 19. Malwarebytes %findstring%
+echo 20. Notepad++ %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
+if /i "%appch%"=="C" set findstring=
+if "%appch%"=="/" set /p "findstring=Enter search term: "
+if "%appch%"=="/" set findstring=^| find /I "%findstring%"
 if "%appch%"=="1" start Apps\SuperF4.bat
 if "%appch%"=="2" start Apps\geek.bat
 if "%appch%"=="3" start cmd & cd %olddir%
@@ -454,7 +464,7 @@ echo Don't make changes and say this script is your own!
 echo Also credit me if you use this for any social media!
 if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCount% batch tools)
 echo Fun Fact: Almost all the tools are made by me! 
-echo (Type "credits" in the main menu for credits)
+echo (Type "sc" in the main menu for secret commands)
 echo.
 echo%GITHUB%
 echo https://youtube.com/@SchooiYT
@@ -594,18 +604,39 @@ pause >nul
 goto start
 
 :egbo
-if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────┐%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% E. Exit    %CYAN%│%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────┘%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌───┬─────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% E %CYAN%│%RESET% Exit    %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴─────────┘%RESET%
 if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
 if NOT %WINDOWSVER% GEQ 10 echo E. Exit
 goto :EOF
 
+:esgbo
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌───┬─────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% / %CYAN%│%RESET% Search  %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 if NOT "%findstring%"=="" echo %CYAN%│%RESET% C %CYAN%│%RESET% Clear   %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% E %CYAN%│%RESET% Exit    %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴─────────┘%RESET%
+if NOT %WINDOWSVER% GEQ 10 echo /. Search
+if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
+if NOT %WINDOWSVER% GEQ 10 echo E. Exit
+goto :EOF
+
+:sgbo
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌───┬─────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% / %CYAN%│%RESET% Search  %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 if NOT "%findstring%"=="" echo %CYAN%│%RESET% C %CYAN%│%RESET% Clear   %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴─────────┘%RESET%
+if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
+goto :EOF
+
 :gbo
-if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────┐%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B. Go Back %CYAN%│%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────┘%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%┌───┬─────────┐%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴─────────┘%RESET%
 if NOT %WINDOWSVER% GEQ 10 echo B. Go Back
 goto :EOF
 

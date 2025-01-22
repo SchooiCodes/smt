@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:35:17.94c9861
+SMT Update logs for update ID d23:30:29.89c4665
 
-Added npp.bat to SchooiMultitool.bat
+Added searching in categories like advanced tools and apps to make naviagtion easier
 
 Made with love by Schooi <3
 
