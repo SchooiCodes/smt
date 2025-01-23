@@ -1,6 +1,6 @@
-SMT Update logs for update ID d23:30:29.89c4665
+SMT Update logs for update ID d22:41:15.30c1500
 
-Added searching in categories like advanced tools and apps to make naviagtion easier
+Moved a few tools to the correct categories
 
 Made with love by Schooi <3
 

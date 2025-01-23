@@ -248,13 +248,10 @@ echo 18. Network Speedtest %findstring%
 echo 19. Website Blocker %findstring%
 echo 20. NS Lookupper %findstring%
 echo 21. Internet Route Tracer %findstring%
-echo 22. UAC Disabler %findstring%
-echo 23. utilman Trick Applier %findstring%
-echo 24. Time Freezer %findstring%
-echo 25. Directory File Line Counter %findstring%
-echo 26. Google Extension Manifest V2 Extender %findstring%
-echo 27. Windows Password Cracker (using WSL) %findstring%
-echo 28. Bootable USB Creator (using Ventoy) %findstring%
+echo 22. Directory File Line Counter %findstring%
+echo 23. Google Extension Manifest V2 Extender %findstring%
+echo 24. Windows Password Cracker (using WSL) %findstring%
+echo 25. Bootable USB Creator (using Ventoy) %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -284,13 +281,10 @@ if "%advch%"=="18" start stcli.bat
 if "%advch%"=="19" start hfb.bat
 if "%advch%"=="20" start nsl.bat
 if "%advch%"=="21" start trt.bat
-if "%advch%"=="22" start uacd.bat
-if "%advch%"=="23" start uta.bat
-if "%advch%"=="24" start tf.bat
-if "%advch%"=="25" start dflc.bat
-if "%advch%"=="26" start emv2ae.bat
-if "%advch%"=="27" start pc.bat
-if "%advch%"=="28" start busbc.bat
+if "%advch%"=="22" start dflc.bat
+if "%advch%"=="23" start emv2ae.bat
+if "%advch%"=="24" start pc.bat
+if "%advch%"=="25" start busbc.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -377,6 +371,9 @@ echo 1. Windows Destroyer
 echo 2. Info Stealer (OLD)
 echo 3. Info Stealer Generator (NEW)
 echo 4. Disk Space Filler
+echo 5. Time Freezer
+echo 6. UAC Disabler
+echo 7. utilman Trick Applier
 echo.
 set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
@@ -384,6 +381,9 @@ if "%dangch%"=="1" start WDDL.bat
 if "%dangch%"=="2" start InfoFinder.bat
 if "%dangch%"=="3" start isg.bat
 if "%dangch%"=="4" start dsf.bat
+if "%dangch%"=="5" start tf.bat
+if "%dangch%"=="6" start uacd.bat
+if "%dangch%"=="7" start uta.bat
 goto danger
 
 :IPTools
