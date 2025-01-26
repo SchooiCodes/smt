@@ -330,6 +330,7 @@ echo 17. 7zip %findstring%
 echo 18. Telegram %findstring%
 echo 19. Malwarebytes %findstring%
 echo 20. Notepad++ %findstring%
+echo 21. ShareX %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -356,6 +357,7 @@ if "%appch%"=="17" start Apps\7z.bat
 if "%appch%"=="18" start Apps\telegram.bat
 if "%appch%"=="19" start Apps\mbam.bat
 if "%appch%"=="20" start Apps\npp.bat
+if "%appch%"=="21" start Apps\sharex.bat
 goto apps
 
 :danger

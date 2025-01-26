@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:41:15.30c1500
+SMT Update logs for update ID d17:38:33.47c1571
 
-Moved a few tools to the correct categories
+Added a ShareX installer
 
 Made with love by Schooi <3
 
