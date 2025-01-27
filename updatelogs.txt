@@ -1,6 +1,6 @@
-SMT Update logs for update ID d17:38:33.47c1571
+SMT Update logs for update ID d22:51:43.98c3154
 
-Added a ShareX installer
+Added a qBittorrent, Paint.NET, Everything and Github Desktop installer
 
 Made with love by Schooi <3
 
