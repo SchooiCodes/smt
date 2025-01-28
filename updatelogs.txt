@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:51:43.98c3154
+SMT Update logs for update ID d17:45:54.48c2439
 
-Added a qBittorrent, Paint.NET, Everything and Github Desktop installer
+Updated qbt.bat and renamed winget.bat to avoid conflicts with the command itself
 
 Made with love by Schooi <3
 

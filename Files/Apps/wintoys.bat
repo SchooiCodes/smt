@@ -10,7 +10,7 @@ cd /d %~dp0
 if exist logo.bat call logo.bat & echo.
 echo Checking for winget...
 winget --version >nul 2>&1
-if NOT %errorlevel% equ 0 echo Installing winget... & start winget.bat
+if NOT %errorlevel% equ 0 echo Installing winget... & start wg.bat
 echo Installing Wintoys...
 winget install WinToys
 pause >nul

@@ -349,7 +349,7 @@ if "%appch%"=="5" start Apps\ps7.bat
 if "%appch%"=="6" start Apps\pswin7.bat
 if "%appch%"=="7" start Apps\fastfetch.bat
 if "%appch%"=="8" start Apps\git.bat
-if "%appch%"=="9" start Apps\winget.bat
+if "%appch%"=="9" start Apps\wg.bat
 if "%appch%"=="10" start Apps\ctt.bat
 if "%appch%"=="11" start Apps\wintoys.bat
 if "%appch%"=="12" start Apps\pcm.bat
