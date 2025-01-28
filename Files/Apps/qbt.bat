@@ -17,5 +17,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\qbtinstaller.exe"
 echo Done!
 del "%TEMP%\qbtinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

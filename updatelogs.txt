@@ -1,6 +1,6 @@
-SMT Update logs for update ID d17:45:54.48c2439
+SMT Update logs for update ID d17:56:36.61c2649
 
-Updated qbt.bat and renamed winget.bat to avoid conflicts with the command itself
+Made qbt.bat not pause >nul (i use it in another script, will do the same for the rest of the scripts soon)
 
 Made with love by Schooi <3
 
