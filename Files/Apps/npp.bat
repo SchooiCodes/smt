@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\nppinstaller.exe"
 echo Done!
 del "%TEMP%\nppinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

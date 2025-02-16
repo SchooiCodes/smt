@@ -12,7 +12,7 @@ if NOT %ERRORLEVEL% EQU 0 goto winget
 echo Installing Powershell...
 winget.exe install --id Microsoft.PowerShell
 echo Installation complete. Please restart your computer to complete the setup.
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit
 
 

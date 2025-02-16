@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\teleinstaller.exe"
 echo Done!
 del "%TEMP%\teleinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

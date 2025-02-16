@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\gitdinstaller.exe"
 echo Done!
 del "%TEMP%\gitdinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

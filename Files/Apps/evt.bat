@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\evtinstaller.exe"
 echo Done!
 del "%TEMP%\evtinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

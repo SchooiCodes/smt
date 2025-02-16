@@ -1,6 +1,6 @@
-SMT Update logs for update ID d21:56:25.33c2753
+SMT Update logs for update ID d23:17:47.30c1070
 
-Added an UWT installer
+Added a Recuva and a Process Hacker installer, replaced all pauses with timeouts
 
 Made with love by Schooi <3
 

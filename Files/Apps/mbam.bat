@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\mbaminstaller.exe"
 echo Done!
 del "%TEMP%\mbaminstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

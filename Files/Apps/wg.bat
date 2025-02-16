@@ -5,5 +5,5 @@ echo Winget Installer
 echo ================
 echo.
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://schooicodes.github.io/file_hosting/winget.ps1 | iex"
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

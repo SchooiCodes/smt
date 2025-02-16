@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\shxinstaller.exe"
 echo Done!
 del "%TEMP%\shxinstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

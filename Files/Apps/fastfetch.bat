@@ -11,5 +11,5 @@ timeout /t 5 >nul
 scoop install fastfetch
 
 if ERRORLEVEL 0 echo Operation succeeded.
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

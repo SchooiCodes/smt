@@ -7,7 +7,7 @@ winget --version 2>&1 >nul
 if NOT %ERRORLEVEL% EQU 0 goto irm
 echo Installing via winget..
 winget install -e --id qBittorrent.qBittorrent
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit
 
 :irm

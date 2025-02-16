@@ -9,5 +9,5 @@ echo Installing..
 start /WAIT "" "%TEMP%\pdninstaller.exe"
 echo Done!
 del "%TEMP%\pdninstaller.exe" >nul
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

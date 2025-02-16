@@ -21,7 +21,7 @@ if %ERRORLEVEL% EQU 0 (
 ) else (
     echo Error: %ERRORLEVEL%
 )
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit
 
 :elevate

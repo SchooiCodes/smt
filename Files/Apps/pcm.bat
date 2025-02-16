@@ -7,7 +7,7 @@ echo Downloading..
 powershell -Command "Invoke-WebRequest -Uri 'https://schooicodes.github.io/file_hosting/PCManager.msix' -OutFile '%USERPROFILE%\Downloads\PCManagerSetup.msix'"
 echo Installing..
 "%USERPROFILE%\Downloads\PCManagerSetup.msix"
-pause >nul
+timeout /t 5 /NOBREAK >nul
 echo Cleaning up..
 del "%USERPROFILE%\Downloads\PCManagerSetup.msix"
 exit

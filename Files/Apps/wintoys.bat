@@ -13,5 +13,5 @@ winget --version >nul 2>&1
 if NOT %errorlevel% equ 0 echo Installing winget... & start wg.bat
 echo Installing Wintoys...
 winget install WinToys
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit

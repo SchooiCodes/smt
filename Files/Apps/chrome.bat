@@ -9,5 +9,5 @@ powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.Security
 %TEMP%\ChromeSetup.exe -silent -install
 del "%TEMP%\ChromeSetup.exe"
 if %ERRORLEVEL% EQU 0 (echo Success!) else (echo Error: %ERRORLEVEL%)
-pause >nul
+timeout /t 5 /NOBREAK >nul
 exit
