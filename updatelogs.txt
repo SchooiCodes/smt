@@ -1,6 +1,6 @@
-SMT Update logs for update ID d17:56:36.61c2649
+SMT Update logs for update ID d21:56:25.33c2753
 
-Made qbt.bat not pause >nul (i use it in another script, will do the same for the rest of the scripts soon)
+Added an UWT installer
 
 Made with love by Schooi <3
 

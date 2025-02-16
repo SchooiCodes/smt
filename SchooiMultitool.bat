@@ -335,6 +335,7 @@ echo 22. qBittorrent %findstring%
 echo 23. Paint.NET %findstring%
 echo 24. Everything %findstring%
 echo 25. Github Desktop %findstring%
+echo 26. Ultimate Windows Tweaker %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -366,6 +367,7 @@ if "%appch%"=="22" start Apps\qbt.bat
 if "%appch%"=="23" start Apps\pdn.bat
 if "%appch%"=="24" start Apps\evt.bat
 if "%appch%"=="25" start Apps\gitd.bat
+if "%appch%"=="26" start Apps\uwt.bat
 goto apps
 
 :danger
