@@ -1,6 +1,6 @@
-SMT Update logs for update ID d23:17:47.30c1070
+SMT Update logs for update ID d18:28:51.17c6862
 
-Added a Recuva and a Process Hacker installer, replaced all pauses with timeouts
+Added a Winaero Tweaker installer and updated the Chrome installer to work (finally)
 
 Made with love by Schooi <3
 

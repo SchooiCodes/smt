@@ -338,6 +338,7 @@ echo 25. Github Desktop %findstring%
 echo 26. Ultimate Windows Tweaker %findstring%
 echo 27. Recuva %findstring%
 echo 28. Process Hacker %findstring%
+echo 29. Winaero Tweaker %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -372,6 +373,7 @@ if "%appch%"=="25" start Apps\gitd.bat
 if "%appch%"=="26" start Apps\uwt.bat
 if "%appch%"=="27" start Apps\rcv.bat
 if "%appch%"=="28" start Apps\pch.bat
+if "%appch%"=="29" start Apps\wat.bat
 goto apps
 
 :danger
