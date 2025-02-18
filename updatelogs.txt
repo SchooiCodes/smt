@@ -1,6 +1,6 @@
-SMT Update logs for update ID d18:28:51.17c6862
+SMT Update logs for update ID d22:37:46.66c1010
 
-Added a Winaero Tweaker installer and updated the Chrome installer to work (finally)
+Added a Windows 11 Tweaker
 
 Made with love by Schooi <3
 

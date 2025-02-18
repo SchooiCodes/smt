@@ -252,6 +252,7 @@ echo 22. Directory File Line Counter %findstring%
 echo 23. Google Extension Manifest V2 Extender %findstring%
 echo 24. Windows Password Cracker (using WSL) %findstring%
 echo 25. Bootable USB Creator (using Ventoy) %findstring%
+echo 26. Windows 11 Tweaker %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -285,6 +286,7 @@ if "%advch%"=="22" start dflc.bat
 if "%advch%"=="23" start emv2ae.bat
 if "%advch%"=="24" start pc.bat
 if "%advch%"=="25" start busbc.bat
+if "%advch%"=="26" start w11.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
