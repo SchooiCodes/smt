@@ -253,7 +253,7 @@ echo 23. Google Extension Manifest V2 Extender %findstring%
 echo 24. Windows Password Cracker (using WSL) %findstring%
 echo 25. Bootable USB Creator (using Ventoy) %findstring%
 echo 26. Windows 11 Tweaker %findstring%
-echo 27. Any App (that exists on winget) installer %findstring%
+echo 27. Any App (that exists on winget) Installer %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -616,6 +616,7 @@ echo %CYAN%Windows Activator%RESET% - %GREEN%massgravel%RESET%
 echo %CYAN%Group Policy Editor Enabler%RESET% - %GREEN%majorgeeks.com%RESET%
 echo %CYAN%Mystery (in advanced tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
 echo %CYAN%INI File Reader (used for settings)%RESET% - %GREEN%rojo on StackOverflow %YELLOW%(%BRIGHT_WHITE%https://bit.ly/3WAxCXz%YELLOW%)%RESET%
+echo %CYAN%Any App (that exists on winget) Installer%RESET% - %GREEN%@curlyhair. on Discord %YELLOW%(%BRIGHT_WHITE%https://discordapp.com/users/1063158162036883476%YELLOW%)%RESET%
 echo.
 echo AI Generated:
 echo %CYAN%Folder Organizer%RESET%
