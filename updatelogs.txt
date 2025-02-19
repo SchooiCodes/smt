@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:37:46.66c1010
+SMT Update logs for update ID d17:02:04.73c2986
 
-Added a Windows 11 Tweaker
+Added Any (winget) App Installer, which @curlyhair. on Discord made, as a tool while trying to learn batch from me. Thanks :D
 
 Made with love by Schooi <3
 
