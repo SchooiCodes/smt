@@ -1,6 +1,6 @@
-SMT Update logs for update ID d17:09:49.45c3138
+SMT Update logs for update ID d15:32:02.14c6692
 
-Added him to the credits
+Added a Discord and a Vencord installer
 
 Made with love by Schooi <3
 
