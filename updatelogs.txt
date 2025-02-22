@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:32:02.14c6692
+SMT Update logs for update ID d15:33:00.86c6885
 
-Added a Discord and a Vencord installer
+Replaced all winget commands with more sophisticated ones and fixed something in WA and CTT
 
 Made with love by Schooi <3
 
