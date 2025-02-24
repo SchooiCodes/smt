@@ -1,6 +1,6 @@
-SMT Update logs for update ID d12:48:19.70c2735
+SMT Update logs for update ID d23:18:40.98c7057
 
-Added dc and vc to the options and fixed the mystery not working in admin priveleges
+Brought back dsf (idk why it was deleted this whole time)
 
 Made with love by Schooi <3
 
