@@ -1,6 +1,6 @@
-SMT Update logs for update ID d23:18:40.98c7057
+SMT Update logs for update ID d15:36:02.88c1949
 
-Brought back dsf (idk why it was deleted this whole time)
+Revamped stcli
 
 Made with love by Schooi <3
 
