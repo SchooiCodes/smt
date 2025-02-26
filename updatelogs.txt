@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:36:02.88c1949
+SMT Update logs for update ID d22:27:19.26c4229
 
-Revamped stcli
+Fixed fastfetch' installer not working when running as admin
 
 Made with love by Schooi <3
 
