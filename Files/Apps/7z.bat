@@ -1,32 +1,22 @@
 @echo off
-title 7zip Installer
-goto elevate
-
-:start
-cd /d "%~dp0"
-if exist logo.bat call logo.bat & echo.
-echo 7zip Installer
-echo ===============
-echo Installing 7zip...
-powershell -Command "$PSVersionTable.PSVersion.Major" > version.txt
-set /p ps_version=<version.txt
-del version.txt
-if %ps_version% GEQ 3 (
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex"
-) else (
-    powershell -Command "$wc = New-Object System.Net.WebClient; $script = $wc.DownloadString('https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1'); Invoke-Expression $script"
-)
-if %ERRORLEVEL% EQU 0 (
-    echo Success!
-) else (
-    echo Error: %ERRORLEVEL%
-)
+title 7-Zip Installer
+if exist logo.bat call logo.bat & echo. 
+echo 7-Zip Installer
+echo ==================
+winget --version 2>&1 >nul
+if NOT %ERRORLEVEL% EQU 0 goto irm
+echo Installing via winget..
+winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id 7zip.7zip
+if %ERRORLEVEL% NEQ 0 goto irm
 timeout /t 5 /NOBREAK >nul
 exit
 
-:elevate
-fltmc >nul 2>&1 || (
-    PowerShell -Command "Start-Process '%0' -Verb RunAs"
-    exit
-)
-goto start
+:irm
+echo Winget not found! Falling back to irm..
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/main/7z.ps1 | iex"
+echo Installing..
+start /WAIT "" "%TEMP%\7zinstaller.exe"
+echo Done!
+del "%TEMP%\7zinstaller.exe" >nul
+timeout /t 5 /NOBREAK >nul
+exit

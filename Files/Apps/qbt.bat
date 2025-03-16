@@ -6,7 +6,7 @@ echo ==================
 winget --version 2>&1 >nul
 if NOT %ERRORLEVEL% EQU 0 goto irm
 echo Installing via winget..
-winget install -e --accept-package-agreements --force --id qBittorrent.qBittorrent
+winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id qBittorrent.qBittorrent
 timeout /t 5 /NOBREAK >nul
 exit
 

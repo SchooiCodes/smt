@@ -254,6 +254,7 @@ echo 24. Windows Password Cracker (using WSL) %findstring%
 echo 25. Bootable USB Creator (using Ventoy) %findstring%
 echo 26. Windows 11 Tweaker %findstring%
 echo 27. Any App (that exists on winget) Installer %findstring%
+echo 28. App Installer Generator %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -289,6 +290,7 @@ if "%advch%"=="24" start pc.bat
 if "%advch%"=="25" start busbc.bat
 if "%advch%"=="26" start w11.bat
 if "%advch%"=="27" start aap.bat
+if "%advch%"=="28" start aig.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -345,6 +347,7 @@ echo 28. Process Hacker %findstring%
 echo 29. Winaero Tweaker %findstring%
 echo 30. Discord %findstring%
 echo 31. Vencord %findstring%
+echo 32. IrfanView %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -382,6 +385,7 @@ if "%appch%"=="28" start Apps\pch.bat
 if "%appch%"=="29" start Apps\wat.bat
 if "%appch%"=="30" start Apps\dc.bat
 if "%appch%"=="31" start Apps\vc.bat
+if "%appch%"=="32" start Apps\ifv.bat
 goto apps
 
 :danger

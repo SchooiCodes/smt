@@ -16,7 +16,7 @@ echo ====================================
 
 :: task here
 set /p id=Please type the winget ID of the app you want to install: 
-winget install -e --accept-package-agreements --force --id %id%
+winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id %id%
 :: end of task
 
 echo Done.

@@ -1,10 +1,10 @@
 @echo off
-fltmc >nul 2>&1 || (
-    PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
-        >nul pause && exit 1
-    )
-    exit 0
-)
+REM fltmc >nul 2>&1 || (
+    REM PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
+        REM >nul pause && exit 1
+    REM )
+    REM exit 0
+REM )
 
 :start
 cd /d "%~dp0"
@@ -12,14 +12,25 @@ title Geek Uninstaller Installation
 if exist logo.bat call logo.bat & echo.
 if not exist "%appdata%\Geek Uninstaller" md "%appdata%\Geek Uninstaller"
 echo Installing..
-if NOT exist "%appdata%\Geek Uninstaller\geek.exe" call :irm
+if NOT exist "%appdata%\Geek Uninstaller\geek.exe" call :winget
 echo Starting..
 cd %appdata%\Geek Uninstaller
 geek.exe
 timeout /t 10 >nul
 exit
 
+:winget
+winget --version 2>&1 >nul
+if %ERRORLEVEL% NEQ 0 call :irm
+echo Installing via winget..
+winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id GeekUninstaller.GeekUninstaller
+if %ERRORLEVEL% NEQ 0 call :irm
+geek.exe
+timeout /t 5 /NOBREAK >nul
+exit
+
 :irm
+echo Winget failed! Using irm instead..
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://geekuninstaller.com/geek.zip -OutFile '%appdata%\Geek Uninstaller\geek.zip'" 
 if NOT %ERRORLEVEL% EQU 0 echo IRM failed! Using choco instead.. & goto geek
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '%appdata%\Geek Uninstaller\geek.zip' -DestinationPath '%appdata%\Geek Uninstaller\'" 

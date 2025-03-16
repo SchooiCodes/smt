@@ -1,6 +1,6 @@
-SMT Update logs for update ID d22:27:19.26c4229
+SMT Update logs for update ID d19:32:21.69c2303
 
-Fixed fastfetch' installer not working when running as admin
+Updated a lot of winget commands, a lot of installers, added an ifv installer, and an app installer generator
 
 Made with love by Schooi <3
 
