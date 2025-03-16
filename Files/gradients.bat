@@ -193,7 +193,7 @@ echo ONLY 6 LINE ASCII ART IS SUPPORTED!
 echo TO GENERATE 6 LINE ASCII ART: https://bit.ly/6linetallascii
 echo Which color would you like it to be?
 echo [1] [38;5;214mOrange[97m --^> [38;5;219mPink[97m, [2] [38;5;40mGreen[97m --^> [38;5;45mBright Blue[97m, [3] [38;5;33mBlue[97m --^> [38;5;213mPink[97m [4] [38;5;196mRed[97m --^> [38;5;201mPink[97m [5] [38;5;46mGreen[97m --^> [38;5;226mYellow[97m
-echo [6] [38;5;51mBlue[97m -^> [38;5;226mYellow[97m, [7] [38;2;135;206;250mLight Blue[97m -^> [38;2;35;106;200mBlue[97m, [8] [38;5;226mYellow --^> [38;5;196mRed[97m
+echo [6] [38;5;51mBlue[97m -^> [38;5;226mYellow[97m, [7] [38;2;135;206;250mLight Blue[97m -^> [38;2;35;106;200mBlue[97m, [8] [38;5;226mYellow[97m --^> [38;5;196mRed[97m
 set /p choice=^> 
 if %choice%==1 goto otp
 if %choice%==2 goto gtbb

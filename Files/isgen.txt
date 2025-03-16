@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 title Schooi's Cleaner ^| v1.2
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 if %WINDOWSVER% GEQ 10 goto compatible
@@ -13,6 +14,7 @@ call :logo
 echo.
 echo Schooi's Cleaner v1.2 ^| ADVANCED
 echo ====================================
+if exist "%TEMP%\wstemp\" rd /s /q "%TEMP%\wstemp" >nul
 if not exist "%TEMP%\wstemp\" md "%TEMP%\wstemp\"
 echo Cleaning System TEMP files..
 setlocal enabledelayedexpansion

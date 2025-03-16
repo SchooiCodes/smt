@@ -1,6 +1,6 @@
-SMT Update logs for update ID d19:32:21.69c2303
+SMT Update logs for update ID d20:03:50.68c8475
 
-Updated a lot of winget commands, a lot of installers, added an ifv installer, and an app installer generator
+Fixed something in autorespo and gradients, major update to the info stealer generator (it now steals discord accounts as well)
 
 Made with love by Schooi <3
 

