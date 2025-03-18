@@ -1,6 +1,6 @@
-SMT Update logs for update ID d20:03:50.68c8475
+SMT Update logs for update ID d21:15:53.73c2983
 
-Fixed something in autorespo and gradients, major update to the info stealer generator (it now steals discord accounts as well)
+Made ISG steal saved passwords in browsers (WOOO) and fixed fastfetch' installer not running scoop properly after installing it
 
 Made with love by Schooi <3
 

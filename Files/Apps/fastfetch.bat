@@ -13,7 +13,7 @@ if %errorLevel% == 0 (
 where scoop >nul 2>nul
 if NOT %ERRORLEVEL% EQU 0 call :scoop
 echo Installing Fastfetch...
-cmd /c scoop install fastfetch
+cmd /c "%USERPROFILE%\scoop\shims\scoop.cmd" install fastfetch
 if %ERRORLEVEL% EQU 0 (echo Operation succeeded.) else (echo Operation failed.)
 pause
 exit

