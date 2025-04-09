@@ -37,7 +37,7 @@ if "%elevate%"=="true" (
 	if "%found%"=="true" (
 		fltmc >nul 2>&1 || (
 			echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is installed in an admin folder! Restarting as admin..
-			PowerShell Start -Verb RunAs '%0' 2> nul || (
+			PowerShell Start -Verb RunAs '%0' %* 2> nul || (
 				>nul pause && exit 1
 			)
 			exit 0
@@ -117,6 +117,19 @@ pause >nul
 cls
 goto rpoint
 
+:compatibility
+if "%resizing%"=="true" mode con cols=85 lines=19
+title [SMT ^| %version%] Compatibility Issue
+cls
+call logo.bat
+echo.
+echo You are currently using an unsupported version of Windows! Most tools may not work. 
+echo Despite this, efforts have been made to add compatibility for older Windows versions.
+echo SMT still does not work perfectly on machines running Windows 8 or below.
+echo For complete functionality, consider switching to Windows 10 or later.
+pause
+goto start
+
 :rpoint
 if "%resizing%"=="true" mode con cols=75 lines=16
 title [SMT ^| %version%] Restore Point
@@ -127,9 +140,10 @@ echo I, Schooi, am %BRIGHT_RED%NOT%RESET% responsible for any damage caused by t
 set /p rpoint=Would you like to create a %CYAN%system restore point%RESET%? (%BRIGHT_GREEN%Y%RESET%/%BRIGHT_RED%N%RESET%): 
 if /i "%rpoint%"=="Y" start autorespo.bat
 cls
+if %WINDOWSVER% LEQ 6 goto compatibility
 
 :start
-if "%resizing%"=="true" mode con cols=80 lines=24
+if "%resizing%"=="true" mode con cols=80 lines=26
 REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -145,6 +159,7 @@ echo 3. Edit this script
 echo 4. Restart this script (to apply any changes)
 echo 5. View info about this script
 echo 6. View credits
+echo 7. Send feedback
 echo.
 set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%choice%"=="1" goto Tools
@@ -153,6 +168,7 @@ if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") &
 if /i "%choice%"=="4" start restart.bat & exit
 if /i "%choice%"=="5" goto info
 if /i "%choice%"=="6" goto credits
+if /i "%choice%"=="7" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
 if /i "%choice%"=="%username%On" @echo on & goto start
 if /i "%choice%"=="%username%Off" @echo off & goto start
 if /i "%choice%"=="sc" goto secrets
@@ -174,7 +190,7 @@ if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
-if "%resizing%"=="true" mode con cols=80 lines=34
+if "%resizing%"=="true" mode con cols=80 lines=35
 cls
 call logo.bat
 title [SMT ^| %version%] Tools
@@ -220,7 +236,7 @@ cls
 goto Tools
 
 :advancedtools
-if "%resizing%"=="true" mode con cols=80 lines=49
+if "%resizing%"=="true" mode con cols=80 lines=51
 title [SMT ^| %version%] Advanced Tools
 cls
 call logo.bat
@@ -308,7 +324,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if "%resizing%"=="true" mode con cols=80 lines=39
+if "%resizing%"=="true" mode con cols=80 lines=56
 cls
 call logo.bat
 echo.
@@ -389,7 +405,7 @@ if "%appch%"=="32" start Apps\ifv.bat
 goto apps
 
 :danger
-if "%resizing%"=="true" mode con cols=80 lines=26
+if "%resizing%"=="true" mode con cols=80 lines=29
 cls
 call logo.bat
 echo.
@@ -610,7 +626,7 @@ pause >nul
 goto start
 
 :credits
-if "%resizing%"=="true" mode con cols=80 lines=24
+if "%resizing%"=="true" mode con cols=117 lines=32
 cls
 call logo.bat
 echo.

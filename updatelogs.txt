@@ -1,10 +1,10 @@
-SMT Update logs for update ID d21:15:53.73c2983
+SMT Update logs for update ID d20:13:48.06c1996
 
-Made ISG steal saved passwords in browsers (WOOO) and fixed fastfetch' installer not running scoop properly after installing it
+Added a compatibility notice for Windows 8 and below and a feedback form (`7` in the main menu) (also fixed `mdon`'s  lines for now and made SMT restart as admin keeping the params)
 
 Made with love by Schooi <3
 
-https://github.com/smt
+https://github.com/SchooiCodes/smt
 https://youtube.com/@SchooiYT
 https://discord.com/users/749226175687295028
 https://discord.gg/REj54yP7Qa
