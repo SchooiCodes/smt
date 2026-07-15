@@ -268,9 +268,9 @@ echo 22. Directory File Line Counter %findstring%
 echo 23. Google Extension Manifest V2 Extender %findstring%
 echo 24. Windows Password Cracker (using WSL) %findstring%
 echo 25. Bootable USB Creator (using Ventoy) %findstring%
-echo 26. Windows 11 Tweaker %findstring%
-echo 27. Any App (that exists on winget) Installer %findstring%
-echo 28. App Installer Generator %findstring%
+echo 26. Any App (that exists on winget) Installer %findstring%
+echo 27. App Installer Generator %findstring%
+echo 28. Minecraft Server Creator %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -304,9 +304,9 @@ if "%advch%"=="22" start dflc.bat
 if "%advch%"=="23" start emv2ae.bat
 if "%advch%"=="24" start pc.bat
 if "%advch%"=="25" start busbc.bat
-if "%advch%"=="26" start w11.bat
-if "%advch%"=="27" start aap.bat
-if "%advch%"=="28" start aig.bat
+if "%advch%"=="26" start aap.bat
+if "%advch%"=="27" start aig.bat
+if "%advch%"=="28" start mcs.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -364,6 +364,7 @@ echo 29. Winaero Tweaker %findstring%
 echo 30. Discord %findstring%
 echo 31. Vencord %findstring%
 echo 32. IrfanView %findstring%
+echo 33. Playit.gg %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -402,6 +403,7 @@ if "%appch%"=="29" start Apps\wat.bat
 if "%appch%"=="30" start Apps\dc.bat
 if "%appch%"=="31" start Apps\vc.bat
 if "%appch%"=="32" start Apps\ifv.bat
+if "%appch%"=="33" start Apps\plt.bat
 goto apps
 
 :danger
@@ -420,6 +422,7 @@ echo 4. Disk Space Filler
 echo 5. Time Freezer
 echo 6. UAC Disabler
 echo 7. utilman Trick Applier
+echo 8. Windows 11 Tweaker
 echo.
 set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%dangch%"=="B" cls & goto AdvancedTools
@@ -430,6 +433,7 @@ if "%dangch%"=="4" start dsf.bat
 if "%dangch%"=="5" start tf.bat
 if "%dangch%"=="6" start uacd.bat
 if "%dangch%"=="7" start uta.bat
+if "%dangch%"=="8" start w11.bat
 goto danger
 
 :IPTools

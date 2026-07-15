@@ -14,7 +14,7 @@
 
 I AM NOT EVEN GOING TO LIE, this is the MOST POWERFUL batch multitool I **have ever seen**, let alone **MADE**. I swear, this is unbiased. 👀
 
-Schooi's Multitool is a versatile collection of **OVER 80** utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
+Schooi's Multitool is a versatile collection of **OVER 100** utilities and tools designed to simplify various tasks and workflows for developers and everyday users alike. From IP Geolocation to .zip Password cracking, Schooi's Multitool offers a wide array of functionalities to streamline your work.
 
 Features
 -
@@ -31,7 +31,7 @@ Features
 - Windows Destroyer
 - URL Shortener
 - Various App Installers
-- and many more, all from the command line![^1]
+- and [many more](https://schooicodes.github.io/smtweb/features/index.html), all from the command line![^1]
 
 Compatibility
 -
@@ -45,7 +45,7 @@ Installation
 
 To install Schooi's Multitool, simply open Powershell as an Administrator and run one of the following commands:
 ```ps1
-irm "https://getsmt.duckdns.org/" | iex
+irm "https://smt.gleeze.com/" | iex
 ```
 ```ps1
 irm "http://smt.farted.net/" | iex
