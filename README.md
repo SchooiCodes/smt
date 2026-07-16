@@ -58,7 +58,7 @@ irm "http://getsmt.us.to" | iex
 ```
 (Recommended)
 
-Alternatively, download [the latest release zip archive](https://github.com/SchooiCodes/smt/releases/latest) or [the installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe)[^2].
+Alternatively, download ~~[the latest release zip archive](https://github.com/SchooiCodes/smt/releases/latest) or~~ [the installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe)[^2].
 
 If you have Github Desktop or git installed, you can use `git` to clone the repo:
 
