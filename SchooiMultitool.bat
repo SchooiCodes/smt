@@ -85,6 +85,7 @@ if "%internet%"=="c" (
 					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
 					"%TEMP%\SMT\SMTSetup.exe"
                     rd /s /q "%TEMP%\SMT" >nul
+					call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
                     echo [+] SMT was updated, please start the script again to continue.
                     timeout /t 5 /NOBREAK >nul
                     exit

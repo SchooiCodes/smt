@@ -1,6 +1,6 @@
-SMT Update logs for update ID d14:28:20,67c5416
+SMT Update logs for update ID d15:10:10,06c1361
 
-Added telemetry usage ping tracking and removed misleading 2.2 stuff
+Made sure that the usage ping is not sent after updating
 
 Made with love by Schooi <3
 
