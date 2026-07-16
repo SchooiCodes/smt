@@ -365,6 +365,8 @@ echo 30. Discord %findstring%
 echo 31. Vencord %findstring%
 echo 32. IrfanView %findstring%
 echo 33. Playit.gg %findstring%
+echo 34. Prism Launcher %findstring%
+echo 35. SKLauncher %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -404,6 +406,8 @@ if "%appch%"=="30" start Apps\dc.bat
 if "%appch%"=="31" start Apps\vc.bat
 if "%appch%"=="32" start Apps\ifv.bat
 if "%appch%"=="33" start Apps\plt.bat
+if "%appch%"=="34" start Apps\psm.bat
+if "%appch%"=="35" start Apps\skl.bat
 goto apps
 
 :danger

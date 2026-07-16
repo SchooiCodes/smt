@@ -1,6 +1,6 @@
-SMT Update logs for update ID d13:03:08,66c1491
+SMT Update logs for update ID d 3:29:03,18c7311
 
-(COMEBACK) Minecraft Server Creator, Playit.gg installer, new SMT IRM link, fixed autorespo.bat, moved w11.bat to danger zone
+Added a Prism Launcher, SKLauncher installer and fixed UWT Installer
 
 Made with love by Schooi <3
 
