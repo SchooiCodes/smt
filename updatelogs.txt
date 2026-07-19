@@ -1,6 +1,6 @@
-SMT Update logs for update ID d15:10:10,06c1361
+SMT Update logs for update ID d21:56:25,82c2214
 
-Made sure that the usage ping is not sent after updating
+Added a Blip installer
 
 Made with love by Schooi <3
 
