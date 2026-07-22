@@ -1,6 +1,6 @@
-SMT Update logs for update ID d21:56:25,82c2214
+SMT Update logs for update ID d22:50:45,98c2726
 
-Added a Blip installer
+Add CapCut installer to app menu
 
 Made with love by Schooi <3
 

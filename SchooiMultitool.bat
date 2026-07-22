@@ -372,6 +372,7 @@ echo 33. Playit.gg %findstring%
 echo 34. Prism Launcher %findstring%
 echo 35. SKLauncher %findstring%
 echo 36. Blip %findstring%
+echo 37. CapCut Pro (free, guide included) %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -414,6 +415,7 @@ if "%appch%"=="33" start Apps\plt.bat
 if "%appch%"=="34" start Apps\psm.bat
 if "%appch%"=="35" start Apps\skl.bat
 if "%appch%"=="36" start Apps\blip.bat
+if "%appch%"=="37" start Apps\cc.bat
 goto apps
 
 :danger
