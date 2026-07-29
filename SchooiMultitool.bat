@@ -158,7 +158,7 @@ cls
 if %WINDOWSVER% LEQ 6 goto compatibility
 
 :start
-if "%resizing%"=="true" mode con cols=80 lines=26
+if "%resizing%"=="true" mode con cols=80 lines=24
 REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -205,7 +205,7 @@ if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
 :tools
-if "%resizing%"=="true" mode con cols=80 lines=35
+if "%resizing%"=="true" mode con cols=80 lines=36
 cls
 call logo.bat
 title [SMT ^| %version%] Tools
@@ -251,7 +251,7 @@ cls
 goto Tools
 
 :advancedtools
-if "%resizing%"=="true" mode con cols=80 lines=51
+if "%resizing%"=="true" mode con cols=80 lines=52
 title [SMT ^| %version%] Advanced Tools
 cls
 call logo.bat
@@ -339,7 +339,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if "%resizing%"=="true" mode con cols=80 lines=56
+if "%resizing%"=="true" mode con cols=80 lines=62
 cls
 call logo.bat
 echo.
@@ -434,7 +434,7 @@ if "%appch%"=="39" start Apps\adk.bat
 goto apps
 
 :danger
-if "%resizing%"=="true" mode con cols=80 lines=29
+if "%resizing%"=="true" mode con cols=80 lines=30
 cls
 call logo.bat
 echo.
@@ -527,7 +527,7 @@ goto fac
 
 :info
 if not "%calced%"=="1" call :calctools
-if "%resizing%"=="true" mode con cols=80 lines=29
+if "%resizing%"=="true" mode con cols=120 lines=%infomode%
 title [SMT ^| %version%] Info
 cls
 call logo.bat
@@ -567,6 +567,8 @@ goto start
 :calctools
 set calced=1
 chcp 437 >nul
+for /f "tokens=* delims=" %%a in ('powershell -Command "(Get-Content ..\updatelogs.txt | Measure-Object -Line).Lines"') do set "updatelines=%%a"
+set /a infomode=32+%updatelines%
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 dir /s *.bat | findstr "File(s)">"%TEMP%\temp.txt"

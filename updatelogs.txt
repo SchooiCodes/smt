@@ -1,2 +1,1 @@
-Added AnyDesk and RustDesk installers
-ECHO is off.
+Minor tweaks to auto window resizing
