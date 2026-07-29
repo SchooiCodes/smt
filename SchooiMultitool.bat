@@ -1,13 +1,5 @@
 @echo off
 set elevate=true
-for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
-for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName ^| find "ProductName"') do set "ProductName=%%b"
-for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild ^| find "CurrentBuild"') do set "CurrentBuild=%%b"
-for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v DisplayVersion ^| find "DisplayVersion"') do set "DisplayVersion=%%b"
-for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v UBR ^| find "UBR"') do set "UBR=%%b"
-if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
-cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
-if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
 cd /d %~dp0
 set found=false
 echo echo %~dp0 | findstr "Program Files" >nul
@@ -55,6 +47,15 @@ if "%elevate%"=="true" (
 	if "%found%"=="false" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is not installed in an admin folder, continuing without escalation..	
 	set found=false
 )
+echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Fetching OS info..
+for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName ^| find "ProductName"') do set "ProductName=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild ^| find "CurrentBuild"') do set "CurrentBuild=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v DisplayVersion ^| find "DisplayVersion"') do set "DisplayVersion=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v UBR ^| find "UBR"') do set "UBR=%%b"
+if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
+cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
+if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat

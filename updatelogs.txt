@@ -1,1 +1,2 @@
-Minor tweaks to auto window resizing
+Updated Schnuker and organized OS info fetching
+Also removed the pyfile. Now, the github repo consists of 0% python!!! wooohhooo!!! SchooiCodes/Schnuker is the new repo for the pyfile. Also organized the logging at the start of the script and added a Fetching OS info section.
