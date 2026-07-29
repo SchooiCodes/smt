@@ -1,7 +1,13 @@
 @echo off
 set elevate=true
-set "github= https://github.com/SchooiCodes/smt"
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName ^| find "ProductName"') do set "ProductName=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild ^| find "CurrentBuild"') do set "CurrentBuild=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v DisplayVersion ^| find "DisplayVersion"') do set "DisplayVersion=%%b"
+for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v UBR ^| find "UBR"') do set "UBR=%%b"
+if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
+cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
+if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
 cd /d %~dp0
 set found=false
 echo echo %~dp0 | findstr "Program Files" >nul
@@ -24,8 +30,8 @@ if "%1"=="-h" goto help
 if "%1"=="--h" goto help
 if "%1"=="-help" goto help
 if "%1"=="--help" goto help
-if "%1"=="-hide" set "github=."
-if "%1"=="--hide" set "github=."
+REM if "%1"=="-hide" set "github=."
+REM if "%1"=="--hide" set "github=."
 cls
 set vnum=2.3
 set version=v%vnum%
@@ -69,10 +75,13 @@ if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepin
 if "%internet%"=="c" (
 	if /i NOT "%sent%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. & curl -s "https://countapi.mileshilliard.com/api/v1/hit/59422026" >nul 2>&1 & call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
+	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. & for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do set "pings=%%a"
     echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
     powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
     for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+		set "latest_upd=%%a"
         for /f "tokens=* delims=" %%b in (config\version) do (
+			set "current_upd=%%b"
             if NOT "%%a"=="%%b" (
                 echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
                 choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] " 
@@ -154,25 +163,23 @@ cls
 call logo.bat
 chcp 65001 >nul
 if %WINDOWSVER% GEQ 10 echo %CYAN%┌────────────────────┬──────┬──────────────────┐%RESET%
-if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET% %version% %CYAN%│%RESET% Made by @schooi. %CYAN%│%RESET%
+if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET% %version% %CYAN%│%RESET% Made by %GRADIENT_DISCORD% %CYAN%│%RESET%
 if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────────────┴──────┴──────────────────┘%RESET%
 echo Hello, %BRIGHT_BLUE%%username%%RESET%. What would you like to do?
 echo 1. Go to the tools
 echo 2. Go to the advanced tools
-echo 3. Edit this script
-echo 4. Restart this script (to apply any changes)
-echo 5. View info about this script
-echo 6. View credits
-echo 7. Send feedback
+REM echo 3. Edit this script
+REM echo 4. Restart this script (to apply any changes)
+echo 3. View info about this script
+echo 4. View credits
+echo 5. Send feedback
 echo.
 set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%choice%"=="1" goto Tools
 if /i "%choice%"=="2" goto AdvancedTools
-if /i "%choice%"=="3" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
-if /i "%choice%"=="4" start restart.bat & exit
-if /i "%choice%"=="5" goto info
-if /i "%choice%"=="6" goto credits
-if /i "%choice%"=="7" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
+if /i "%choice%"=="3" goto info
+if /i "%choice%"=="4" goto credits
+if /i "%choice%"=="5" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
 if /i "%choice%"=="%username%On" @echo on & goto start
 if /i "%choice%"=="%username%Off" @echo off & goto start
 if /i "%choice%"=="sc" goto secrets
@@ -186,9 +193,11 @@ if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
 if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul & call config\tc.bat
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
-if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set resizing=true & goto start
+if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set "resizing=true" & goto start
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & pause & goto start
+if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
+if /i "%choice%"=="rs" start restart.bat & exit
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
@@ -517,25 +526,42 @@ title [SMT ^| %version%] Info
 cls
 call logo.bat
 echo.
-echo Made by %GREEN%@schooi.%RESET% on Discord (SchooiCodes on github)
-echo %CYAN%=====================================================%RESET%
-echo Currently in version %YELLOW%%vnum%%RESET%
-echo Development started May 2024
-echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
-echo Don't make changes and say this script is your own!
-echo Also credit me if you use this for any social media!
-if not "%found%"=="true" echo I had a lot of fun making this! (Yes, all %toolCount% batch tools)
-echo Fun Fact: Almost all the tools are made by me! 
-echo (Type "sc" in the main menu for secret commands)
+REM echo Development started %GOLD%May 2024%RESET%
+if "%win_activated%"=="true" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_GREEN2%ACTIVATED%RESET%)
+if "%win_activated%"=="false" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_RED%NOT ACTIVATED%RESET%)
+echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET%
+if "%found%"=="true" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%ADMIN OWNED FOLDER%RESET%)
+if "%found%"=="false" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%USER OWNED FOLDER%RESET%)
+echo Schooi's Multitool version: %GOLD%%vnum%%RESET%
+echo Current update ID: %GOLD%%current_upd%%RESET%
+if /i "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_GREEN2%UP TO DATE%RESET%)
+if /i NOT "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_RED%UPDATE NEEDED%RESET%)
+echo Current toolcount: %GOLD%%toolCount%%RESET%
+if /i NOT "%pings%"=="" echo Total usage pings sent: %BRIGHT_GREEN2%%pings%%RESET%
+echo License: %GOLD%MIT%RESET%
+REM echo Current command line flags: %GOLD%%1%RESET%
+REM echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
+REM echo Don't make changes and say this script is your own!
+REM echo Also credit me if you use this for any social media!
+REM echo I had a lot of fun making this! (Yes, all %GOLD%%toolCount%%RESET% batch tools)
+REM echo Check out the %CYAN%credits%RESET% or type "%CYAN%sc%RESET%" for secret commands on the main menu! :)
+REM echo Fun Fact: Almost all the tools are made by me! 
 echo.
-echo%GITHUB%
-echo https://youtube.com/@SchooiYT
-echo (c) Schooi 2024
+echo Update logs for the current update ID:%BRIGHT_GREEN2%
+type ..\updatelogs.txt
+echo.%RESET%
+echo Check out the %BRIGHT_CYAN%credits%RESET%, and type "%BRIGHT_CYAN%sc%RESET%" on the main menu for %BRIGHT_CYAN%secret commands%RESET%! :)
+echo https://github.com/%GRADIENT_GITHUB%/smt
+echo https://youtube.com/@%GRADIENT_YOUTUBE%
+echo https://discord.com/users/749226175687295028 (%GRADIENT_DISCORD%)
+echo (c) %GRADIENT_SCHOOI% 2026
 pause >nul
 goto start
 
 :calctools
 set calced=1
+chcp 437 >nul
+chcp 65001 >nul
 setlocal enabledelayedexpansion
 dir /s *.bat | findstr "File(s)">"%TEMP%\temp.txt"
 set lastLine=
@@ -637,7 +663,9 @@ echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
 echo %Bright_CYAN%git%RESET% - opens the github page for this tool
-echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
+REM echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
+echo %Bright_CYAN%rs%RESET% - restarts Schooi's Multitool
+echo %Bright_CYAN%edit%RESET% - opens SchooiMultitool.bat in Notepad
 pause >nul
 goto start
 

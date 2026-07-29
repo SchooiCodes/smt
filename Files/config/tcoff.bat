@@ -17,6 +17,13 @@ set "Bright_Red="
 set "Bright_Purple="
 set "Bright_Yellow="
 set "Bright_White="
+set "BRIGHT_GREEN2="
+set "Gold="
 set "RESET="
+set "GRADIENT_DISCORD=@schooi."
+set "GRADIENT_SCHOOI=Schooi"
+set "GRADIENT_YOUTUBE=SchooiYT"
+set "GRADIENT_GITHUB=SchooiCodes"
+set "GRADIENT_LINE============================"
 REM call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini
 goto :EOF

@@ -1,10 +1,2 @@
-SMT Update logs for update ID d22:50:45,98c2726
-
-Add CapCut installer to app menu
-
-Made with love by Schooi <3
-
-https://github.com/smt
-https://youtube.com/@SchooiYT
-https://discord.com/users/749226175687295028
-https://discord.gg/REj54yP7Qa
+HUGE SMT Info section revamp, new colors, gradients and main menu simplification
+Added new colors and gradients in tc and tcoff bats, revamped info option on main menu to contain useful information about the system and the installation, deprecated some main menu options, simplifying it, added more info collection regarding OS version and smt updates, simplified updatelogs.txt

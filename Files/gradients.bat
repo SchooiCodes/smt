@@ -247,7 +247,7 @@ set "l6=echo ^<escape^>[38;5;201m%l6%^<escape^>[0m"
 call :scags
 
 :gty
-call :input
+call "%TEMP%\inputs.bat"
 set "l1=echo ^<escape^>[38;5;46m%l1%"
 set "l2=echo ^<escape^>[38;5;82m%l2%"
 set "l3=echo ^<escape^>[38;5;118m%l3%"

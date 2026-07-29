@@ -18,6 +18,13 @@ set "Bright_Red=[91m"
 set "Bright_Purple=[95m"
 set "Bright_Yellow=[93m"
 set "Bright_White=[97m"
+set "Gold=[38:5:220m"
+set "BRIGHT_GREEN2=[38:5:46m"GRADIENT_DISC
 if %color%==07 set "RESET=[0m"
 if %color%==0f set "RESET=[97m"
+set "GRADIENT_DISCORD=[38;5;46m@[38;5;82msc[38;5;118mh[38;5;154moo[38;5;190mi[38;5;226m.%RESET%"
+set "GRADIENT_SCHOOI=[38;5;46mS[38;5;47mc[38;5;48mh[38;5;49mo[38;5;50mo[38;5;51mi%RESET%"
+set "GRADIENT_YOUTUBE=[38;5;196mSc[38;5;203mh[38;5;210mo[38;5;217mo[38;5;224mi[38;5;231mYT%RESET%"
+set "GRADIENT_GITHUB=[38;2;130;70;160mS[38;2;143;89;170mc[38;2;155;107;179mh[38;2;168;126;189mo[38;2;180;144;198mo[38;2;193;163;208mi[38;2;205;181;217mC[38;2;218;200;227mo[38;2;230;218;236md[38;2;243;237;246me[38;2;255;255;255ms%RESET%"
+set "GRADIENT_LINE=[38;2;135;206;250m=====[38;2;115;186;240m====[38;2;95;166;230m====[38;2;75;146;220m=====[38;2;55;126;210m====[38;2;35;106;200m=====[0m%RESET%"
 goto :EOF
