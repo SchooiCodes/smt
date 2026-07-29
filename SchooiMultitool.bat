@@ -39,8 +39,10 @@ cd Files
 call logo.bat
 echo.
 echo Starting SMT..
+set "admin_needed=false"
 if "%elevate%"=="true" (
 	if "%found%"=="true" (
+		set "admin_needed=true"
 		fltmc >nul 2>&1 || (
 			echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is installed in an admin folder! Restarting as admin..
 			PowerShell Start -Verb RunAs '%0' %* 2> nul || (
@@ -382,6 +384,8 @@ echo 34. Prism Launcher %findstring%
 echo 35. SKLauncher %findstring%
 echo 36. Blip %findstring%
 echo 37. CapCut Pro (free, guide included) %findstring%
+echo 38. RustDesk %findstring%
+echo 39. AnyDesk %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -425,6 +429,8 @@ if "%appch%"=="34" start Apps\psm.bat
 if "%appch%"=="35" start Apps\skl.bat
 if "%appch%"=="36" start Apps\blip.bat
 if "%appch%"=="37" start Apps\cc.bat
+if "%appch%"=="38" start Apps\rdk.bat
+if "%appch%"=="39" start Apps\adk.bat
 goto apps
 
 :danger
@@ -530,8 +536,8 @@ REM echo Development started %GOLD%May 2024%RESET%
 if "%win_activated%"=="true" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_GREEN2%ACTIVATED%RESET%)
 if "%win_activated%"=="false" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_RED%NOT ACTIVATED%RESET%)
 echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET%
-if "%found%"=="true" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%ADMIN OWNED FOLDER%RESET%)
-if "%found%"=="false" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%USER OWNED FOLDER%RESET%)
+if "%admin_needed%"=="true" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%ADMIN OWNED FOLDER%RESET%)
+if "%admin_needed%"=="false" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%USER OWNED FOLDER%RESET%)
 echo Schooi's Multitool version: %GOLD%%vnum%%RESET%
 echo Current update ID: %GOLD%%current_upd%%RESET%
 if /i "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_GREEN2%UP TO DATE%RESET%)

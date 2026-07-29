@@ -1,2 +1,2 @@
-HUGE SMT Info section revamp, new colors, gradients and main menu simplification
-Added new colors and gradients in tc and tcoff bats, revamped info option on main menu to contain useful information about the system and the installation, deprecated some main menu options, simplifying it, added more info collection regarding OS version and smt updates, simplified updatelogs.txt
+Added AnyDesk and RustDesk installers
+ECHO is off.
