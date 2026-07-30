@@ -517,6 +517,7 @@ echo 1. Malwarebytes Premium Resetter
 echo 2. "Some Settings Are Managed By Your Organization" Fixer
 echo 3. Windows Activator
 echo 4. Group Policy Editor Enabler
+echo 5. FGRDown (FitGirl Repacks Downloader / Game Piracy Tool)
 echo.
 set /p facch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%facch%"=="B" cls & goto AdvancedTools
@@ -524,6 +525,7 @@ if "%facch%"=="1" start Malwarebytes-Premium-Reset.bat
 if "%facch%"=="2" start SSAMBYO.bat
 if "%facch%"=="3" start WA.bat
 if "%facch%"=="4" start GPEE.bat
+if "%facch%"=="5" start fgrdown.bat
 goto fac
 
 :info
@@ -540,9 +542,9 @@ echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RES
 if "%admin_needed%"=="true" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%ADMIN OWNED FOLDER%RESET%)
 if "%admin_needed%"=="false" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%USER OWNED FOLDER%RESET%)
 echo Schooi's Multitool version: %GOLD%%vnum%%RESET%
-echo Current update ID: %GOLD%%current_upd%%RESET%
-if /i "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_GREEN2%UP TO DATE%RESET%)
-if /i NOT "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_RED%UPDATE NEEDED%RESET%)
+if "%internet%"=="c" echo Current update ID: %GOLD%%current_upd%%RESET%
+if "%internet%"=="c" if /i "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_GREEN2%UP TO DATE%RESET%)
+if "%internet%"=="c" if /i NOT "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_RED%UPDATE NEEDED%RESET%)
 echo Current toolcount: %GOLD%%toolCount%%RESET%
 if /i NOT "%pings%"=="" echo Total usage pings sent: %BRIGHT_GREEN2%%pings%%RESET%
 echo License: %GOLD%MIT%RESET%
