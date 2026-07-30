@@ -340,7 +340,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if "%resizing%"=="true" mode con cols=80 lines=62
+if "%resizing%"=="true" mode con cols=80 lines=64
 cls
 call logo.bat
 echo.
@@ -387,6 +387,8 @@ echo 36. Blip %findstring%
 echo 37. CapCut Pro (free, guide included) %findstring%
 echo 38. RustDesk %findstring%
 echo 39. AnyDesk %findstring%
+echo 40. Win10 Widgets + Rainmeter 4.0 %findstring%
+echo 41. Rainmeter %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto AdvancedTools
@@ -432,6 +434,8 @@ if "%appch%"=="36" start Apps\blip.bat
 if "%appch%"=="37" start Apps\cc.bat
 if "%appch%"=="38" start Apps\rdk.bat
 if "%appch%"=="39" start Apps\adk.bat
+if "%appch%"=="40" start Apps\w10wr4.bat
+if "%appch%"=="41" start Apps\rmt.bat
 goto apps
 
 :danger
@@ -505,7 +509,7 @@ if "%perfch%"=="3" start UPPPE.bat
 goto Performance
 
 :fac
-if "%resizing%"=="true" mode con cols=80 lines=26
+if "%resizing%"=="true" mode con cols=80 lines=27
 cls
 call logo.bat
 echo.

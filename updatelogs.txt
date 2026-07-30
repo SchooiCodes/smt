@@ -1,2 +1,2 @@
-(fuck it,) Integrated FGRDown into SMT (check SchooiCodes/fgrdown)
-Added my FitGirl Repacks Downloader tool that has been in the works for over a year into SMT. It fetches all fitgirl repacks and helps you install them easily from the commandline. Additionally, fixed the info menu showing stuff when it can't (internet-wise)
+Rainmeter and Win10 Widgets with Rainmeter 4.0 installers
+also updated md lines
