@@ -95,7 +95,7 @@ if "%internet%"=="c" (
                     copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 					start /WAIT "" add_exclusion.bat
 					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
-					"%TEMP%\SMT\SMTSetup.exe"
+					"%TEMP%\SMT\SMTSetup.exe" /S
                     rd /s /q "%TEMP%\SMT" >nul
 					call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
                     echo [+] SMT was updated, please start the script again to continue.
@@ -201,6 +201,7 @@ if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false 
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & pause & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
+if /i "%choice%"=="forceupd" echo forced>config\version & start restart.bat & exit
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
@@ -681,6 +682,7 @@ echo %Bright_CYAN%git%RESET% - opens the github page for this tool
 REM echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
 echo %Bright_CYAN%rs%RESET% - restarts Schooi's Multitool
 echo %Bright_CYAN%edit%RESET% - opens SchooiMultitool.bat in Notepad
+echo %Bright_CYAN%forceupd%RESET% - forces a software update and restarts
 pause >nul
 goto start
 

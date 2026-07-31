@@ -1,2 +1,2 @@
-Rainmeter and Win10 Widgets with Rainmeter 4.0 installers
-also updated md lines
+Made updating launch the installer as silent. Also added `forceupd` to the main menu.
+Check sc for more info.
