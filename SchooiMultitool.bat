@@ -78,7 +78,8 @@ if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepin
 if "%internet%"=="c" (
 	if /i NOT "%sent%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. & curl -s "https://countapi.mileshilliard.com/api/v1/hit/59422026" >nul 2>&1 & call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
-	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. & for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do set "pings=%%a"
+	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
+	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
     echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
     powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
     for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
@@ -86,22 +87,27 @@ if "%internet%"=="c" (
         for /f "tokens=* delims=" %%b in (config\version) do (
 			set "current_upd=%%b"
             if NOT "%%a"=="%%b" (
-                echo %RESET%[%BRIGHT_RED%-%RESET%] %%a update available! 
-                choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] " 
-                if ERRORLEVEL 2 (
-                    echo [+] Update skipped. Continuing...
-                ) else (
-                    if not exist "%TEMP%\smt" md "%TEMP%\smt" 
+                echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
+				setlocal enabledelayedexpansion
+                choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
+                if "!ERRORLEVEL!"=="1" (
+                    if not exist "%TEMP%\smt" md "%TEMP%\smt"
                     copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-					start /WAIT "" add_exclusion.bat
-					powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe" 
-					"%TEMP%\SMT\SMTSetup.exe" /S
+                    start /WAIT /MIN "" add_exclusion.bat
+                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
+                    "%TEMP%\SMT\SMTSetup.exe" /S
                     rd /s /q "%TEMP%\SMT" >nul
-					call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
-                    echo [+] SMT was updated, please start the script again to continue.
+                    if /i "%sent%"=="true" (
+                        echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
+                        call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
+                    )
+                    echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
                     timeout /t 5 /NOBREAK >nul
                     exit
+                ) else (
+                    echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
                 )
+                endlocal
             )
             if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
         )

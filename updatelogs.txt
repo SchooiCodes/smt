@@ -1,2 +1,2 @@
-Made updating launch the installer as silent. Also added `forceupd` to the main menu.
-Check sc for more info.
+Polished the bootup logs, and fixed bugs regarding updating
+Also added colors to lines that didn't have them, and made logging more precise
