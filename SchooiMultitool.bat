@@ -549,7 +549,9 @@ echo.
 REM echo Development started %GOLD%May 2024%RESET%
 if "%win_activated%"=="true" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_GREEN2%ACTIVATED%RESET%)
 if "%win_activated%"=="false" echo OS version: %GOLD%%PRODUCTNAME%%RESET% (%BRIGHT_RED%NOT ACTIVATED%RESET%)
-echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET%
+if /i "%accounttype%"=="Domain Account" echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET% (%BRIGHT_CYAN%DOMAIN ACCOUNT%RESET%)
+if /i "%accounttype%"=="Local Account" echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET% (%BRIGHT_GREEN2%LOCAL ACCOUNT%RESET%)
+if /i "%accounttype%"=="Microsoft Account" echo OS username ^& hostname: %GOLD%%username%%RESET% @ %GOLD%%computername%%RESET% (%BRIGHT_RED%MICROSOFT ACCOUNT%RESET%)
 if "%admin_needed%"=="true" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%ADMIN OWNED FOLDER%RESET%)
 if "%admin_needed%"=="false" echo Schooi's Multitool install location: %GOLD%%~dp0%RESET% (%BRIGHT_CYAN%USER OWNED FOLDER%RESET%)
 echo Schooi's Multitool version: %GOLD%%vnum%%RESET%
@@ -558,8 +560,8 @@ if "%internet%"=="c" if /i "%current_upd%"=="%latest_upd%" echo Latest update ID
 if "%internet%"=="c" if /i NOT "%current_upd%"=="%latest_upd%" echo Latest update ID: %GOLD%%latest_upd%%RESET% (%BRIGHT_RED%UPDATE NEEDED%RESET%)
 echo Current toolcount: %GOLD%%toolCount%%RESET%
 if /i NOT "%pings%"=="" echo Total usage pings sent: %BRIGHT_GREEN2%%pings%%RESET%
+if NOT "%1"=="" echo Current command line flags: %GOLD%%1%RESET%
 echo License: %GOLD%MIT%RESET%
-REM echo Current command line flags: %GOLD%%1%RESET%
 REM echo It is currently %BRIGHT_RED%%date%%RESET%. Still open source! :D
 REM echo Don't make changes and say this script is your own!
 REM echo Also credit me if you use this for any social media!
@@ -582,6 +584,7 @@ goto start
 set calced=1
 chcp 437 >nul
 for /f "tokens=* delims=" %%a in ('powershell -Command "(Get-Content ..\updatelogs.txt | Measure-Object -Line).Lines"') do set "updatelines=%%a"
+for /f "tokens=* delims=" %%a in ('powershell -NoProfile -Command "$sid=(whoami /user | Select-String 'S-1-\d+(-\d+)+' -AllMatches).Matches.Value; if($sid -match '^S-1-12-1-'){'Microsoft Account'}elseif((Get-CimInstance Win32_UserAccount | Where-Object {$_.Name -eq $env:USERNAME}).LocalAccount){'Local Account'}else{'Domain Account'}"') do set "accounttype=%%a"
 set /a infomode=32+%updatelines%
 chcp 65001 >nul
 setlocal enabledelayedexpansion

@@ -1,2 +1,2 @@
-Polished the bootup logs, and fixed bugs regarding updating
-Also added colors to lines that didn't have them, and made logging more precise
+Local VS Domain VS Microsoft account checking in Script Info
+Also added a cmdline args thing for when they exist sorry its 3am right now goodnight (to-do: verbose calctools)
