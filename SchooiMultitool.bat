@@ -6,22 +6,30 @@ echo echo %~dp0 | findstr "Program Files" >nul
 if %ERRORLEVEL% EQU 0 set found=true
 echo echo %~dp0 | findstr "System32" >nul
 if %ERRORLEVEL% EQU 0 set found=true
-if "%1"=="-debug" @echo on
+if "%1"=="-d" @echo on
+if "%1"=="/d" @echo on
 if "%1"=="--debug" @echo on
+if "%1"=="/debug" @echo on
 if "%1"=="-rp" start Files\autorespo.bat & exit
-if "%1"=="--rp" start Files\autorespo.bat & exit
-if "%1"=="-restore-point" start Files\autorespo.bat & exit
+if "%1"=="/rp" start Files\autorespo.bat & exit
 if "%1"=="--restore-point" start Files\autorespo.bat & exit
-if "%1"=="-noadmin" set elevate=false
+if "%1"=="/restore-point" start Files\autorespo.bat & exit
+if "%1"=="-na" set elevate=false
+if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
+if "%1"=="/noadmin" set elevate=false
 if "%1"=="-32" start Files\s32.bat & exit
-if "%1"=="--32" start Files\s32.bat & exit
+if "%1"=="/32" start Files\s32.bat & exit
+if "%1"=="--system32" start Files\s32.bat & exit
+if "%1"=="/system32" start Files\s32.bat & exit
 if "%1"=="-pf" start Files\pf.bat & exit
-if "%1"=="--pf" start Files\pf.bat & exit
+if "%1"=="/pf" start Files\pf.bat & exit
+if "%1"=="--program-files" start Files\pf.bat & exit
+if "%1"=="/program-files" start Files\pf.bat & exit
 if "%1"=="-h" goto help
-if "%1"=="--h" goto help
-if "%1"=="-help" goto help
+if "%1"=="/h" goto help
 if "%1"=="--help" goto help
+if "%1"=="/help" goto help
 REM if "%1"=="-hide" set "github=."
 REM if "%1"=="--hide" set "github=."
 cls
@@ -779,20 +787,20 @@ echo  Schooi's Multitool is a multitool created to compile many utilities that c
 echo.
 echo  Arguments:
 echo.
-echo  -debug ,--debug           Enters debug mode
+echo  -d, /d, --debug, /debug           Enters debug mode
 echo.
-echo  -h, --h                   Prints this manual
-echo  -help, --help
+echo  -h, /h, --help, /help             Prints this manual
 echo.
-echo  -rp, --rp                 Creates a system restore point
-echo  -restore-point            
-echo  --restore-point
+echo  -rp, /rp, --restore-point,        Creates a system restore point
+echo  /restore-point            
 echo.
-echo  -32, --32                 Adds SMT to the path
+echo  -32, /32, --system32,             Adds SMT to the path (old, superseeded by automatic path addition on first boot)
+echo  /system32
 echo.
-echo  -pf, --pf                 Adds SMT to program files and creates a shortcut on the desktop (old, use exe installer instead)
+echo  -pf, /pf, --program-files,        Adds SMT to program files and creates a shortcut on the desktop (old, use exe installer instead)
+echo  /program-files
 echo.
-echo  -noadmin, --noadmin       Runs SMT without admin if it is installed in an admin folder (e.g. Program Files)
+echo  -na, /na, --noadmin, /noadmin     Runs SMT without admin if it is installed in an admin folder (e.g. Program Files)
 echo.
 echo  Disclaimers:
 echo.

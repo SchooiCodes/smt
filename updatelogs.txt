@@ -1,2 +1,1 @@
-CRUCIAL fixes regarding SMT in PATH
-fixed VITAL bugs that would corrupt the PATH env variable. also, added checks for trailing semicolons, proper pathsaving, and proper addition. also update affinity. shoutout 12 yr old me figuring out batchfile for the first time. (also added elevation checks)
+Updated command-line args (they were BAD)
