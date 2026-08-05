@@ -47,6 +47,7 @@ if "%elevate%"=="true" (
 	if "%found%"=="false" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is not installed in an admin folder, continuing without escalation..	
 	set found=false
 )
+net session >nul 2>&1 && set "elevated=true" || set "elevated=false"
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Fetching OS info..
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName ^| find "ProductName"') do set "ProductName=%%b"
@@ -65,12 +66,17 @@ FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set polic
 if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-if "%inpath%"=="false " for /f "tokens=3" %%a in ('reg query "HKCU\Environment" /v Path') do set OLD_DATA=%%a 
-if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
-if "%inpath%"=="false " reg add "HKCU\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f 
-if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul 
 if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 if "%inpath%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
+if "%inpath%"=="false " if "%elevated%"=="true" for /f "tokens=* delims=" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path') do set OLD_DATA=%%a
+if "%inpath%"=="false " if NOT "%elevated%"=="true" for /f "tokens=* delims=" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path') do set OLD_DATA=%%a
+if "%OLD_DATA%"=="" set OLD_DATA=Placeholder
+if "%inpath%"=="false " if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA:~22%
+if "%inpath%"=="false " if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA:~22%;
+if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
+if "%inpath%"=="false " if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if "%inpath%"=="false " if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true "
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
@@ -101,6 +107,10 @@ if "%internet%"=="c" (
                         echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
                         call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
                     )
+                    if /i "%inpath%"=="true " (
+                        echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
+						call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
+					)
                     echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
                     timeout /t 5 /NOBREAK >nul
                     exit
