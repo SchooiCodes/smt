@@ -70,9 +70,9 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColor
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
-FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set policy=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
-if "%policy%"=="Unrestricted " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
-if NOT "%policy%"=="Unrestricted " powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
+FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set "policy=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
+if "%policy%"=="Unrestricted" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
+if NOT "%policy%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 if "%inpath%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
@@ -505,12 +505,14 @@ call :gbo
 echo 1. IP Logger
 echo 2. IP Geolocator
 echo 3. IP Pinger
+echo 4. IPv6 Disabler
 echo.
 set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
 if "%ipch%"=="1" start IPLog.bat
 if "%ipch%"=="2" start IPGeolocatorDL.bat
 if "%ipch%"=="3" start pinger.bat
+if "%ipch%"=="4" start ipv6.bat
 goto IPTools
 
 :Performance
