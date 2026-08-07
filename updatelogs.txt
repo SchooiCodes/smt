@@ -1,1 +1,2 @@
-Added an IPv6 disabler and made a slight fix to PS Policy checking
+Added MegaTemp into SMT and added a ipv6 revert mode
+it is really late right now, sorry if this is  a bad commit. integrated SchooiCodes/MegaTemp (completely vibecoded lol) into SMT. and added a ipv6 revert thingy

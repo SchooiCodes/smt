@@ -312,6 +312,7 @@ echo 25. Bootable USB Creator (using Ventoy) %findstring%
 echo 26. Any App (that exists on winget) Installer %findstring%
 echo 27. App Installer Generator %findstring%
 echo 28. Minecraft Server Creator %findstring%
+echo 29. MegaTemp (Mega Mass Account Manager) %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -348,6 +349,7 @@ if "%advch%"=="25" start busbc.bat
 if "%advch%"=="26" start aap.bat
 if "%advch%"=="27" start aig.bat
 if "%advch%"=="28" start mcs.bat
+if "%advch%"=="29" start megatemp.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls
@@ -506,6 +508,7 @@ echo 1. IP Logger
 echo 2. IP Geolocator
 echo 3. IP Pinger
 echo 4. IPv6 Disabler
+echo 5. IPv6 Re-enabler
 echo.
 set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
@@ -513,6 +516,7 @@ if "%ipch%"=="1" start IPLog.bat
 if "%ipch%"=="2" start IPGeolocatorDL.bat
 if "%ipch%"=="3" start pinger.bat
 if "%ipch%"=="4" start ipv6.bat
+if "%ipch%"=="5" start ipv6.bat /revert
 goto IPTools
 
 :Performance
