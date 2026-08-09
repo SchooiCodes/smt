@@ -313,6 +313,7 @@ echo 26. Any App (that exists on winget) Installer %findstring%
 echo 27. App Installer Generator %findstring%
 echo 28. Minecraft Server Creator %findstring%
 echo 29. MegaTemp (Mega Mass Account Manager) %findstring%
+echo 30. Private Folder Manager %findstring%
 echo ?. ??? %findstring%
 echo.
 set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
@@ -350,6 +351,7 @@ if "%advch%"=="26" start aap.bat
 if "%advch%"=="27" start aig.bat
 if "%advch%"=="28" start mcs.bat
 if "%advch%"=="29" start megatemp.bat
+if "%advch%"=="30" start PrivateFolderManager.bat
 if "%advch%"=="cd" echo %cd% & pause>nul
 if "%advch%"=="?" start mystery.bat
 cls

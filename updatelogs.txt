@@ -1,2 +1,2 @@
-Major rewrite of Easy DNS Changer
-Partly made with Claude - mostly hand-written; added a lot more new DNS options, including my personal favorite, NextDNS. also added QoL features like auto-finding the current network adapter.
+Integrated PFM into SMT
+Added SchooiCodes/PrivateFolderManager into SMT. It creates "private" folders in Windows. (not very secure) (old project of mine that I really really like)
