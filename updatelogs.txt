@@ -1,2 +1,2 @@
-Added MegaTemp into SMT and added a ipv6 revert mode
-it is really late right now, sorry if this is  a bad commit. integrated SchooiCodes/MegaTemp (completely vibecoded lol) into SMT. and added a ipv6 revert thingy
+Major rewrite of Easy DNS Changer
+Partly made with Claude - mostly hand-written; added a lot more new DNS options, including my personal favorite, NextDNS. also added QoL features like auto-finding the current network adapter.
