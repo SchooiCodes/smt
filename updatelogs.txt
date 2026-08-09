@@ -1,2 +1,1 @@
-Integrated PFM into SMT
-Added SchooiCodes/PrivateFolderManager into SMT. It creates "private" folders in Windows. (not very secure) (old project of mine that I really really like)
+oopsies!

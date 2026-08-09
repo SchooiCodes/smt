@@ -328,7 +328,7 @@ if "%advch%"=="3" goto IPTools
 if "%advch%"=="4" goto Performance
 if "%advch%"=="5" goto fac
 if "%advch%"=="6" start zicrack.bat
-if "%advch%"=="7" start speak.vbs
+if "%advch%"=="7" start speak.bat
 if "%advch%"=="8" start SMBBruteforcer.bat
 if "%advch%"=="9" start RAUP.bat
 if "%advch%"=="10" cd Schnuker & start install.bat & cd..
@@ -511,6 +511,7 @@ echo 2. IP Geolocator
 echo 3. IP Pinger
 echo 4. IPv6 Disabler
 echo 5. IPv6 Re-enabler
+echo 6. Easy DNS Changer
 echo.
 set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%ipch%"=="B" cls & goto AdvancedTools
@@ -519,6 +520,7 @@ if "%ipch%"=="2" start IPGeolocatorDL.bat
 if "%ipch%"=="3" start pinger.bat
 if "%ipch%"=="4" start ipv6.bat
 if "%ipch%"=="5" start ipv6.bat /revert
+if "%ipch%"=="6" start ednsc.bat
 goto IPTools
 
 :Performance
