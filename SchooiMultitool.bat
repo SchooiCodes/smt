@@ -183,7 +183,7 @@ cls
 if %WINDOWSVER% LEQ 6 goto compatibility
 
 :start
-if "%resizing%"=="true" mode con cols=80 lines=24
+if "%resizing%"=="true" mode con cols=80 lines=23
 REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -194,19 +194,17 @@ if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% Schooi's Multitool %CYAN%│%RESET%
 if %WINDOWSVER% GEQ 10 echo %CYAN%└────────────────────┴──────┴──────────────────┘%RESET%
 echo Hello, %BRIGHT_BLUE%%username%%RESET%. What would you like to do?
 echo 1. Go to the tools
-echo 2. Go to the advanced tools
 REM echo 3. Edit this script
 REM echo 4. Restart this script (to apply any changes)
-echo 3. View info about this script
-echo 4. View credits
-echo 5. Send feedback
+echo 2. View info about this script
+echo 3. View credits
+echo 4. Send feedback
 echo.
 set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%choice%"=="1" goto Tools
-if /i "%choice%"=="2" goto AdvancedTools
-if /i "%choice%"=="3" goto info
-if /i "%choice%"=="4" goto credits
-if /i "%choice%"=="5" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
+if /i "%choice%"=="1" goto tools
+if /i "%choice%"=="2" goto info
+if /i "%choice%"=="3" goto credits
+if /i "%choice%"=="4" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
 if /i "%choice%"=="%username%On" @echo on & goto start
 if /i "%choice%"=="%username%Off" @echo off & goto start
 if /i "%choice%"=="sc" goto secrets
@@ -230,55 +228,29 @@ if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
 
-:tools
-if "%resizing%"=="true" mode con cols=80 lines=36
-cls
-call logo.bat
-title [SMT ^| %version%] Tools
-echo.
-echo Choose a tool:
-call :esgbo
-echo 1. Password Generator %findstring%
-echo 2. Right Click Menu Changer %findstring%
-echo 3. Command-Line Game %findstring%
-echo 4. Scan Computer for Errors %findstring%
-echo 5. Create A System Restore Point %findstring%
-echo 6. URL Shortener %findstring%
-echo 7. View this system's info %findstring%
-echo 8. Enable/Disable Hibernation %findstring%
-echo 9. Folder Organizer %findstring%
-echo 10. ASCII(/ANSI) Art Generator %findstring%
-echo 11. ASCII(/ANSI) Art Gradient Generator %findstring%
-echo 12. Credentials Storer %findstring%
-echo 13. School Utilities %findstring%
-echo.
-set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%ch%"=="B" cls & goto start
-if /i "%ch%"=="E" goto end
-if /i "%ch%"=="C" set findstring=
-if "%ch%"=="/" set /p "findstring=Enter search term: "
-if "%ch%"=="/" set findstring=^| find /I "%findstring%"
-if "%ch%"=="1" start PasswordGenerator.bat
-if "%ch%"=="2" start rcmc.bat
-if "%ch%"=="3" start CommandLineGame.bat
-if "%ch%"=="4" start suc.bat
-if "%ch%"=="5" start autorespo.bat
-if "%ch%"=="6" start URLShortener.bat
-if "%ch%"=="7" start sysinfo.bat
-if "%ch%"=="8" start hibern.bat
-if "%ch%"=="9" start fo.bat
-if "%ch%"=="10" start ascii.bat
-if "%ch%"=="11" start gradients.bat
-if "%ch%"=="12" start creds.bat
-if "%ch%"=="13" start sut.bat
-if "%ch%"=="cd" echo %cd% & pause >nul
-set "%ch%"="nul"
-cls
-goto Tools
+REM :tools
+REM if "%resizing%"=="true" mode con cols=80 lines=36
+REM cls
+REM call logo.bat
+REM title [SMT ^| %version%] Tools
+REM echo.
+REM echo Choose a tool:
+REM call :esgbo
+REM echo.
+REM set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+REM if /i "%ch%"=="B" cls & goto start
+REM if /i "%ch%"=="E" goto end
+REM if /i "%ch%"=="C" set findstring=
+REM if "%ch%"=="/" set /p "findstring=Enter search term: "
+REM if "%ch%"=="/" set findstring=^| find /I "%findstring%"
+REM if "%ch%"=="cd" echo %cd% & pause >nul
+REM set "%ch%"="nul"
+REM cls
+REM goto Tools
 
-:advancedtools
-if "%resizing%"=="true" mode con cols=80 lines=52
-title [SMT ^| %version%] Advanced Tools
+:tools
+if "%resizing%"=="true" mode con cols=80 lines=33
+title [SMT ^| %version%] Tools
 cls
 call logo.bat
 echo.
@@ -286,76 +258,32 @@ echo Choose a tool:
 call :esgbo
 echo 1. Apps %findstring%
 echo 2. Danger Zone %findstring%
-echo 3. IP Tools %findstring%
-echo 4. Performance %findstring%
-echo 5. Fixes and Crackers %findstring%
-echo 6. .zip Password Cracker %findstring%
-echo 7. Text To Speech %findstring%
-echo 8. SMB Bruteforcer %findstring%
-echo 9. User Manager %findstring%
-echo 10. Schnuker %findstring%
-echo 11. Driver Backupper %findstring%
-echo 12. Batch File Creator %findstring%
-echo 13. Backup the Registry %findstring%
-echo 14. Import Registry Backups %findstring%
-echo 15. rockyou.txt Downloader %findstring%
-echo 16. CLI Task Manager %findstring%
-echo 17. Wi-Fi Password Shower %findstring%
-echo 18. Network Speedtest %findstring%
-echo 19. Website Blocker %findstring%
-echo 20. NS Lookupper %findstring%
-echo 21. Internet Route Tracer %findstring%
-echo 22. Directory File Line Counter %findstring%
-echo 23. Google Extension Manifest V2 Extender %findstring%
-echo 24. Windows Password Cracker (using WSL) %findstring%
-echo 25. Bootable USB Creator (using Ventoy) %findstring%
-echo 26. Any App (that exists on winget) Installer %findstring%
-echo 27. App Installer Generator %findstring%
-echo 28. Minecraft Server Creator %findstring%
-echo 29. MegaTemp (Mega Mass Account Manager) %findstring%
-echo 30. Private Folder Manager %findstring%
+echo 3. Network %findstring%
+echo 4. Fixes %findstring%
+echo 5. Cracks %findstring%
+echo 6. System Administration %findstring%
+echo 7. Utilities %findstring%
+echo 8. Fun %findstring%
 echo ?. ??? %findstring%
 echo.
-set /p advch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%advch%"=="B" set findstring= & cls & goto start
-if /i "%advch%"=="E" goto end
-if /i "%advch%"=="C" set findstring=
-if "%advch%"=="/" set /p "findstring=Enter search term: "
-if "%advch%"=="/" set findstring=^| find /I "%findstring%"
-if "%advch%"=="1" goto Apps
-if "%advch%"=="2" goto Danger
-if "%advch%"=="3" goto IPTools
-if "%advch%"=="4" goto Performance
-if "%advch%"=="5" goto fac
-if "%advch%"=="6" start zicrack.bat
-if "%advch%"=="7" start speak.bat
-if "%advch%"=="8" start SMBBruteforcer.bat
-if "%advch%"=="9" start RAUP.bat
-if "%advch%"=="10" cd Schnuker & start install.bat & cd..
-if "%advch%"=="11" start db.bat
-if "%advch%"=="12" start bfc.bat
-if "%advch%"=="13" start BR.bat
-if "%advch%"=="14" start IB.bat
-if "%advch%"=="15" start rockyou.bat
-if "%advch%"=="16" start taskmanager.bat
-if "%advch%"=="17" start wifipasses.bat
-if "%advch%"=="18" start stcli.bat
-if "%advch%"=="19" start hfb.bat
-if "%advch%"=="20" start nsl.bat
-if "%advch%"=="21" start trt.bat
-if "%advch%"=="22" start dflc.bat
-if "%advch%"=="23" start emv2ae.bat
-if "%advch%"=="24" start pc.bat
-if "%advch%"=="25" start busbc.bat
-if "%advch%"=="26" start aap.bat
-if "%advch%"=="27" start aig.bat
-if "%advch%"=="28" start mcs.bat
-if "%advch%"=="29" start megatemp.bat
-if "%advch%"=="30" start PrivateFolderManager.bat
-if "%advch%"=="cd" echo %cd% & pause>nul
-if "%advch%"=="?" start mystery.bat
+set /p ch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%ch%"=="B" set findstring= & cls & goto start
+if /i "%ch%"=="E" goto end
+if /i "%ch%"=="C" set findstring=
+if "%ch%"=="/" set /p "findstring=Enter search term: "
+if "%ch%"=="/" set findstring=^| find /I "%findstring%"
+if "%ch%"=="1" goto Apps
+if "%ch%"=="2" goto Danger
+if "%ch%"=="3" goto Network
+if "%ch%"=="4" goto fixes
+if "%ch%"=="5" goto cracks
+if "%ch%"=="6" goto sysadmin
+if "%ch%"=="7" goto utils
+if "%ch%"=="8" goto fun
+REM if "%ch%"=="cd" echo %cd% & pause>nul
+if "%ch%"=="?" start mystery.bat
 cls
-goto AdvancedTools
+goto tools
 
 
 REM :1
@@ -369,7 +297,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if "%resizing%"=="true" mode con cols=80 lines=64
+if "%resizing%"=="true" mode con cols=80 lines=66
 cls
 call logo.bat
 echo.
@@ -420,7 +348,7 @@ echo 40. Win10 Widgets + Rainmeter 4.0 %findstring%
 echo 41. Rainmeter %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%appch%"=="B" cls & goto AdvancedTools
+if /i "%appch%"=="B" cls & goto tools
 if /i "%appch%"=="C" set findstring=
 if "%appch%"=="/" set /p "findstring=Enter search term: "
 if "%appch%"=="/" set findstring=^| find /I "%findstring%"
@@ -483,10 +411,10 @@ echo 4. Disk Space Filler
 echo 5. Time Freezer
 echo 6. UAC Disabler
 echo 7. utilman Trick Applier
-echo 8. Windows 11 Tweaker
+echo 8. Schnuker
 echo.
 set /p dangch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%dangch%"=="B" cls & goto AdvancedTools
+if /i "%dangch%"=="B" cls & goto tools
 if "%dangch%"=="1" start WDDL.bat
 if "%dangch%"=="2" start InfoFinder.bat
 if "%dangch%"=="3" start isg.bat
@@ -494,15 +422,15 @@ if "%dangch%"=="4" start dsf.bat
 if "%dangch%"=="5" start tf.bat
 if "%dangch%"=="6" start uacd.bat
 if "%dangch%"=="7" start uta.bat
-if "%dangch%"=="8" start w11.bat
+if "%dangch%"=="8" cd Schnuker & start install.bat & cd..
 goto danger
 
-:IPTools
-if "%resizing%"=="true" mode con cols=80 lines=25
+:Network
+if "%resizing%"=="true" mode con cols=80 lines=34
 cls
 call logo.bat
 echo.
-echo IP Tools
+echo Network
 echo ======
 echo Choose a tool:
 call :gbo
@@ -512,61 +440,199 @@ echo 3. IP Pinger
 echo 4. IPv6 Disabler
 echo 5. IPv6 Re-enabler
 echo 6. Easy DNS Changer
+echo 7. SMB Bruteforcer
+echo 8. Wi-Fi Password Shower
+echo 9. Network Speedtest
+echo 10. Website Blocker
+echo 11. NS Lookupper
+echo 12. Internet Route Tracer
 echo.
-set /p ipch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%ipch%"=="B" cls & goto AdvancedTools
-if "%ipch%"=="1" start IPLog.bat
-if "%ipch%"=="2" start IPGeolocatorDL.bat
-if "%ipch%"=="3" start pinger.bat
-if "%ipch%"=="4" start ipv6.bat
-if "%ipch%"=="5" start ipv6.bat /revert
-if "%ipch%"=="6" start ednsc.bat
-goto IPTools
+set /p netch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%netch%"=="B" cls & goto tools
+if "%netch%"=="1" start IPLog.bat
+if "%netch%"=="2" start IPGeolocatorDL.bat
+if "%netch%"=="3" start pinger.bat
+if "%netch%"=="4" start ipv6.bat
+if "%netch%"=="5" start ipv6.bat /revert
+if "%netch%"=="6" start ednsc.bat
+if "%netch%"=="7" start SMBBruteforcer.bat
+if "%netch%"=="8" start wifipasses.bat
+if "%netch%"=="9" start stcli.bat
+if "%netch%"=="10" start hfb.bat
+if "%netch%"=="11" start nsl.bat
+if "%netch%"=="12" start trt.bat
+goto Network
 
-:Performance
-if "%resizing%"=="true" mode con cols=80 lines=25
-cls
-call logo.bat
-echo.
-echo Performance
-echo ==========
-echo Choose a tool:
-call :gbo
-echo 1. Windows Performance Options
-echo 2. Chris Titus Tool
-echo 3. Ultimate Performance Power Plan Enabler
-echo.
-set /p perfch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%perfch%"=="B" cls & goto AdvancedTools
-if "%perfch%"=="1" start %windir%\system32\systempropertiesperformance.exe
-if "%perfch%"=="2" start apps\ctt.bat
-if "%perfch%"=="3" start UPPPE.bat
-goto Performance
+REM :Performance
+REM if "%resizing%"=="true" mode con cols=80 lines=25
+REM cls
+REM call logo.bat
+REM echo.
+REM echo Performance
+REM echo ==========
+REM echo Choose a tool:
+REM call :gbo
+REM echo.
+REM set /p perfch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+REM if /i "%perfch%"=="B" cls & goto tools
+REM goto Performance
 
-:fac
+:fixes
 if "%resizing%"=="true" mode con cols=80 lines=27
 cls
 call logo.bat
 echo.
-echo Fixes ^& Crackers
-echo ================
+echo Fixes
+echo =====
+echo Choose a tool:
+call :gbo
+echo 1. "Some Settings Are Managed By Your Organization" Fixer
+echo 2. Group Policy Editor Enabler
+echo 3. Backup the Registry
+echo 4. Import Registry Backups
+echo 5. Driver Backupper
+echo.
+set /p fixch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%fixch%"=="B" cls & goto tools
+if "%fixch%"=="1" start SSAMBYO.bat
+if "%fixch%"=="2" start GPEE.bat
+if "%fixch%"=="3" start BR.bat
+if "%fixch%"=="4" start IB.bat
+if "%fixch%"=="5" start db.bat
+goto fixes
+
+:cracks
+if "%resizing%"=="true" mode con cols=80 lines=27
+cls
+call logo.bat
+echo.
+echo Cracks
+echo ======
 echo Choose a tool:
 call :gbo
 echo 1. Malwarebytes Premium Resetter
-echo 2. "Some Settings Are Managed By Your Organization" Fixer
-echo 3. Windows Activator
-echo 4. Group Policy Editor Enabler
-echo 5. FGRDown (FitGirl Repacks Downloader / Game Piracy Tool)
+echo 2. Windows Activator
+echo 3. FGRDown (FitGirl Repacks Downloader / Game Piracy Tool)
+echo 4. .zip Password Cracker
+echo 5. Windows Password Cracker (using WSL)
 echo.
-set /p facch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
-if /i "%facch%"=="B" cls & goto AdvancedTools
-if "%facch%"=="1" start Malwarebytes-Premium-Reset.bat
-if "%facch%"=="2" start SSAMBYO.bat
-if "%facch%"=="3" start WA.bat
-if "%facch%"=="4" start GPEE.bat
-if "%facch%"=="5" start fgrdown.bat
-goto fac
-
+set /p crackch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%crackch%"=="B" cls & goto tools
+if "%crackch%"=="1" start Malwarebytes-Premium-Reset.bat
+if "%crackch%"=="2" start WA.bat
+if "%crackch%"=="3" start fgrdown.bat
+if "%crackch%"=="4" start zicrack.bat
+if "%crackch%"=="5" start pc.bat
+goto cracks
+    
+:sysadmin
+if "%resizing%"=="true" mode con cols=80 lines=38
+cls
+call logo.bat
+echo.
+echo System Administration
+echo =====================
+echo Choose a tool:
+call :sgbo
+echo 1. User Manager %findstring%
+echo 2. CLI Task Manager %findstring%
+echo 3. Bootable USB Creator (using Ventoy) %findstring%
+echo 4. Any App (that exists on winget) Installer %findstring%
+echo 5. App Installer Generator %findstring%
+echo 6. Right Click Menu Changer %findstring%
+echo 7. Scan Computer for Errors %findstring%
+echo 8. Create A System Restore Point %findstring%
+echo 9. View this system's info %findstring%
+echo 10. Enable/Disable Hibernation %findstring%
+echo 11. Windows 11 Tweaker
+echo 12. Windows Performance Options
+echo 13. Ultimate Performance Power Plan Enabler
+echo 14. Chris Titus Tool
+echo.
+set /p sysch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%sysch%"=="B" cls & goto tools
+if /i "%sysch%"=="C" set findstring=
+if "%sysch%"=="/" set /p "findstring=Enter search term: "
+if "%sysch%"=="/" set findstring=^| find /I "%findstring%"
+if "%sysch%"=="1" start RAUP.bat
+if "%sysch%"=="2" start taskmanager.bat
+if "%sysch%"=="3" start busbc.bat
+if "%sysch%"=="4" start aap.bat
+if "%sysch%"=="5" start aig.bat
+if "%sysch%"=="6" start rcmc.bat
+if "%sysch%"=="7" start suc.bat
+if "%sysch%"=="8" start autorespo.bat
+if "%sysch%"=="9" start sysinfo.bat
+if "%sysch%"=="10" start hibern.bat
+if "%sysch%"=="11" start w11.bat
+if "%sysch%"=="12" start %windir%\system32\systempropertiesperformance.exe
+if "%sysch%"=="13" start UPPPE.bat
+if "%sysch%"=="14" start apps\ctt.bat
+goto sysadmin
+        
+:utils
+if "%resizing%"=="true" mode con cols=80 lines=37
+cls
+call logo.bat
+echo.
+echo Utilities
+echo =========
+echo Choose a tool:
+call :sgbo
+echo 1. Password Generator %findstring%
+echo 2. URL Shortener %findstring%
+echo 3. Folder Organizer %findstring%
+echo 4. ASCII(/ANSI) Art Generator %findstring%
+echo 5. ASCII(/ANSI) Art Gradient Generator %findstring%
+echo 6. Credentials Storer %findstring%
+echo 7. Google Extension Manifest V2 Extender %findstring%
+echo 8. Batch File Creator %findstring%
+echo 9. rockyou.txt Downloader %findstring%
+echo 10. Directory File Line Counter %findstring%
+echo 11. Minecraft Server Creator %findstring%
+echo 12. MegaTemp (Mega Mass Account Manager) %findstring%
+echo 13. Private Folder Manager %findstring%
+echo.
+set /p utilch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%utilch%"=="B" cls & goto tools
+if /i "%utilch%"=="C" set findstring=
+if "%utilch%"=="/" set /p "findstring=Enter search term: "
+if "%utilch%"=="/" set findstring=^| find /I "%findstring%"
+if "%utilch%"=="1" start PasswordGenerator.bat
+if "%utilch%"=="2" start URLShortener.bat
+if "%utilch%"=="3" start fo.bat
+if "%utilch%"=="4" start ascii.bat
+if "%utilch%"=="5" start gradients.bat
+if "%utilch%"=="6" start creds.bat
+if "%utilch%"=="7" start emv2ae.bat
+if "%utilch%"=="8" start bfc.bat
+if "%utilch%"=="9" start rockyou.bat 
+if "%utilch%"=="10" start dflc.bat
+if "%utilch%"=="11" start mcs.bat
+if "%utilch%"=="12" start megatemp.bat
+if "%utilch%"=="13" start PrivateFolderManager.bat
+goto utils
+        		
+:fun
+if "%resizing%"=="true" mode con cols=80 lines=25
+cls
+call logo.bat
+echo.
+echo Fun
+echo ===
+echo Choose a tool:
+call :gbo
+echo 1. Text To Speech
+echo 2. Command-Line Game
+echo 3. School Utilities
+echo.
+set /p funch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%funch%"=="B" cls & goto tools
+if "%funch%"=="1" start speak.bat
+if "%funch%"=="2" start CommandLineGame.bat
+if "%funch%"=="3" start sut.bat
+goto fun
+                                 
 :info
 if not "%calced%"=="1" call :calctools
 if "%resizing%"=="true" mode con cols=120 lines=%infomode%
@@ -736,7 +802,7 @@ echo %CYAN%Chris Titus Tool%RESET% - %GREEN%Chris Titus%RESET%
 echo %CYAN%Malwarebytes Premium Resetter%RESET% - %GREEN%Scut1ny%RESET%
 echo %CYAN%Windows Activator%RESET% - %GREEN%massgravel%RESET%
 echo %CYAN%Group Policy Editor Enabler%RESET% - %GREEN%majorgeeks.com%RESET%
-echo %CYAN%Mystery (in advanced tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
+echo %CYAN%Mystery (in Tools)%RESET% - %GREEN%the animation itself is by ascii.live%RESET%
 echo %CYAN%INI File Reader (used for settings)%RESET% - %GREEN%rojo on StackOverflow %YELLOW%(%BRIGHT_WHITE%https://bit.ly/3WAxCXz%YELLOW%)%RESET%
 echo %CYAN%Any App (that exists on winget) Installer%RESET% - %GREEN%@curlyhair. on Discord %YELLOW%(%BRIGHT_WHITE%https://discordapp.com/users/1063158162036883476%YELLOW%)%RESET%
 echo.

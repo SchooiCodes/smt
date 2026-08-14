@@ -1,1 +1,2 @@
-oopsies!
+[300 COMMIT SPECIAL!] Huge re-organization of SchooiMultitool.bat
+Rewrote sections, simplified categories, made the average user be able to locate tools, and not need insider info to be able to find utilities. RIP to the advanced tools category, 2024-2026. Many merges, categorizations and simplifications :) (everything looks much cleaner now)
