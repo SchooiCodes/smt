@@ -18,9 +18,7 @@ if "%choice%"=="3" exit
 goto menu
 
 :save
-for /f "tokens=*" %%a in ('powershell -Command "Get-Clipboard"') do set clipboard=%%a
-set /a count+=1
-echo !count!. !clipboard! >> clipboard_history.txt
+powershell -NoProfile -Command "try { $content = Get-Clipboard -Raw -ErrorAction Stop } catch { $content = $null }; if ([string]::IsNullOrWhiteSpace($content)) { Write-Host 'Clipboard is empty or contains non-text data.'; exit }; $count = 1; if (Test-Path 'clipboard_history.txt') { $count = ([regex]::Matches((Get-Content 'clipboard_history.txt' -Raw -ErrorAction SilentlyContinue), '(?m)^--- Entry \d+').Count) + 1 }; $entry = \"--- Entry $count ($(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')) ---`r`n$content`r`n\"; Add-Content -Path 'clipboard_history.txt' -Value $entry"
 echo Clipboard saved!
 pause
 goto menu

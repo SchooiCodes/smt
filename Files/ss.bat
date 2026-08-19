@@ -17,7 +17,7 @@ goto menu
 
 :capture
 set /p filepath="Enter the file path to save the screenshot (e.g., C:\screenshot.png): "
-powershell -command "Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds; $bmp = New-Object System.Drawing.Bitmap($bounds.Width, $bounds.Height); $graphics = [System.Drawing.Graphics]::FromImage($bmp); $graphics.CopyFromScreen($bounds.Location, [System.Drawing.Point]::Empty, $bounds.Size); $bmp.Save('%filepath%'); $bmp.Dispose(); $graphics.Dispose();"
+powershell -command "Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds; $bmp = New-Object System.Drawing.Bitmap($bounds.Width, $bounds.Height); $graphics = [System.Drawing.Graphics]::FromImage($bmp); $graphics.CopyFromScreen($bounds.Location, [System.Drawing.Point]::Empty, $bounds.Size); $path = [System.Environment]::ExpandEnvironmentVariables('%filepath%'); $bmp.Save($path); $bmp.Dispose(); $graphics.Dispose();"
 echo Screenshot saved to %filepath%
 pause
 goto menu

@@ -571,7 +571,7 @@ if "%sysch%"=="14" start apps\ctt.bat
 goto sysadmin
         
 :utils
-if "%resizing%"=="true" mode con cols=80 lines=37
+if "%resizing%"=="true" mode con cols=80 lines=40
 cls
 call logo.bat
 echo.
@@ -592,6 +592,9 @@ echo 10. Directory File Line Counter %findstring%
 echo 11. Minecraft Server Creator %findstring%
 echo 12. MegaTemp (Mega Mass Account Manager) %findstring%
 echo 13. Private Folder Manager %findstring%
+echo 14. Clipboard Manager %findstring%
+echo 15. File Integrity Checker %findstring%
+echo 16. Screenshot Tool %findstring%
 echo.
 set /p utilch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%utilch%"=="B" cls & goto tools
@@ -611,6 +614,9 @@ if "%utilch%"=="10" start dflc.bat
 if "%utilch%"=="11" start mcs.bat
 if "%utilch%"=="12" start megatemp.bat
 if "%utilch%"=="13" start PrivateFolderManager.bat
+if "%utilch%"=="14" start cm.bat
+if "%utilch%"=="15" start fic.bat
+if "%utilch%"=="16" start ss.bat
 goto utils
         		
 :fun
