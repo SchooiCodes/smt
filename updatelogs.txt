@@ -1,1 +1,2 @@
-Added a choco and scoop installer
+Added new installers
+Added a pnpm, python install manager and node.js installer. also integrated scoop and choco installers into mainfile

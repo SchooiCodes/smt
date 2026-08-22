@@ -297,7 +297,7 @@ REM if /i "%rpoint%"=="Y" start autorespo.bat
 REM cls
 
 :apps
-if "%resizing%"=="true" mode con cols=80 lines=66
+if "%resizing%"=="true" mode con cols=80 lines=71
 cls
 call logo.bat
 echo.
@@ -346,6 +346,11 @@ echo 38. RustDesk %findstring%
 echo 39. AnyDesk %findstring%
 echo 40. Win10 Widgets + Rainmeter 4.0 %findstring%
 echo 41. Rainmeter %findstring%
+echo 42. Node.js %findstring%
+echo 43. pnpm %findstring%
+echo 44. Python Install Manager %findstring%
+echo 45. Chocolatey (choco, package manager) %findstring%
+echo 46. Scoop (package manager) %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -393,6 +398,11 @@ if "%appch%"=="38" start Apps\rdk.bat
 if "%appch%"=="39" start Apps\adk.bat
 if "%appch%"=="40" start Apps\w10wr4.bat
 if "%appch%"=="41" start Apps\rmt.bat
+if "%appch%"=="42" start Apps\njs.bat
+if "%appch%"=="43" start Apps\pnpm.bat
+if "%appch%"=="44" start Apps\pim.bat
+if "%appch%"=="45" start Apps\getchoco.bat
+if "%appch%"=="46" start Apps\getscoop.bat
 goto apps
 
 :danger
