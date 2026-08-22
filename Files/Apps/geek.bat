@@ -1,74 +1,59 @@
 @echo off
-REM fltmc >nul 2>&1 || (
-    REM PowerShell -Command "Start-Process '%0' -Verb RunAs" || (
-        REM >nul pause && exit 1
-    REM )
-    REM exit 0
-REM )
-
-:start
+setlocal EnableExtensions
 cd /d "%~dp0"
 title Geek Uninstaller Installation
 if exist logo.bat call logo.bat & echo.
-if not exist "%appdata%\Geek Uninstaller" md "%appdata%\Geek Uninstaller"
-echo Installing..
-if NOT exist "%appdata%\Geek Uninstaller\geek.exe" call :winget
+if "%~1"=="choco" goto geek
+set "GEEK_DIR=%appdata%\Geek Uninstaller"
+if not exist "%GEEK_DIR%" md "%GEEK_DIR%"
+where geek.exe
+if %ERRORLEVEL% NEQ 0 (echo Installing.. & call :winget) else (echo Already installed..)
 echo Starting..
-cd %appdata%\Geek Uninstaller
 geek.exe
-timeout /t 10 >nul
-exit
+timeout /t 5 >nul
+exit /b 0
 
 :winget
-winget --version 2>&1 >nul
-if %ERRORLEVEL% NEQ 0 call :irm
+winget --version >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (echo Winget not found. Using irm instead.. & call :irm & goto :EOF)
 echo Installing via winget..
 winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id GeekUninstaller.GeekUninstaller
-if %ERRORLEVEL% NEQ 0 call :irm
-geek.exe
-timeout /t 5 /NOBREAK >nul
-exit
+if %ERRORLEVEL% NEQ 0 (echo Winget install failed! Using irm instead.. & call :irm)
+goto :EOF
 
 :irm
-echo Winget failed! Using irm instead..
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://geekuninstaller.com/geek.zip -OutFile '%appdata%\Geek Uninstaller\geek.zip'" 
-if NOT %ERRORLEVEL% EQU 0 echo IRM failed! Using choco instead.. & goto geek
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '%appdata%\Geek Uninstaller\geek.zip' -DestinationPath '%appdata%\Geek Uninstaller\'" 
-del "%appdata%\Geek Uninstaller\geek.zip"
-if %ERRORLEVEL% EQU 0 call :shortcut "%appdata%\Geek Uninstaller\geek.exe" 
+powershell -NoProfile -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://geekuninstaller.com/geek.zip -OutFile '%GEEK_DIR%\geek.zip'"
+if %ERRORLEVEL% NEQ 0 (echo IRM failed! Using choco instead.. & goto geek)
+powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '%GEEK_DIR%\geek.zip' -DestinationPath '%GEEK_DIR%\' -Force"
+if %ERRORLEVEL% NEQ 0 (echo Extraction failed! Using choco instead.. & goto geek)
+del "%GEEK_DIR%\geek.zip"
+call :shortcut "%GEEK_DIR%\geek.exe"
 goto :EOF
 
 :shortcut
-set TARGET=%1
-set SCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
-echo Set oWS = WScript.CreateObject("WScript.Shell") >> %SCRIPT%
-echo sLinkFile = "%USERPROFILE%\Desktop\Geek Uninstaller.lnk" >> %SCRIPT%
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
-echo oLink.TargetPath = %TARGET% >> %SCRIPT%
-echo oLink.Save >> %SCRIPT%
-cscript /nologo %SCRIPT%
-del %SCRIPT%
+set "TARGET=%~1"
+set "SCRIPT=%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
+> "%SCRIPT%" (echo Set oWS = WScript.CreateObject("WScript.Shell"^) & echo sLinkFile = "%USERPROFILE%\Desktop\Geek Uninstaller.lnk" & echo Set oLink = oWS.CreateShortcut(sLinkFile^) & echo oLink.TargetPath = "%TARGET%" & echo oLink.Save)
+cscript //nologo "%SCRIPT%"
+del "%SCRIPT%"
+goto :EOF
+
+:refreshenv
+if not exist "..\RefreshEnv.cmd" (powershell -NoProfile -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/chocolatey/choco/raw/refs/heads/master/src/chocolatey.resources/redirects/RefreshEnv.cmd -OutFile ..\RefreshEnv.cmd")
+call ..\RefreshEnv.cmd
 goto :EOF
 
 :geek
-choco /? 1>nul
-if NOT %ERRORLEVEL% EQU 0 goto :choco
-if NOT exist C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe goto geek
+REM Only this path needs admin (chocolatey install)
+fltmc >nul 2>&1 || (echo Restarting as admin.. & PowerShell Start -Verb RunAs '%0' %* 2> nul || (>nul pause && exit 1) & exit 0)
+where choco >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (echo Choco not found. Running installer.. & call getchoco.bat & call :refreshenv)
 echo Downloading geek uninstaller..
-choco install geekuninstaller -y
-call :shortcut "C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe"
+choco install geekuninstaller -y --force
+set "CHOCO_EXE=C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe"
+if not exist "%CHOCO_EXE%" (echo Chocolatey install failed - geek.exe not found. & pause & exit /b 1)
+call :shortcut "%CHOCO_EXE%"
 echo Starting..
-cd C:\ProgramData\chocolatey\lib\geekuninstaller\tools\
-geek.exe
-timeout /t 10 >nul
-exit
-
-:choco
-echo Installing Chocolatey...
-powershell Set-ExecutionPolicy AllSigned
-powershell Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-echo Please sign out, sign in and re-run this script to install Geek Uninstaller.
-timeout /t 10 /NOBREAK >nul
+start "" "%CHOCO_EXE%"
+timeout /t 5 >nul
 exit /b 0
-
-

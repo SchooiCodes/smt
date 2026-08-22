@@ -1,2 +1,1 @@
-Added forgotten tools to smt menu
-Linked forgotten batchfiles with the smt menu. Also fixed cm.bat and ss.bat
+Major re-write of geek.bat and fastfetch.bat. Added RefreshEnv.cmd (from choco)
