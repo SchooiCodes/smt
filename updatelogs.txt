@@ -1,1 +1,1 @@
-Major re-write of geek.bat and fastfetch.bat. Added RefreshEnv.cmd (from choco)
+Added a choco and scoop installer
