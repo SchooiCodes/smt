@@ -1,2 +1,2 @@
-Added new installers
-Added a pnpm, python install manager and node.js installer. also integrated scoop and choco installers into mainfile
+Revamp README and installation docs
+This commit refreshes the project landing page with a cleaner header, updated feature highlights, and clearer compatibility and installation guidance. It also improves the usage section with CLI examples, modernizes the wording around tools and licensing, and adds notes about third-party tools and antivirus flags for the installer.
