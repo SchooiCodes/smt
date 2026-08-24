@@ -1,2 +1,2 @@
-Add sync command and batch exit fix
-This patch adds a new `-s / --sync` command to SMT that downloads and runs the upstream sync script, ensuring all project files are present. It also adds the corresponding README help entry. In addition, the batch entrypoints now use `goto :EOF` instead of `exit` in several command handlers so they terminate only the current branch instead of exiting the whole script unexpectedly.
+Fixed s, sync args to run the sync as admin if in admin folder
+Also deleted an unnecessary file

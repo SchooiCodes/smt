@@ -14,10 +14,10 @@ if "%1"=="-rp" start Files\autorespo.bat & goto :EOF
 if "%1"=="/rp" start Files\autorespo.bat & goto :EOF
 if "%1"=="--restore-point" start Files\autorespo.bat & goto :EOF
 if "%1"=="/restore-point" start Files\autorespo.bat & goto :EOF
-if "%1"=="-s" echo. & call Files\sync.bat & goto :EOF
-if "%1"=="/s" echo. & call Files\sync.bat & goto :EOF
-if "%1"=="--sync" echo. & call Files\sync.bat & goto :EOF
-if "%1"=="/sync" echo. & call Files\sync.bat & goto :EOF
+if "%1"=="-s" start Files\sync.bat & goto :EOF
+if "%1"=="/s" start Files\sync.bat & goto :EOF
+if "%1"=="--sync" start Files\sync.bat & goto :EOF
+if "%1"=="/sync" start Files\sync.bat & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
