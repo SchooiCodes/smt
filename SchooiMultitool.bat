@@ -10,22 +10,26 @@ if "%1"=="-d" @echo on
 if "%1"=="/d" @echo on
 if "%1"=="--debug" @echo on
 if "%1"=="/debug" @echo on
-if "%1"=="-rp" start Files\autorespo.bat & exit
-if "%1"=="/rp" start Files\autorespo.bat & exit
-if "%1"=="--restore-point" start Files\autorespo.bat & exit
-if "%1"=="/restore-point" start Files\autorespo.bat & exit
+if "%1"=="-rp" start Files\autorespo.bat & goto :EOF
+if "%1"=="/rp" start Files\autorespo.bat & goto :EOF
+if "%1"=="--restore-point" start Files\autorespo.bat & goto :EOF
+if "%1"=="/restore-point" start Files\autorespo.bat & goto :EOF
+if "%1"=="-s" echo. & call Files\sync.bat & goto :EOF
+if "%1"=="/s" echo. & call Files\sync.bat & goto :EOF
+if "%1"=="--sync" echo. & call Files\sync.bat & goto :EOF
+if "%1"=="/sync" echo. & call Files\sync.bat & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
 if "%1"=="/noadmin" set elevate=false
-if "%1"=="-32" start Files\s32.bat & exit
-if "%1"=="/32" start Files\s32.bat & exit
-if "%1"=="--system32" start Files\s32.bat & exit
-if "%1"=="/system32" start Files\s32.bat & exit
-if "%1"=="-pf" start Files\pf.bat & exit
-if "%1"=="/pf" start Files\pf.bat & exit
-if "%1"=="--program-files" start Files\pf.bat & exit
-if "%1"=="/program-files" start Files\pf.bat & exit
+if "%1"=="-32" start Files\s32.bat & goto :EOF
+if "%1"=="/32" start Files\s32.bat & goto :EOF
+if "%1"=="--system32" start Files\s32.bat & goto :EOF
+if "%1"=="/system32" start Files\s32.bat & goto :EOF
+if "%1"=="-pf" start Files\pf.bat & goto :EOF
+if "%1"=="/pf" start Files\pf.bat & goto :EOF
+if "%1"=="--program-files" start Files\pf.bat & goto :EOF
+if "%1"=="/program-files" start Files\pf.bat & goto :EOF
 if "%1"=="-h" goto help
 if "%1"=="/h" goto help
 if "%1"=="--help" goto help
@@ -220,7 +224,7 @@ if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v tru
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set "resizing=true" & goto start
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
-if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & pause & goto start
+if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
 if /i "%choice%"=="forceupd" echo forced>config\version & start restart.bat & exit
@@ -243,7 +247,7 @@ REM if /i "%ch%"=="E" goto end
 REM if /i "%ch%"=="C" set findstring=
 REM if "%ch%"=="/" set /p "findstring=Enter search term: "
 REM if "%ch%"=="/" set findstring=^| find /I "%findstring%"
-REM if "%ch%"=="cd" echo %cd% & pause >nul
+REM if "%ch%"=="cd" echo %cd% & goto :EOF >nul
 REM set "%ch%"="nul"
 REM cls
 REM goto Tools
@@ -280,7 +284,7 @@ if "%ch%"=="5" goto cracks
 if "%ch%"=="6" goto sysadmin
 if "%ch%"=="7" goto utils
 if "%ch%"=="8" goto fun
-REM if "%ch%"=="cd" echo %cd% & pause>nul
+REM if "%ch%"=="cd" echo %cd% & goto :EOF>nul
 if "%ch%"=="?" start mystery.bat
 cls
 goto tools
@@ -884,7 +888,9 @@ echo.
 echo  -h, /h, --help, /help             Prints this manual
 echo.
 echo  -rp, /rp, --restore-point,        Creates a system restore point
-echo  /restore-point            
+echo  /restore-point  
+echo.
+echo  -s, /s, --sync, /sync             Syncs SMT files with the upstream repo to make sure they all exist
 echo.
 echo  -32, /32, --system32,             Adds SMT to the path (old, superseeded by automatic path addition on first boot)
 echo  /system32

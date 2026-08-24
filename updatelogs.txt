@@ -1,2 +1,2 @@
-Revamp README and installation docs
-This commit refreshes the project landing page with a cleaner header, updated feature highlights, and clearer compatibility and installation guidance. It also improves the usage section with CLI examples, modernizes the wording around tools and licensing, and adds notes about third-party tools and antivirus flags for the installer.
+Add sync command and batch exit fix
+This patch adds a new `-s / --sync` command to SMT that downloads and runs the upstream sync script, ensuring all project files are present. It also adds the corresponding README help entry. In addition, the batch entrypoints now use `goto :EOF` instead of `exit` in several command handlers so they terminate only the current branch instead of exiting the whole script unexpectedly.
