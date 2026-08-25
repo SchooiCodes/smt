@@ -1,2 +1,2 @@
-Add portable install support and update flow [portable creation pending]
-Introduce portable mode and adjust update/sync behavior: add [Portable] isportable=true in Files/config/settings.ini; update SchooiMultitool.bat to read the portable flag, skip PATH changes for portable installs, create a wrapper SMT.bat when appropriate, and run the updater only for non-portable installs (portable runs filesync). Tweak Files/sync.bat detection and remove pause. Add SMT.bat to .gitignore.
+Add portable creation script and CLI option
+Add Files/createportable.bat to build an SMT portable ZIP in %USERPROFILE%\Downloads\smt.zip (copies sync.bat and settings.ini, updates config keys, runs filesync and compresses via PowerShell). Update SchooiMultitool.bat to add -p/--portable and /portable flags, a menu 'port' command, and help/menu text; also start sync.bat where appropriate. Update README.md to document the portable option and describe the sync/portable behavior.

@@ -18,6 +18,10 @@ if "%1"=="-s" start Files\sync.bat & goto :EOF
 if "%1"=="/s" start Files\sync.bat & goto :EOF
 if "%1"=="--sync" start Files\sync.bat & goto :EOF
 if "%1"=="/sync" start Files\sync.bat & goto :EOF
+if "%1"=="-p" start Files\createportable.bat & goto :EOF
+if "%1"=="/p" start Files\createportable.bat & goto :EOF
+if "%1"=="--portable" start Files\createportable.bat & goto :EOF
+if "%1"=="/portable" start Files\createportable.bat & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
@@ -141,7 +145,7 @@ if "%internet%"=="c" (
 		)
 	) else (
 		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Running filesync..
-		REM start sync.bat
+		start sync.bat
 	)
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
@@ -237,6 +241,7 @@ if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & 
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
 if /i "%choice%"=="forceupd" echo forced>config\version & start restart.bat & exit
+if /i "%choice%"=="port" start createportable & goto start
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
 goto start
@@ -815,6 +820,7 @@ REM echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
 echo %Bright_CYAN%rs%RESET% - restarts Schooi's Multitool
 echo %Bright_CYAN%edit%RESET% - opens SchooiMultitool.bat in Notepad
 echo %Bright_CYAN%forceupd%RESET% - forces a software update and restarts
+echo %Bright_CYAN%port%RESET% - creates a Schooi's Multitool portable zip
 pause >nul
 goto start
 
@@ -900,6 +906,8 @@ echo  -rp, /rp, --restore-point,        Creates a system restore point
 echo  /restore-point  
 echo.
 echo  -s, /s, --sync, /sync             Syncs SMT files with the upstream repo to make sure they all exist
+echo.
+echo  -p, /p, --portable, /portable     Creates an SMT portable zip
 echo.
 echo  -32, /32, --system32,             Adds SMT to the path (old, superseeded by automatic path addition on first boot)
 echo  /system32

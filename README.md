@@ -100,7 +100,8 @@ C:\Program Files\SMT>SchooiMultitool.bat --debug
 | d / debug | Enters debug mode |
 | h / help | Prints the help manual |
 | rp / restore-point | Creates a system restore point |          
-| s / sync | Syncs SMT files with the upstream repo to make sure they all exist |          
+| s / sync | Syncs SMT files with the upstream repo to make sure they all exist (portable update system) |          
+| p / portable | Creates an SMT portable zip |          
 | 32 / system32 | Adds SMT to PATH (old, happens automatically) |
 | pf / program-files | Adds SMT to `C:\Program Files` and creates a shortcut on the desktop (old, use [exe installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe) instead)
 | na / no-admin | Runs SMT without admin if it is installed in an admin folder (e.g. `C:\Program Files`) |
