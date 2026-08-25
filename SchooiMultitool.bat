@@ -106,13 +106,13 @@ if "%internet%"=="c" (
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
 	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
-    if "%portable%"=="false " (
-		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-		powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
-		for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-			set "latest_upd=%%a"
-			for /f "tokens=* delims=" %%b in (config\version) do (
-				set "current_upd=%%b"
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
+	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+		set "latest_upd=%%a"
+		for /f "tokens=* delims=" %%b in (config\version) do (
+			set "current_upd=%%b"
+			if "%portable%"=="false " (
 				if NOT "%%a"=="%%b" (
 					echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
 					setlocal enabledelayedexpansion
@@ -141,11 +141,10 @@ if "%internet%"=="c" (
 					endlocal
 				)
 				if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
+			) else (
+				start sync.bat
 			)
 		)
-	) else (
-		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Running filesync..
-		start sync.bat
 	)
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x

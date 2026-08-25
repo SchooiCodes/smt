@@ -16,6 +16,8 @@ call "%~dp0ini.bat" /i smtinpath /s AddedToPath /v false config\settings.ini >nu
 echo Starting filesync..
 start /WAIT sync.bat
 echo Zipping..
+echo Deleting "%USERPROFILE%\Downloads\smt"..
+rd /s /q "%USERPROFILE%\Downloads\smt"
 powershell $ProgressPreference = 'SilentlyContinue'; Compress-Archive -Path "%USERPROFILE%\Downloads\smt\*" -DestinationPath "%USERPROFILE%\Downloads\smt.zip" -Force
 echo Done! If everything went correctly, "%USERPROFILE%\Downloads\smt.zip" should be a functional SMT portable!
 pause

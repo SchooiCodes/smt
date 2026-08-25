@@ -1,2 +1,2 @@
-Add portable creation script and CLI option
-Add Files/createportable.bat to build an SMT portable ZIP in %USERPROFILE%\Downloads\smt.zip (copies sync.bat and settings.ini, updates config keys, runs filesync and compresses via PowerShell). Update SchooiMultitool.bat to add -p/--portable and /portable flags, a menu 'port' command, and help/menu text; also start sync.bat where appropriate. Update README.md to document the portable option and describe the sync/portable behavior.
+Adjust portable creation and update-check logic
+Delete existing Downloads\smt before creating portable ZIP to avoid stale contents. Rework SchooiMultitool.bat update-check: always fetch latest version and compare to local, and correctly start sync.bat when running in portable mode. Fixes conditional scoping so update checks and file sync run in the intended branches.
