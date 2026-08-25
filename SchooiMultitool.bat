@@ -77,7 +77,10 @@ if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text colori
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set "policy=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
 if "%policy%"=="Unrestricted" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s Portable config\settings.ini') do set portable=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+if "%portable%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
+if "%portable%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
+if "%portable%"=="false " FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 if "%inpath%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
 if "%inpath%"=="false " if "%elevated%"=="true" for /f "tokens=* delims=" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path') do set OLD_DATA=%%a
@@ -89,6 +92,7 @@ if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>confi
 if "%inpath%"=="false " if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
 if "%inpath%"=="false " if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
 if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true "
+if "%inpath%"=="true " if not exist ..\SMT.bat echo @%%~dp0SchooiMultitool.bat %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
@@ -98,42 +102,47 @@ if "%internet%"=="c" (
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
 	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
-    echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
-    for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-		set "latest_upd=%%a"
-        for /f "tokens=* delims=" %%b in (config\version) do (
-			set "current_upd=%%b"
-            if NOT "%%a"=="%%b" (
-                echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
-				setlocal enabledelayedexpansion
-                choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
-                if "!ERRORLEVEL!"=="1" (
-                    if not exist "%TEMP%\smt" md "%TEMP%\smt"
-                    copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-                    start /WAIT /MIN "" add_exclusion.bat
-                    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
-                    "%TEMP%\SMT\SMTSetup.exe" /S
-                    rd /s /q "%TEMP%\SMT" >nul
-                    if /i "%sent%"=="true" (
-                        echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
-                        call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
-                    )
-                    if /i "%inpath%"=="true " (
-                        echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
-						call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
+    if "%portable%"=="false " (
+		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
+		powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+		for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+			set "latest_upd=%%a"
+			for /f "tokens=* delims=" %%b in (config\version) do (
+				set "current_upd=%%b"
+				if NOT "%%a"=="%%b" (
+					echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
+					setlocal enabledelayedexpansion
+					choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
+					if "!ERRORLEVEL!"=="1" (
+						if not exist "%TEMP%\smt" md "%TEMP%\smt"
+						copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+						start /WAIT /MIN "" add_exclusion.bat
+						powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
+						"%TEMP%\SMT\SMTSetup.exe" /S
+						rd /s /q "%TEMP%\SMT" >nul
+						if /i "%sent%"=="true" (
+							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
+							call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
+						)
+						if /i "%inpath%"=="true " (
+							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
+							call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
+						)
+						echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
+						timeout /t 5 /NOBREAK >nul
+						exit
+					) else (
+						echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
 					)
-                    echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
-                    timeout /t 5 /NOBREAK >nul
-                    exit
-                ) else (
-                    echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
-                )
-                endlocal
-            )
-            if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
-        )
-    )
+					endlocal
+				)
+				if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
+			)
+		)
+	) else (
+		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Running filesync..
+		REM start sync.bat
+	)
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)

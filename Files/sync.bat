@@ -1,7 +1,7 @@
 @echo off
-echo echo %~dp0 | findstr "Program Files" >nul
+echo %~dp0 | findstr "C:\Program" >nul
 if %ERRORLEVEL% EQU 0 set found=true
-echo echo %~dp0 | findstr "System32" >nul
+echo %~dp0 | findstr "System32" >nul
 if %ERRORLEVEL% EQU 0 set found=true
 if "%found%"=="true" (
 	fltmc >nul 2>&1 || (
@@ -20,5 +20,4 @@ cd ..
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/refs/heads/main/sync.ps1 -OutFile sync.ps1"
 powershell ./sync.ps1 
 del sync.ps1
-pause
 exit
