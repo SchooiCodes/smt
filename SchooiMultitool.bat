@@ -2,8 +2,6 @@
 set elevate=true
 cd /d %~dp0
 set found=false
-echo echo %* | findstr "updated" >nul
-if %ERRORLEVEL% EQU 0 set updated=true
 echo echo %~dp0 | findstr "Program Files" >nul
 if %ERRORLEVEL% EQU 0 set found=true
 echo echo %~dp0 | findstr "System32" >nul
@@ -108,50 +106,46 @@ if "%internet%"=="c" (
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
 	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
-	if NOT "%updated%"=="true" (
-		echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
-		powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
-		for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
-			set "latest_upd=%%a"
-			for /f "tokens=* delims=" %%b in (config\version) do (
-				set "current_upd=%%b"
-				if "%portable%"=="false " (
-					if NOT "%%a"=="%%b" (
-						echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
-						setlocal enabledelayedexpansion
-						choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
-						if "!ERRORLEVEL!"=="1" (
-							if not exist "%TEMP%\smt" md "%TEMP%\smt"
-							copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
-							start /WAIT /MIN "" add_exclusion.bat
-							powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
-							"%TEMP%\SMT\SMTSetup.exe" /S
-							rd /s /q "%TEMP%\SMT" >nul
-							if /i "%sent%"=="true" (
-								echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
-								call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
-							)
-							if /i "%inpath%"=="true " (
-								echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
-								call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
-							)
-							echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
-							timeout /t 5 /NOBREAK >nul
-							exit
-						) else (
-							echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
+	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
+	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
+		set "latest_upd=%%a"
+		for /f "tokens=* delims=" %%b in (config\version) do (
+			set "current_upd=%%b"
+			if NOT "%%a"=="%%b" (
+				echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
+				setlocal enabledelayedexpansion
+				choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
+				if "!ERRORLEVEL!"=="1" (
+					if "%portable%"=="false " (
+						if not exist "%TEMP%\smt" md "%TEMP%\smt"
+						copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+						start /WAIT /MIN "" add_exclusion.bat
+						powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
+						"%TEMP%\SMT\SMTSetup.exe" /S
+						rd /s /q "%TEMP%\SMT" >nul
+						if /i "%sent%"=="true" (
+							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
+							call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
 						)
-						endlocal
+						if /i "%inpath%"=="true " (
+							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
+							call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
+						)
+						echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
+						timeout /t 5 /NOBREAK >nul
+						exit
+					) else (
+						start cmd /c "sync.bat %*"
+						exit
 					)
-					if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
 				) else (
-					start cmd /c "sync.bat %*"
-					exit
+					echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
 				)
+				endlocal
 			)
+			if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
 		)
-	) else (
-		echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, proceeding..
 	)
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x

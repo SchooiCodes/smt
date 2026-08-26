@@ -1,2 +1,2 @@
-Fix portable sync creation flow
-The portable creator now clears any existing target folder before recreating an SMT portable, runs sync in create-port mode, and zips the final folder without reopening the main app. This prevents recursive sync launches while generating a portable build.
+Refine update flow
+Restructure SchooiMultitool.bat update-check logic to always prompt when an update is available, move the portable check into the update-action branch, and ensure sync.bat is invoked correctly for portable and non-portable cases. Also fixed block ordering and exit behavior so updates are handled consistently.
