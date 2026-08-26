@@ -16,10 +16,10 @@ if "%1"=="-rp" start Files\autorespo.bat & goto :EOF
 if "%1"=="/rp" start Files\autorespo.bat & goto :EOF
 if "%1"=="--restore-point" start Files\autorespo.bat & goto :EOF
 if "%1"=="/restore-point" start Files\autorespo.bat & goto :EOF
-if "%1"=="-s" start Files\sync.bat & goto :EOF
-if "%1"=="/s" start Files\sync.bat & goto :EOF
-if "%1"=="--sync" start Files\sync.bat & goto :EOF
-if "%1"=="/sync" start Files\sync.bat & goto :EOF
+if "%1"=="-s" start cmd /c "Files\sync.bat createport" & goto :EOF
+if "%1"=="/s" start cmd /c "Files\sync.bat createport" & goto :EOF
+if "%1"=="--sync" start cmd /c "Files\sync.bat createport" & goto :EOF
+if "%1"=="/sync" start cmd /c "Files\sync.bat createport" & goto :EOF
 if "%1"=="-p" start Files\createportable.bat & goto :EOF
 if "%1"=="/p" start Files\createportable.bat & goto :EOF
 if "%1"=="--portable" start Files\createportable.bat & goto :EOF
@@ -145,7 +145,7 @@ if "%internet%"=="c" (
 					)
 					if "%%a"=="%%b" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is up to date.
 				) else (
-					start "" "sync.bat" %*
+					start cmd /c "sync.bat %*"
 					exit
 				)
 			)

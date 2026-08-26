@@ -1,4 +1,6 @@
 @echo off
+echo echo %* | findstr "createport" >nul
+if %ERRORLEVEL% EQU 0 set create=true
 echo %~dp0 | findstr "C:\Program" >nul
 if %ERRORLEVEL% EQU 0 set found=true
 echo %~dp0 | findstr "System32" >nul
@@ -18,4 +20,4 @@ if exist logo.bat call logo.bat & echo.
 echo Running sync..
 cd ..
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/refs/heads/main/sync.ps1 -OutFile sync.ps1"
-powershell ./sync.ps1 & del sync.ps1 & start "" "SchooiMultitool.bat" %* updated & exit
+powershell ./sync.ps1 & del sync.ps1 & if NOT "%create%"=="true" (start "" "SchooiMultitool.bat" %* updated) & exit

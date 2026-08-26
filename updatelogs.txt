@@ -1,2 +1,2 @@
-updated to avoid loopsyncing in portable installs
-yes
+Fix portable sync creation flow
+The portable creator now clears any existing target folder before recreating an SMT portable, runs sync in create-port mode, and zips the final folder without reopening the main app. This prevents recursive sync launches while generating a portable build.
