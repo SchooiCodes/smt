@@ -1,2 +1,2 @@
-Adjust portable creation and update-check logic
-Delete existing Downloads\smt before creating portable ZIP to avoid stale contents. Rework SchooiMultitool.bat update-check: always fetch latest version and compare to local, and correctly start sync.bat when running in portable mode. Fixes conditional scoping so update checks and file sync run in the intended branches.
+updated to avoid loopsyncing in portable installs
+yes
