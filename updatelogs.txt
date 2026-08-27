@@ -1,2 +1,2 @@
-Brought back the thank you notif
-When the Info screen runs on Windows 10 or newer, start a minimized PowerShell to download a heart.ico from the project's file host and display a NotifyIcon balloon ('Thank you! Thanks for using SMT! <3'). Uses TLS1.2, -NoProfile and Bypass execution policy, runs hidden/minimized, then disposes the notify icon and removes the downloaded file.
+Tidied up notif
+Moved notif commands to notif.bat and made notif run on exit also

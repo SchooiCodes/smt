@@ -1,0 +1,2 @@
+@echo off
+powershell -NoProfile -WindowStyle Hidden -Command "$ProgressPreference='SilentlyContinue'; $i=Join-Path $env:USERPROFILE 'Downloads\heart.ico'; iwr 'https://schooicodes.github.io/file_hosting/heart.ico' -OutFile $i -UseBasicParsing; Add-Type -AssemblyName System.Windows.Forms,System.Drawing; $n=New-Object System.Windows.Forms.NotifyIcon; $n.Icon=New-Object System.Drawing.Icon($i); $n.Visible=$true; $n.ShowBalloonTip(10000,'Thank you!','Thanks for using SMT! <3','Info'); Start-Sleep 10; $n.Dispose(); Remove-Item $i -ErrorAction SilentlyContinue"

@@ -672,7 +672,7 @@ if not "%calced%"=="1" call :calctools
 if "%resizing%"=="true" mode con cols=120 lines=%infomode%
 title [SMT ^| %version%] Info
 cls
-if %WINDOWSVER% GEQ 10 (start /MIN powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; $iconPath = Join-Path $env:USERPROFILE 'Downloads\heart.ico'; Invoke-RestMethod -Uri 'https://schooicodes.github.io/file_hosting/heart.ico' -OutFile $iconPath -UseBasicParsing; Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $notify = New-Object System.Windows.Forms.NotifyIcon; $notify.Icon = New-Object System.Drawing.Icon($iconPath); $notify.Visible = $true; $notify.BalloonTipTitle = 'Thank you!'; $notify.BalloonTipText = 'Thanks for using SMT! <3'; $notify.ShowBalloonTip(10000); Start-Sleep -Seconds 10; $notify.Dispose(); Remove-Item $iconPath -ErrorAction SilentlyContinue")
+if %WINDOWSVER% GEQ 10 (start /MIN notif.bat) 
 call logo.bat
 echo.
 REM echo Development started %GOLD%May 2024%RESET%
@@ -891,6 +891,7 @@ REM :elevate
 REM goto :EOF
 
 :end
+if %WINDOWSVER% GEQ 10 (start /MIN notif.bat) 
 exit
 
 :help
