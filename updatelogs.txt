@@ -1,2 +1,2 @@
-Split the info stealer into multiple webhook messages
-More organization. Prep for modularization (perhaps)
+Added WinDefCtl to kill Defender and implemented self-elevation
+The script now elevates (needed for WinDefCtl) but also has a fallback for non-elevated mode. (hell yeah + legal disclaimer)

