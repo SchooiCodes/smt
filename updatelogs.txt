@@ -1,2 +1,2 @@
-Added detailed logging to the info stealer
-Stopped downloading isgen2.txt in isg.bat and added detailed runtime logging to %%TEMP%%\SCleaner.log
+Split the info stealer into multiple webhook messages
+More organization. Prep for modularization (perhaps)

