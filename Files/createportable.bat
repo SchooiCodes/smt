@@ -3,7 +3,7 @@ cd /d "%~dp0"
 title [SMT] Portable Creator
 if exist logo.bat call logo.bat & echo.
 echo Creating a SMT portable in "%USERPROFILE%\Downloads\smt"..
-if not exist "%USERPROFILE%\Downloads\smt\Files\config" (echo Folder doesn't exist, creating it.. & md "%USERPROFILE%\Downloads\smt\Files\config") else (echo Folder exists, wiping it.. & rd /s /q "%USERPROFILE%\Downloads\smt")
+if not exist "%USERPROFILE%\Downloads\smt\Files\config" (echo Folder doesn't exist, creating it.. & md "%USERPROFILE%\Downloads\smt\Files\config") else (echo Folder exists, wiping it.. & rd /s /q "%USERPROFILE%\Downloads\smt" & md "%USERPROFILE%\Downloads\smt\Files\config")
 echo Copying sync.bat into the folder..
 copy sync.bat "%USERPROFILE%\Downloads\smt\Files\" >nul
 echo Copying settings.ini into the folder..
