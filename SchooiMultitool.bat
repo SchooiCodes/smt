@@ -519,6 +519,7 @@ echo 2. Group Policy Editor Enabler
 echo 3. Backup the Registry
 echo 4. Import Registry Backups
 echo 5. Driver Backupper
+echo 6. U* XMRig Injection Miner Remover
 echo.
 set /p fixch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%fixch%"=="B" cls & goto tools
@@ -527,6 +528,7 @@ if "%fixch%"=="2" start GPEE.bat
 if "%fixch%"=="3" start BR.bat
 if "%fixch%"=="4" start IB.bat
 if "%fixch%"=="5" start db.bat
+if "%fixch%"=="6" start UXM_R.bat
 goto fixes
 
 :cracks

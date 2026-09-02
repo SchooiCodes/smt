@@ -8,14 +8,15 @@ fltmc >nul 2>&1 || (
 cd %~dp0
 title Minecraft Server Creator ^| SMT
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "config=[38;5;46mC[38;5;47mO[38;5;48mN[38;5;49mF[38;5;50mI[38;5;51mG%RESET% |"
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "setuptext=[38;5;214mS[38;5;215mE[38;5;216mT[38;5;217mU[38;5;218mP%RESET%  ^|"
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator1=[38;5;46m====[38;5;47m====[38;5;48m====[38;5;49m====[38;5;50m====[38;5;51m====[0m"
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator2=[38;5;46m============[38;5;47m============[38;5;48m============[38;5;49m============[38;5;50m============[38;5;51m============[0m"
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator3=[38;5;214m============[38;5;215m============[38;5;216m============[38;5;217m============[38;5;218m============[38;5;219m============[0m"
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator1=[38;5;46m====[38;5;47m====[38;5;48m====[38;5;49m====[38;5;50m====[38;5;51m====%RESET%"
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator2=[38;5;46m============[38;5;47m============[38;5;48m============[38;5;49m============[38;5;50m============[38;5;51m============%RESET%"
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " set "seperator3=[38;5;214m============[38;5;215m============[38;5;216m============[38;5;217m============[38;5;218m============[38;5;219m============%RESET%"
 if NOT "%coloring%"=="true " set "config=CONFIG |" && set "setuptext=SETUP  ^|" && set "seperator1=========================" && set "seperator2=========================================================================" && set "seperator3========================================================================="
 goto main
 
@@ -35,7 +36,7 @@ if exist logo.bat call logo.bat & echo.
 echo Minecraft Server Setup
 echo %BRIGHT_YELLOW%YELLOW%RESET% = %BRIGHT_WHITE%Available Options%RESET%, %BRIGHT_GREEN%GREEN%RESET% = %BRIGHT_WHITE%Default%RESET% (leave %BRIGHT_RED%EMPTY%RESET% for %BRIGHT_GREEN%default%RESET%)
 echo %seperator2%
-set /p "mcver=%CONFIG% Please choose the %BRIGHT_CYAN%version%RESET% the server [%BRIGHT_GREEN%26.2%RESET%] > "
+set /p "mcver=%CONFIG% Please choose the %BRIGHT_CYAN%version%RESET% of the server [%BRIGHT_GREEN%26.2%RESET%] > "
 set /p "sname=%CONFIG% Please choose a %BRIGHT_CYAN%name%RESET% for the server [%BRIGHT_GREEN%Server%RESET%] > "
 if /i "%sname%"=="" set "sname=Server"
 set /p "sf=%CONFIG% Please choose the %BRIGHT_CYAN%folder%RESET% for the server files [%BRIGHT_GREEN%%USERPROFILE%\Documents\MinecraftServer\%sname%\%RESET%] > "
