@@ -24,7 +24,7 @@ cls
 if exist logo.bat call logo.bat & echo.
 echo Minecraft Server Setup
 echo %seperator1%
-set /p "setup=Start setup? (for %BRIGHT_CYAN%MC 26.2%RESET%) ([%BRIGHT_GREEN%Y%RESET%]es/[%BRIGHT_RED%n%RESET%]o) > "
+set /p "setup=Start setup? ([%BRIGHT_GREEN%Y%RESET%]es/[%BRIGHT_RED%n%RESET%]o) > "
 if "%setup%"=="" goto q
 if /i "%setup%"=="n" echo Quitting.. && timeout /t 3 && exit
 if /i NOT "%setup%"=="y" goto main
@@ -35,6 +35,7 @@ if exist logo.bat call logo.bat & echo.
 echo Minecraft Server Setup
 echo %BRIGHT_YELLOW%YELLOW%RESET% = %BRIGHT_WHITE%Available Options%RESET%, %BRIGHT_GREEN%GREEN%RESET% = %BRIGHT_WHITE%Default%RESET% (leave %BRIGHT_RED%EMPTY%RESET% for %BRIGHT_GREEN%default%RESET%)
 echo %seperator2%
+set /p "mcver=%CONFIG% Please choose the %BRIGHT_CYAN%version%RESET% the server [%BRIGHT_GREEN%26.2%RESET%] > "
 set /p "sname=%CONFIG% Please choose a %BRIGHT_CYAN%name%RESET% for the server [%BRIGHT_GREEN%Server%RESET%] > "
 if /i "%sname%"=="" set "sname=Server"
 set /p "sf=%CONFIG% Please choose the %BRIGHT_CYAN%folder%RESET% for the server files [%BRIGHT_GREEN%%USERPROFILE%\Documents\MinecraftServer\%sname%\%RESET%] > "
@@ -48,6 +49,7 @@ set /p "sminram=%config% Please choose the %BRIGHT_CYAN%minimum memory allocatio
 set /p "smaxram=%config% Please choose the %BRIGHT_CYAN%maximum memory allocation%RESET% for the server (in GB) [%BRIGHT_GREEN%3%RESET%] > "
 set /p "soffline=%config% Should the server support %BRIGHT_CYAN%offline (cracked) clients%RESET%? ([%BRIGHT_GREEN%y%RESET%]es/[%BRIGHT_RED%N%RESET%]o) [%BRIGHT_GREEN%N%RESET%] > "
 set /p "swhite=%config% Should the server have a %BRIGHT_CYAN%whitelist%RESET%? ([%BRIGHT_GREEN%y%RESET%]es/[%BRIGHT_RED%N%RESET%]o) [%BRIGHT_GREEN%N%RESET%] > "
+if /i "%mcver%"=="" set "mcver=26.2"
 if /i "%sf%"=="" set "sf=%USERPROFILE%\Documents\MinecraftServer\%sname%\"
 if /i NOT "%sf:~-1,1%"=="\" set "sf=%sf%\"
 if /i "%sprov%"=="" set "sprov=V"
@@ -70,13 +72,14 @@ goto create
 
 :create
 echo %seperator3%
-echo %SETUPTEXT% %BRIGHT_CYAN%Minecraft 26.2 Servers%RESET% require %BRIGHT_CYAN%Java 25%RESET%, checking for it..
+echo %SETUPTEXT% %BRIGHT_CYAN%Minecraft Servers%RESET% require %BRIGHT_CYAN%Java 25%RESET%, checking for it..
 java --version | findstr "25." >nul
 if %ERRORLEVEL% EQU 0 set "skip=true" && echo %SETUPTEXT% %BRIGHT_CYAN%Java found!%RESET% Skipping installation..
 if NOT "%skip%"=="true" echo %SETUPTEXT% %BRIGHT_CYAN%Java not found!%RESET% Downloading it now.. && powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://api.adoptium.net/v3/installer/latest/25/ga/windows/x64/jre/hotspot/normal/eclipse -OutFile '%TEMP%\javai.msi'" & echo %SETUPTEXT% Installing %BRIGHT_CYAN%Adoptium Java 25 JRE%RESET% silently.. && "%TEMP%\javai.msi" /quiet
 echo %SETUPTEXT% %BRIGHT_CYAN%Playit.gg%RESET% is needed for %BRIGHT_CYAN%public server access%RESET%, checking for it..
 playit version >nul 2>&1
-if %ERRORLEVEL% EQU 0 set "skip2=true" && echo %SETUPTEXT% %BRIGHT_CYAN%Playit.gg found!%RESET% Skipping installation..if /I NOT "%skip2%"=="true" (
+if %ERRORLEVEL% EQU 0 set "skip2=true" && echo %SETUPTEXT% %BRIGHT_CYAN%Playit.gg found!%RESET% Skipping installation..
+if /I NOT "%skip2%"=="true" (
     echo %SETUPTEXT% %BRIGHT_CYAN%Playit.gg not found!%RESET% Installing it now..
     if NOT exist "Apps\plt.bat" (
         powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm sfh.gleeze.com/plt.bat -OutFile 'Apps\plt.bat'"
@@ -86,9 +89,13 @@ if %ERRORLEVEL% EQU 0 set "skip2=true" && echo %SETUPTEXT% %BRIGHT_CYAN%Playit.g
 )
 echo %SETUPTEXT% Setting up the server's %BRIGHT_CYAN%folder%RESET%..
 if NOT EXIST "%sf%" md "%sf%"
-if /i "%sprov%"=="V" echo %SETUPTEXT% Downloading the %BRIGHT_CYAN%Vanilla 26.2 Server jarfile%RESET%.. && powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://piston-data.mojang.com/v1/objects/823e2250d24b3ddac457a60c92a6a941943fcd6a/server.jar -OutFile '%sf%server.jar'
-if /i "%sprov%"=="P" echo %SETUPTEXT% Downloading the %BRIGHT_CYAN%Paper 26.2 Server jarfile%RESET%.. && powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://fill-data.papermc.io/v1/objects/8600cc3b91ea38d7e836d562550b31d0fa3ed785d14dffc1a6d9dc1d36c21fa5/paper-26.2-56.jar -OutFile '%sf%server.jar'
-if /i "%sprov%"=="F" echo %SETUPTEXT% Downloading the %BRIGHT_CYAN%Fabric 26.2 Server jarfile%RESET%.. && powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://meta.fabricmc.net/v2/versions/loader/26.2/0.19.3/1.1.1/server/jar -OutFile '%sf%server.jar'
+if /i "%sprov%"=="V" set PROVNAME=Vanilla
+if /i "%sprov%"=="P" set PROVNAME=Paper
+if /i "%sprov%"=="F" set PROVNAME=Fabric
+echo %SETUPTEXT% Downloading the %BRIGHT_CYAN%%PROVNAME% %MCVER% Server jarfile%RESET%..
+if not exist "%~dp0Get-ServerJar.ps1" powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/file_hosting/refs/heads/main/Get-ServerJar.ps1 -OutFile Get-ServerJar.ps1" 
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0Get-ServerJar.ps1" -Provider "%sprov%" -Version "%MCVER%" -OutFile "%sf%server.jar"
+if errorlevel 1 (echo %SETUPTEXT% %BRIGHT_CYAN%Failed to download the server jar.%RESET% Check the version/provider combo and try again. & pause & exit /b 1)
 if /i "%sdiff%"=="P" set "diff=peaceful"
 if /i "%sdiff%"=="E" set "diff=easy"
 if /i "%sdiff%"=="N" set "diff=normal"

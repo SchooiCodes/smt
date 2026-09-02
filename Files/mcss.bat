@@ -14,4 +14,3 @@ echo Starting Playit.gg..
 start "" "playit"
 echo Please make sure it is properly set up and configured!
 echo Starting Minecraft server..
-pause

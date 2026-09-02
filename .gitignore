@@ -4,3 +4,4 @@ Files/config/settings.ini
 Files/MegaTemp.exe
 Files/config.json
 SMT.bat
+Files/Get-ServerJar.ps1

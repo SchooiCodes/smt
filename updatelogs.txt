@@ -1,1 +1,2 @@
-Small bugfix + legal fix
+Made MCS download any MC version + others
+Make Playit installer use .msi filename, add robust server-jar download flow, and tidy prompts. Updates: plt.bat now downloads/uses playit .msi; mcs.bat cleans prompts, adds MC version input with default, fixes Playit installation conditional, and delegates jar retrieval to Get-ServerJar.ps1 (auto-downloads it if missing) with error handling. .gitignore now ignores Files/Get-ServerJar.ps1. Removed extraneous pause in mcss.bat. These changes improve flexibility and reliability when creating servers.

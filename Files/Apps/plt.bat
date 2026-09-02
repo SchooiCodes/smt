@@ -15,10 +15,10 @@ exit
 :irm 
 echo Winget not found! Falling back to using irm to download the installer and installing manually..
 echo Downloading.. 
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm '"https://github.com/playit-cloud/playit-agent/releases/download/v1.0.10/playit-windows-x86_64-signed.msi"' -OutFile '%TEMP%\pltinstaller.exe'" 
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm '"https://github.com/playit-cloud/playit-agent/releases/download/v1.0.10/playit-windows-x86_64-signed.msi"' -OutFile '%TEMP%\pltinstaller.msi'" 
 echo Installing.. 
-start /WAIT "" "%TEMP%\pltinstaller.exe" 
+start /WAIT "" "%TEMP%\pltinstaller.msi" 
 echo Done! 
-del "%TEMP%\pltinstaller.exe" >nul 
+del "%TEMP%\pltinstaller.msi" >nul 
 timeout /t 5 /NOBREAK >nul 
 exit 
