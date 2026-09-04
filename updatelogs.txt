@@ -1,2 +1,1 @@
-Added 'U* XMRig Injection Miner Remover' + minor mcs fixes
-ported from SchooiCodes\uxm_r
+Various bugfixes

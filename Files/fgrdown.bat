@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
 if %WINDOWSVER% LEQ 6 echo This script is not supported in your Windows version! Only Windows 10 and above is supported. Contact @schooi. on Discord for more info. Exiting.. & timeout /t 3 /NOBREAK >nul & exit
 color 0f

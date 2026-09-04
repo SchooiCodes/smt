@@ -96,7 +96,7 @@ if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>confi
 if "%inpath%"=="false " if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
 if "%inpath%"=="false " if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
 if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true "
-if "%inpath%"=="true " if not exist ..\SMT.bat echo @%%~dp0SchooiMultitool.bat %%*>..\SMT.bat
+if "%inpath%"=="true " echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
