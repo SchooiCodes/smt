@@ -1,1 +1,1 @@
-Various bugfixes
+Added a Proton VPN and a Stacher7 installer
