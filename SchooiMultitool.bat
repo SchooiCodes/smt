@@ -85,18 +85,23 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s Portable config
 if "%portable%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
 if "%portable%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
 if "%portable%"=="false " FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-if "%inpath%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
-if "%inpath%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
-if "%inpath%"=="false " if "%elevated%"=="true" for /f "tokens=* delims=" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path') do set OLD_DATA=%%a
-if "%inpath%"=="false " if NOT "%elevated%"=="true" for /f "tokens=* delims=" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path') do set OLD_DATA=%%a
-if "%OLD_DATA%"=="" set OLD_DATA=Placeholder
-if "%inpath%"=="false " if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA:~22%
-if "%inpath%"=="false " if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA:~22%;
-if "%inpath%"=="false " echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
-if "%inpath%"=="false " if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-if "%inpath%"=="false " if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-if "%inpath%"=="false " call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true "
-if "%inpath%"=="true " echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
+set "inpath=%inpath: =%"
+if /i "%inpath%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
+if /i "%inpath%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
+if /i "%inpath%"=="false" set "OLD_DATA="
+if /i "%inpath%"=="false" set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if not defined OLD_DATA set OLD_DATA=Placeholder
+if /i "%inpath%"=="false" if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%
+if /i "%inpath%"=="false" if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
+if /i "%inpath%"=="false" echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
+if /i "%inpath%"=="false" if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if /i "%inpath%"=="false" call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true"
+if /i "%inpath%"=="true" echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
