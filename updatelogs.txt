@@ -1,2 +1,1 @@
-Improve PATH handling
-Revise SchooiMultitool.bat to sanitize the inpath value, use case-insensitive checks, robustly parse reg query output, detect and preserve REG_SZ/REG_EXPAND_SZ types, handle empty OLD_DATA, save the previous PATH to config\old_path.txt, and add C:\Program Files\SMT to the appropriate registry key. Update the ini flag and ensure SMT.bat is generated. These changes improve reliability when adding SMT to the system PATH.
+Addded Bitdefender

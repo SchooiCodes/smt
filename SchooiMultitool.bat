@@ -376,6 +376,7 @@ echo 45. Chocolatey (choco, package manager) %findstring%
 echo 46. Scoop (package manager) %findstring%
 echo 47. Proton VPN
 echo 48. Stacher7
+echo 49. Bitdefender Free
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -430,6 +431,7 @@ if "%appch%"=="45" start Apps\getchoco.bat
 if "%appch%"=="46" start Apps\getscoop.bat
 if "%appch%"=="47" start Apps\pvpn.bat
 if "%appch%"=="48" start Apps\st7.bat
+if "%appch%"=="49" start Apps\bit.bat
 goto apps
 
 :danger
