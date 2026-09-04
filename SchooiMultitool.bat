@@ -381,6 +381,8 @@ echo 49. Bitdefender Free %findstring%
 echo 50. Logitech G HUB %findstring%
 echo 51. Steam %findstring%
 echo 52. Hydra Launcher %findstring%
+echo 53. ExifCleaner %findstring%
+echo 54. Keyviz %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -439,6 +441,8 @@ if "%appch%"=="49" start Apps\bit.bat
 if "%appch%"=="50" start Apps\lgh.bat
 if "%appch%"=="51" start Apps\stm.bat
 if "%appch%"=="52" start Apps\hyd.bat
+if "%appch%"=="53" start Apps\exf.bat
+if "%appch%"=="54" start Apps\kvz.bat
 goto apps
 
 :danger
