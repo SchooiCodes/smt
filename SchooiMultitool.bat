@@ -1,4 +1,5 @@
 @echo off
+@echo off
 set elevate=true
 cd /d %~dp0
 set found=false
@@ -377,6 +378,7 @@ echo 46. Scoop (package manager) %findstring%
 echo 47. Proton VPN
 echo 48. Stacher7
 echo 49. Bitdefender Free
+echo 50. Logitech G HUB
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -432,6 +434,7 @@ if "%appch%"=="46" start Apps\getscoop.bat
 if "%appch%"=="47" start Apps\pvpn.bat
 if "%appch%"=="48" start Apps\st7.bat
 if "%appch%"=="49" start Apps\bit.bat
+if "%appch%"=="50" start Apps\lgh.bat
 goto apps
 
 :danger
