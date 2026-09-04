@@ -383,6 +383,8 @@ echo 51. Steam %findstring%
 echo 52. Hydra Launcher %findstring%
 echo 53. ExifCleaner %findstring%
 echo 54. Keyviz %findstring%
+echo 55. OBS Studio %findstring%
+echo 56. Audacity %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -443,6 +445,8 @@ if "%appch%"=="51" start Apps\stm.bat
 if "%appch%"=="52" start Apps\hyd.bat
 if "%appch%"=="53" start Apps\exf.bat
 if "%appch%"=="54" start Apps\kvz.bat
+if "%appch%"=="55" start Apps\obs.bat
+if "%appch%"=="56" start Apps\aud.bat
 goto apps
 
 :danger
