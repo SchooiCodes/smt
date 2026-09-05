@@ -604,6 +604,7 @@ echo 11. Windows 11 Tweaker
 echo 12. Windows Performance Options
 echo 13. Ultimate Performance Power Plan Enabler
 echo 14. Chris Titus Tool
+echo 15. Tron
 echo.
 set /p sysch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%sysch%"=="B" cls & goto tools
@@ -624,6 +625,7 @@ if "%sysch%"=="11" start w11.bat
 if "%sysch%"=="12" start %windir%\system32\systempropertiesperformance.exe
 if "%sysch%"=="13" start UPPPE.bat
 if "%sysch%"=="14" start apps\ctt.bat
+if "%sysch%"=="15" start tron.bat
 goto sysadmin
         
 :utils
