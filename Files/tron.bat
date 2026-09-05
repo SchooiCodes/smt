@@ -23,13 +23,13 @@ echo.
 echo Legal Notice
 echo qBittorrent is a file sharing program. When you run a torrent, its data will be made available to others by means of upload. Any content you share is your sole responsibility.
 echo.
-start /MIN /WAIT "" "C:\Program Files\qbittorrent\qbittorrent.exe" "magnet:?xt=urn:btih:1b4d2f1ca6893625f1d655b127762210c8be7203&dn=Tron%%20v12.0.8%%20%%282025-01-09%%29&tr=udp%%3A%%2F%%2Ftracker.publicbt.com%%3A80&tr=http%%3A%%2F%%2Ftracker.openbittorrent.com%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.ccc.de%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.istole.it%%3A80&tr=http%%3A%%2F%%2F9.rarbg.com%%3A2710%%2Fannounce&tr=http%%3A%%2F%%2Ftracker.ipv6tracker.org%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.coppersurfer.tk%%3A6969%%2Fannounce" --save-path="." --skip-dialog --configuration=smt --confirm-legal-notice
+start /MIN /WAIT "" "C:\Program Files\qbittorrent\qbittorrent.exe" "magnet:?xt=urn:btih:1b4d2f1ca6893625f1d655b127762210c8be7203&dn=Tron%%20v12.0.8%%20%%282025-01-09%%29&tr=udp%%3A%%2F%%2Ftracker.publicbt.com%%3A80&tr=http%%3A%%2F%%2Ftracker.openbittorrent.com%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.ccc.de%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.istole.it%%3A80&tr=http%%3A%%2F%%2F9.rarbg.com%%3A2710%%2Fannounce&tr=http%%3A%%2F%%2Ftracker.ipv6tracker.org%%3A80%%2Fannounce&tr=udp%%3A%%2F%%2Ftracker.coppersurfer.tk%%3A6969%%2Fannounce" --save-path="%USERPROFILE%\Downloads" --skip-dialog --configuration=smt --confirm-legal-notice
 rd /s /q "%localappdata%\qBittorrent_smt\BT_backup"
 echo Setting up Tron..
-cd "Tron v12.0.8 (2025-01-09)"
-copy tron.bat "%USERPROFILE%\Desktop\" >nul
+cd "%USERPROFILE%\Downloads\Tron v12.0.8 (2025-01-09)"
+move tron.bat "%USERPROFILE%\Desktop\" >nul
 if exist "%USERPROFILE%\Desktop\resources" echo "%USERPROFILE%\Desktop\resources" already exists. Renaming to resources_old.. & ren "%USERPROFILE%\Desktop\resources" resources_old >nul
-copy resources "%USERPROFILE%\Desktop\" >nul
+move resources "%USERPROFILE%\Desktop\" >nul
 copy /y runtron.bat "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\" >nul
 echo Restarting..
 shutdown -r -t 0
