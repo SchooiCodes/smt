@@ -129,7 +129,7 @@ if "%internet%"=="c" (
 			if NOT "%%a"=="%%b" (
 				echo %RESET%[%BRIGHT_GREEN%+%RESET%] %%a update available! 
 				setlocal enabledelayedexpansion
-				choice /c YN /t 30 /D Y /N /M "[%BRIGHT_YELLOW%?%RESET%] Would you like to install it now? [Y/N] "
+				choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] "
 				if "!ERRORLEVEL!"=="1" (
 					if "%portable%"=="false " (
 						if not exist "%TEMP%\smt" md "%TEMP%\smt"
@@ -139,14 +139,14 @@ if "%internet%"=="c" (
 						"%TEMP%\SMT\SMTSetup.exe" /S
 						rd /s /q "%TEMP%\SMT" >nul
 						if /i "%sent%"=="true" (
-							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
+							echo [~] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
 							call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
 						)
 						if /i "%inpath%"=="true " (
-							echo [%BRIGHT_YELLOW%~%RESET%] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
+							echo [~] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
 							call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
 						)
-						echo [%BRIGHT_GREEN%+%RESET%] SMT was updated, if the script doesn't automatically restart, start it again to continue.
+						echo [+] SMT was updated, if the script doesn't automatically restart, start it again to continue.
 						timeout /t 5 /NOBREAK >nul
 						exit
 					) else (
