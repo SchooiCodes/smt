@@ -1,1 +1,1 @@
-Made Spicetify run as non-admin and removed broken colors in update
+Added a tool to update every app and fixed winget installer (I think)
