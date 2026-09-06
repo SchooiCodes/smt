@@ -1,1 +1,2 @@
-Various fixes I recovered from my PC :)
+Added a bare Spotify installer and a long-awaited Spicetify installer!
+with adblock, spicy lyrics, and the marketplace :) did you know Spicetify exists on winget? me neither.

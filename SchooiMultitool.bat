@@ -351,7 +351,7 @@ echo 11. Wintoys %findstring%
 echo 12. Windows PC Manager %findstring%
 echo 13. f.lux %findstring%
 echo 14. Chrome %findstring%
-echo 15. Spotify (No Ads) %findstring%
+echo 15. Spotify (No Ads) [OLD, USE SPICETIFY (58) INSTEAD] %findstring%
 echo 16. Firefox %findstring%
 echo 17. 7zip %findstring%
 echo 18. Telegram %findstring%
@@ -393,6 +393,8 @@ echo 53. ExifCleaner %findstring%
 echo 54. Keyviz %findstring%
 echo 55. OBS Studio %findstring%
 echo 56. Audacity %findstring%
+echo 57. Spotify %findstring%
+echo 58. Spicetify (Spotify with no ads + enhancements) %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -455,6 +457,8 @@ if "%appch%"=="53" start Apps\exf.bat
 if "%appch%"=="54" start Apps\kvz.bat
 if "%appch%"=="55" start Apps\obs.bat
 if "%appch%"=="56" start Apps\aud.bat
+if "%appch%"=="57" start Apps\spt.bat
+if "%appch%"=="58" start Apps\spct.bat
 goto apps
 
 :danger
