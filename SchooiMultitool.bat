@@ -23,6 +23,14 @@ if "%1"=="-p" start Files\createportable.bat & goto :EOF
 if "%1"=="/p" start Files\createportable.bat & goto :EOF
 if "%1"=="--portable" start Files\createportable.bat & goto :EOF
 if "%1"=="/portable" start Files\createportable.bat & goto :EOF
+if "%1"=="-f" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto :EOF
+if "%1"=="/f" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto :EOF
+if "%1"=="--feedback" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto :EOF
+if "%1"=="/feedback" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto :EOF
+if "%1"=="-i" call :install & goto :EOF
+if "%1"=="/i" call :install & goto :EOF
+if "%1"=="--install" call :install & goto :EOF
+if "%1"=="/install" call :install & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
@@ -760,6 +768,24 @@ FOR /F "tokens=* delims=" %%x in ('type "%TEMP%\toolnum.txt"') DO set toolcount=
 del "%TEMP%\toolnum.txt"
 goto info
 
+:install
+echo.
+cd /d %~dp0Files
+echo [~] Creating temporary directory..
+if not exist "%TEMP%\smt" md "%TEMP%\smt"
+echo [~] Applying settings..
+copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
+echo [~] Adding exclusion..
+start /WAIT /MIN "" add_exclusion.bat
+echo [~] Fetching installer..
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://github.com/SchooiCodes/smt/raw/main/Schooi`'s%%20Multitool%%20Setup.exe -OutFile %TEMP%\SMT\SMTSetup.exe"
+echo [~] Running installer..
+"%TEMP%\SMT\SMTSetup.exe" /S
+echo [~] Cleaning up..
+rd /s /q "%TEMP%\SMT" >nul
+echo [+] Done.
+goto :EOF
+
 :history
 if "%resizing%"=="true" mode con cols=80 lines=45
 title [SMT ^| %version%] Command History
@@ -941,10 +967,14 @@ echo  -s, /s, --sync, /sync             Syncs SMT files with the upstream repo t
 echo.
 echo  -p, /p, --portable, /portable     Creates an SMT portable zip
 echo.
+echo  -f, /f, --feedback, /feedback     Opens the feedback form
+echo.
+echo  -i, /i, --install, /install       Installs SMT
+echo.
 echo  -32, /32, --system32,             Adds SMT to the path (old, superseeded by automatic path addition on first boot)
 echo  /system32
 echo.
-echo  -pf, /pf, --program-files,        Adds SMT to program files and creates a shortcut on the desktop (old, use exe installer instead)
+echo  -pf, /pf, --program-files,        Adds SMT to program files and creates a shortcut on the desktop (old, use /i instead)
 echo  /program-files
 echo.
 echo  -na, /na, --noadmin, /noadmin     Runs SMT without admin if it is installed in an admin folder (e.g. Program Files)

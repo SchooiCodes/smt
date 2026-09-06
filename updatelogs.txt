@@ -1,1 +1,1 @@
-Fix Tron
+Added new install / feedback CLI flags (view readme)
