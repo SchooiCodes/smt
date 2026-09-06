@@ -1,4 +1,6 @@
 @echo off
+cd /d "%~dp0"
+title Text to Speech
 if exist logo.bat call logo.bat & echo.
 echo Generating needed file..
 echo Dim message, sapi > speak.vbs

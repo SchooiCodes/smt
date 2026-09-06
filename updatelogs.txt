@@ -1,1 +1,1 @@
-Added new install / feedback CLI flags (view readme)
+Various fixes I recovered from my PC :)
