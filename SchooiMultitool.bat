@@ -1,5 +1,4 @@
 @echo off
-@echo off
 set elevate=true
 cd /d %~dp0
 set found=false

@@ -1,1 +1,1 @@
-Added a tool to update every app and fixed winget installer (I think)
+how were color codes even working?
