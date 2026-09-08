@@ -37,6 +37,6 @@ if /i "%spicy%"=="y" (
 echo Applying changes..
 "%localappdata%\spicetify\spicetify.exe" update
 "%localappdata%\spicetify\spicetify.exe" backup apply
-echo Done.
+echo Done. In case Spicetify ever breaks / stops working, re-run this script.
 pause
 exit

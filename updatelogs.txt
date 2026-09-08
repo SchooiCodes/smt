@@ -1,1 +1,1 @@
-Added a WakaTime for Windows installer
+Small bugfixes in fastfetch installer and spct
