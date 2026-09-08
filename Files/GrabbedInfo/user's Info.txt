@@ -1,0 +1,303 @@
+IP Info 
+--------- 
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet 3:
+
+   Connection-specific DNS Suffix  . : 
+   IPv4 Address. . . . . . . . . . . : 192.168.68.109
+   Subnet Mask . . . . . . . . . . . : 255.255.252.0
+   Default Gateway . . . . . . . . . : 192.168.68.1
+
+Ethernet adapter д??лое? л??з??? Bluetooth 3:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+
+Ethernet adapter vEthernet (Default Switch):
+
+   Connection-specific DNS Suffix  . : 
+   Link-local IPv6 Address . . . . . : fe80::d420:ac16:cb13:b30e%32
+   IPv4 Address. . . . . . . . . . . : 172.19.192.1
+   Subnet Mask . . . . . . . . . . . : 255.255.240.0
+   Default Gateway . . . . . . . . . : 
+ 
+User Info 
+--------- 
+
+User accounts for \\DESKTOP-BJ3U7IE
+
+-------------------------------------------------------------------------------
+Administrator            Guest                    Manolis                  
+user                     WDAGUtilityAccount       г??ог??о?ж???? ???а??аеж?
+The command completed successfully.
+
+ 
+System Info 
+--------- 
+
+Host Name:                 DESKTOP-BJ3U7IE
+OS Name:                   Microsoft Windows 10 Pro
+OS Version:                10.0.19045 N/A Build 19045
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          user
+Registered Organization:   
+Product ID:                00330-80000-00000-AA508
+Original Install Date:     1/17/2023, 5:25:12 PM
+System Boot Time:          9/8/2026, 2:01:52 PM
+System Manufacturer:       Gigabyte Technology Co., Ltd.
+System Model:              H81M-S2PV
+System Type:               x64-based PC
+Processor(s):              1 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 60 Stepping 3 GenuineIntel ~3400 Mhz
+BIOS Version:              American Megatrends Inc. F4, 8/14/2013
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+02:00) Athens, Bucharest
+Total Physical Memory:     8,145 MB
+Available Physical Memory: 3,953 MB
+Virtual Memory: Max Size:  14,801 MB
+Virtual Memory: Available: 9,817 MB
+Virtual Memory: In Use:    4,984 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              \\DESKTOP-BJ3U7IE
+Hotfix(s):                 38 Hotfix(s) Installed.
+                           [01]: KB5120709
+                           [02]: KB5028853
+                           [03]: KB5011048
+                           [04]: KB5011055
+                           [05]: KB5012170
+                           [06]: KB5015684
+                           [07]: KB5020683
+                           [08]: KB5033052
+                           [09]: KB5072653
+                           [10]: KB5120249
+                           [11]: KB5014032
+                           [12]: KB5016705
+                           [13]: KB5020372
+                           [14]: KB5022924
+                           [15]: KB5023794
+                           [16]: KB5025315
+                           [17]: KB5026879
+                           [18]: KB5028318
+                           [19]: KB5029709
+                           [20]: KB5037240
+                           [21]: KB5037995
+                           [22]: KB5039336
+                           [23]: KB5041579
+                           [24]: KB5043935
+                           [25]: KB5043130
+                           [26]: KB5046823
+                           [27]: KB5050388
+                           [28]: KB5050111
+                           [29]: KB5052916
+                           [30]: KB5054682
+                           [31]: KB5058526
+                           [32]: KB5059504
+                           [33]: KB5063706
+                           [34]: KB5063261
+                           [35]: KB5063979
+                           [36]: KB5066790
+                           [37]: KB5071982
+                           [38]: KB5104021
+Network Card(s):           3 NIC(s) Installed.
+                           [01]: Hyper-V Virtual Ethernet Adapter
+                                 Connection Name: vEthernet (Default Switch)
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 172.19.192.1
+                                 [02]: fe80::d420:ac16:cb13:b30e
+                           [02]: Realtek PCIe GbE Family Controller
+                                 Connection Name: Ethernet 3
+                                 DHCP Enabled:    Yes
+                                 DHCP Server:     192.168.68.1
+                                 IP address(es)
+                                 [01]: 192.168.68.109
+                           [03]: Bluetooth Device (Personal Area Network)
+                                 Connection Name: д??лое? л??з??? Bluetooth 3
+                                 Status:          Media disconnected
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+ 
+C:\ contents 
+--------- 
+ Volume in drive C has no label.
+ Volume Serial Number is 9C0E-A074
+
+ Directory of C:\
+
+01/17/2023  06:30 PM    <DIR>          $GIGABYTE$
+02/11/2026  10:54 PM         9,130,588 2026-02-11 21-52-47.mp4
+06/05/2024  08:53 PM    <DIR>          ESD
+05/28/2025  08:41 PM    <DIR>          Games
+04/13/2025  05:46 PM    <DIR>          inetpub
+09/05/2026  06:47 PM    <DIR>          logs
+07/22/2025  08:58 PM                90 logUploaderSettings.ini
+07/22/2025  08:58 PM                90 logUploaderSettings_temp.ini
+03/27/2025  06:23 PM    <DIR>          PerfLogs
+09/07/2026  03:10 PM    <DIR>          Program Files
+09/05/2026  08:59 PM    <DIR>          Program Files (x86)
+09/26/2024  08:46 PM    <DIR>          SYSTEM.SAV
+04/19/2026  03:31 PM         2,679,836 Untitled 1.pptx
+11/15/2024  08:08 PM    <DIR>          Users
+03/31/2026  04:01 PM    <DIR>          VentoyBackup
+09/06/2026  04:43 PM    <DIR>          Windows
+05/15/2024  07:35 PM    <DIR>          XboxGames
+               4 File(s)     11,810,604 bytes
+              13 Dir(s)  42,002,354,176 bytes free
+ 
+Program Files contents 
+------------------------- 
+ Volume in drive C has no label.
+ Volume Serial Number is 9C0E-A074
+
+ Directory of C:\Program Files
+
+09/07/2026  03:10 PM    <DIR>          .
+09/07/2026  03:10 PM    <DIR>          ..
+03/11/2025  09:42 PM    <DIR>          7-Zip
+03/28/2023  04:43 PM    <DIR>          Adobe
+09/05/2026  02:34 PM    <DIR>          Anvsoft
+09/05/2026  09:41 PM    <DIR>          Audacity
+09/07/2026  02:49 PM    <DIR>          AutoHotkey
+04/21/2023  07:25 PM    <DIR>          Badlion Client
+01/19/2023  04:16 PM    <DIR>          CDBurnerXP
+09/06/2026  01:46 AM    <DIR>          Common Files
+03/12/2025  12:18 AM    <DIR>          CPUID
+07/28/2025  05:07 PM    <DIR>          Creative
+05/11/2025  05:46 PM    <DIR>          Desktop Info
+02/05/2026  12:12 AM    <DIR>          Docker
+09/05/2026  02:41 PM    <DIR>          dotnet
+01/23/2025  05:23 PM    <DIR>          DS4Windows
+07/18/2023  11:54 AM    <DIR>          EaseUS
+09/07/2026  03:00 PM    <DIR>          Eclipse Adoptium
+09/07/2026  02:49 PM    <DIR>          Everything
+09/06/2026  11:32 PM    <DIR>          Git
+03/22/2023  03:28 PM    <DIR>          Google
+07/19/2023  03:26 PM    <DIR>          Highresolution Enterprises
+09/27/2024  03:01 PM    <DIR>          HP
+09/06/2026  04:39 PM    <DIR>          Hyper-V
+06/05/2024  03:41 PM    <DIR>          IconViewer
+09/06/2026  01:42 AM    <DIR>          Image-Line
+01/17/2023  06:29 PM    <DIR>          Intel
+09/06/2026  04:39 PM    <DIR>          Internet Explorer
+09/06/2026  01:38 AM    <DIR>          IrfanView
+09/07/2026  03:02 PM    <DIR>          Java
+10/24/2024  06:48 PM    <DIR>          KeyboardNotification
+09/07/2026  02:58 PM    <DIR>          LGHUB
+01/31/2026  05:15 PM    <DIR>          LGHUB.old
+02/10/2025  04:13 PM    <DIR>          Logi
+04/21/2023  08:00 PM    <DIR>          Logitech
+09/05/2026  09:24 PM    <DIR>          Malwarebytes
+03/09/2023  05:49 PM    <DIR>          Microsoft
+09/07/2026  02:51 PM    <DIR>          Microsoft GameInput
+09/05/2026  07:11 PM    <DIR>          Microsoft Office
+03/08/2023  08:47 PM    <DIR>          Microsoft Office 15
+01/17/2023  06:32 PM    <DIR>          Microsoft Silverlight
+05/25/2024  11:13 AM    <DIR>          Microsoft Update Health Tools
+10/31/2024  09:25 PM    <DIR>          Microsoft Visual Studio
+09/07/2026  02:51 PM    <DIR>          MiniTool Partition Wizard 13
+12/07/2019  12:14 PM    <DIR>          ModifiableWindowsApps
+09/06/2026  03:39 PM    <DIR>          Mozilla Firefox
+02/06/2023  10:35 PM    <DIR>          MSBuild
+06/05/2024  12:00 PM    <DIR>          Notepad++
+09/06/2026  02:15 AM    <DIR>          NVIDIA Corporation
+06/04/2024  10:03 PM    <DIR>          Oracle
+05/17/2024  06:14 PM    <DIR>          PackageManagement
+09/07/2026  02:53 PM    <DIR>          paint.net
+09/05/2026  03:11 PM    <DIR>          PowerShell
+02/17/2025  12:10 AM    <DIR>          Process Hacker 2
+09/07/2026  03:08 PM    <DIR>          PuTTY
+09/07/2026  03:32 PM    <DIR>          Python313
+09/07/2026  03:11 PM    <DIR>          qBittorrent
+09/07/2026  03:10 PM    <DIR>          Rainmeter
+09/05/2026  02:30 PM    <DIR>          Razer
+09/07/2026  02:50 PM    <DIR>          Recuva
+02/06/2023  10:35 PM    <DIR>          Reference Assemblies
+09/05/2026  03:55 PM    <DIR>          Rockstar Games
+07/22/2025  08:10 PM    <DIR>          RUXIM
+07/21/2024  09:12 AM    <DIR>          Schooi's Multitool
+09/05/2026  02:04 PM    <DIR>          ShareX
+09/05/2026  02:15 PM    <DIR>          SMT
+01/28/2023  10:26 AM    <DIR>          SteamLibrary
+03/16/2025  11:35 PM    <DIR>          TeraCopy
+05/20/2025  09:53 PM    <DIR>          VB
+01/19/2023  04:16 PM    <DIR>          VideoLAN
+09/07/2026  02:50 PM    <DIR>          Winaero Tweaker
+05/25/2024  12:42 PM    <DIR>          Windows Defender
+09/06/2026  04:39 PM    <DIR>          Windows Defender Advanced Threat Protection
+05/16/2024  09:06 PM    <DIR>          Windows Mail
+05/25/2024  12:42 PM    <DIR>          Windows Media Player
+09/06/2026  04:39 PM    <DIR>          Windows Multimedia Platform
+12/07/2019  06:00 PM    <DIR>          Windows NT
+09/06/2026  04:39 PM    <DIR>          Windows Photo Viewer
+09/06/2026  04:39 PM    <DIR>          Windows Portable Devices
+12/07/2019  12:31 PM    <DIR>          Windows Security
+05/17/2024  06:14 PM    <DIR>          WindowsPowerShell
+09/07/2026  02:50 PM    <DIR>          WinRAR
+03/22/2025  10:24 PM    <DIR>          yt-dlp
+               0 File(s)              0 bytes
+              83 Dir(s)  42,002,350,080 bytes free
+ 
+Program Files x86 contents 
+------------------------- 
+ Volume in drive C has no label.
+ Volume Serial Number is 9C0E-A074
+
+ Directory of C:\Program Files (x86)
+
+09/05/2026  08:59 PM    <DIR>          .
+09/05/2026  08:59 PM    <DIR>          ..
+01/17/2023  06:31 PM    <DIR>          Adobe
+09/07/2026  03:02 PM    <DIR>          Common Files
+07/28/2025  05:08 PM    <DIR>          Creative
+07/18/2023  11:54 AM    <DIR>          EaseUS
+06/19/2024  03:23 PM    <DIR>          FinalWire
+05/11/2023  06:55 PM    <DIR>          Glarysoft
+05/15/2024  07:19 PM    <DIR>          Google
+01/17/2023  06:29 PM    <DIR>          Intel
+09/06/2026  04:39 PM    <DIR>          Internet Explorer
+09/07/2026  03:10 PM    <DIR>          K-Lite Codec Pack
+09/05/2026  02:39 PM    <DIR>          Microsoft
+01/17/2023  06:32 PM    <DIR>          Microsoft Silverlight
+10/31/2024  09:25 PM    <DIR>          Microsoft Visual Studio
+01/20/2025  06:23 PM    <DIR>          Microsoft XNA
+09/05/2026  07:10 PM    <DIR>          Microsoft.NET
+03/02/2025  12:22 PM    <DIR>          Minecraft Launcher
+09/06/2026  03:39 PM    <DIR>          Mozilla Maintenance Service
+10/31/2024  10:29 PM    <DIR>          MSBuild
+09/11/2024  10:03 PM    <DIR>          NSIS
+09/06/2026  02:23 AM    <DIR>          NVIDIA Corporation
+09/02/2025  03:52 PM    <DIR>          oh-my-posh
+01/29/2023  10:03 PM    <DIR>          Proton Technologies
+12/23/2024  04:40 PM    <DIR>          Razer
+02/06/2023  10:35 PM    <DIR>          Reference Assemblies
+02/18/2023  01:40 PM    <DIR>          Roblox
+02/10/2026  03:22 PM    <DIR>          Samuel Tulach
+02/18/2025  03:44 PM    <DIR>          Stardock
+09/05/2026  07:08 PM    <DIR>          Steam
+07/18/2023  11:57 AM    <DIR>          Tenorshare
+05/17/2024  02:54 PM    <DIR>          TP-Link
+02/16/2025  09:13 PM    <DIR>          UltraISO
+05/20/2025  09:49 PM    <DIR>          VB
+09/05/2023  06:52 PM    <DIR>          VEGAS
+09/06/2026  01:46 AM    <DIR>          VMware
+05/25/2024  12:42 PM    <DIR>          Windows Defender
+10/31/2024  10:27 PM    <DIR>          Windows Kits
+05/16/2024  09:06 PM    <DIR>          Windows Mail
+05/25/2024  12:42 PM    <DIR>          Windows Media Player
+09/06/2026  04:39 PM    <DIR>          Windows Multimedia Platform
+12/07/2019  06:00 PM    <DIR>          Windows NT
+09/06/2026  04:39 PM    <DIR>          Windows Photo Viewer
+09/06/2026  04:39 PM    <DIR>          Windows Portable Devices
+03/20/2023  05:49 PM    <DIR>          WindowsInstallationAssistant
+12/07/2019  12:31 PM    <DIR>          WindowsPowerShell
+               0 File(s)              0 bytes
+              46 Dir(s)  42,002,345,984 bytes free

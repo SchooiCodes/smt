@@ -153,7 +153,7 @@ if "%internet%"=="c" (
 						exit
 					)
 				) else (
-					echo [%BRIGHT_RED%-%RESET%] Update skipped. Continuing...
+					echo [-] Update skipped. Continuing...
 				)
 				endlocal
 			)
@@ -462,6 +462,22 @@ goto apps
 
 :danger
 if "%resizing%"=="true" mode con cols=80 lines=30
+set "dotheyknow="
+cls
+call logo.bat
+echo.
+echo %BRIGHT_RED%[WARNING]%RESET% Entering Danger Zone
+echo %BRIGHT_RED%==============================%RESET%
+echo This category is intended purely for %BRIGHT_RED%TESTING%RESET% and %BRIGHT_RED%EXPERIMENTAL TOOLS%RESET%.
+echo The tools inside can be harmful towards you or others, and are %BRIGHT_RED%ONLY%RESET% meant for %BRIGHT_RED%AUTHORIZED USE%RESET%.
+echo If you do not know what you are doing, or have malicious intents, please go back.
+echo.
+echo %BRIGHT_RED%[!] DISCLAIMER:%RESET% No warranty, no liability for damage, data loss, or misuse.
+echo Only run these tools against systems/data you own or are authorized to test.
+echo You are responsible for complying with all applicable laws.
+echo %BRIGHT_RED%==============================%RESET%
+set /p "dotheyknow=Type "%BRIGHT_RED%I KNOW WHAT I AM DOING%RESET%" to proceed, or leave blank to go back > "
+if /i NOT "%dotheyknow%"=="I KNOW WHAT I AM DOING" cls & goto tools
 cls
 call logo.bat
 echo.

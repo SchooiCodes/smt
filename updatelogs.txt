@@ -1,1 +1,2 @@
-how were color codes even working?
+Added a disclaimer to the Danger Zone
+i hope this does the job :pray:
