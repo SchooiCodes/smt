@@ -1,2 +1,1 @@
-i pushed something i shouldn't have. always have gh desktop open.
-y
+Added a WakaTime for Windows installer

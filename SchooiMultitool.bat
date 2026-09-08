@@ -394,6 +394,7 @@ echo 55. OBS Studio %findstring%
 echo 56. Audacity %findstring%
 echo 57. Spotify %findstring%
 echo 58. Spicetify (Spotify with no ads + enhancements) %findstring%
+echo 59. WakaTime for Windows %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -458,6 +459,7 @@ if "%appch%"=="55" start Apps\obs.bat
 if "%appch%"=="56" start Apps\aud.bat
 if "%appch%"=="57" start Apps\spt.bat
 if "%appch%"=="58" start Apps\spct.bat
+if "%appch%"=="59" start Apps\wkt.bat
 goto apps
 
 :danger
