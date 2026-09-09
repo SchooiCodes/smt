@@ -1,2 +1,1 @@
-Self-hosted the usage pings system, cleaned up settings names
-Renamed/re-categorized settings.ini, self hosted usage pings under cloudflare pages.
+Fixed the installer to work properly with the new settings
