@@ -10,7 +10,7 @@ echo Copying settings.ini into the folder..
 copy config\settings.ini "%USERPROFILE%\Downloads\smt\Files\config\" >nul
 cd %USERPROFILE%\Downloads\smt\Files
 echo Applying new config.. (isportable=true, usagepingsent=false, addedtopath=false)
-call "%~dp0ini.bat" /i isportable /s Portable /v true config\settings.ini >nul
+call "%~dp0ini.bat" /i isportable /s System /v true config\settings.ini >nul
 call "%~dp0ini.bat" /i usagepingsent /s Telemetry /v false config\settings.ini >nul
 call "%~dp0ini.bat" /i smtinpath /s AddedToPath /v false config\settings.ini >nul
 echo Starting filesync..

@@ -81,18 +81,18 @@ for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Curre
 if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
 cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
 if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s TerminalTextColoring config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
-if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
+if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set "policy=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
 if "%policy%"=="Unrestricted" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s Portable config\settings.ini') do set portable=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do set portable=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
 if "%portable%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
 if "%portable%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
-if "%portable%"=="false " FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s AddedToPath config\settings.ini') do set inpath=%%x & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
+if "%portable%"=="false " FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do set inpath=%%x & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 set "inpath=%inpath: =%"
 if /i "%inpath%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 if /i "%inpath%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
@@ -108,17 +108,17 @@ if /i "%inpath%"=="false" if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
 if /i "%inpath%"=="false" echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
 if /i "%inpath%"=="false" if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
 if /i "%inpath%"=="false" if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-if /i "%inpath%"=="false" call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul & set "inpath=true"
+if /i "%inpath%"=="false" call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
 if /i "%inpath%"=="true" echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
-if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepingsent /s Telemetry config\settings.ini') do set "sent=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent..
+if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepingsent /s System config\settings.ini') do set "sent=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent..
 if "%internet%"=="c" (
-	if /i NOT "%sent%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. & curl -s "https://countapi.mileshilliard.com/api/v1/hit/59422026" >nul 2>&1 & call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul 
+	if /i NOT "%sent%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. & curl -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" >nul 2>&1 & call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul 
 	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
-	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://countapi.mileshilliard.com/api/v1/get/59422026).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
+	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://counter-api.schooicodes.workers.dev/count/smt/pings).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
 	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
 	powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/version -OutFile %TEMP%\version"
 	for /f "tokens=* delims=" %%a in (%TEMP%\version) do (
@@ -139,11 +139,11 @@ if "%internet%"=="c" (
 						rd /s /q "%TEMP%\SMT" >nul
 						if /i "%sent%"=="true" (
 							echo [~] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
-							call ini.bat /i usagepingsent /s Telemetry /v true config\settings.ini >nul
+							call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul
 						)
 						if /i "%inpath%"=="true " (
 							echo [~] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
-							call ini.bat /i smtinpath /s AddedToPath /v true config\settings.ini >nul
+							call ini.bat /i smtinpath /s System /v true config\settings.ini >nul
 						)
 						echo [+] SMT was updated, if the script doesn't automatically restart, start it again to continue.
 						timeout /t 5 /NOBREAK >nul
@@ -161,7 +161,7 @@ if "%internet%"=="c" (
 		)
 	)
 )
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s TerminalResizing config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
@@ -246,10 +246,10 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
-if /i "%choice%"=="tcon" call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul & call config\tc.bat
-if /i "%choice%"=="tcoff" call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul & call config\tcoff.bat
-if /i "%choice%"=="mdon" call ini.bat /i resizing /s TerminalResizing /v true config\settings.ini >nul & set "resizing=true" & goto start
-if /i "%choice%"=="mdoff" call ini.bat /i resizing /s TerminalResizing /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
+if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
+if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
+if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start
+if /i "%choice%"=="mdoff" call ini.bat /i resizing /s Visuals /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
@@ -846,8 +846,8 @@ set /p cl=^>
 REM break>config\color.ini
 if /i "%cl%"=="O" (
 	color 07
-	call ini.bat /i hex /s TerminalColor /v 07 config\settings.ini >nul 2>&1
-	call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul 2>&1
+	call ini.bat /i hex /s Visuals /v 07 config\settings.ini >nul 2>&1
+	call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul 2>&1
 	call config\tc.bat
 	REM if exist config\ae.ini (
 		REM set "RESET=[0m"
@@ -857,8 +857,8 @@ if /i "%cl%"=="O" (
 	)
 if /i "%cl%"=="N" (
 	color 0f
-	call ini.bat /i hex /s TerminalColor /v 0f config\settings.ini >nul 2>&1
-	call ini.bat /i coloring /s TerminalTextColoring /v true config\settings.ini >nul 2>&1
+	call ini.bat /i hex /s Visuals /v 0f config\settings.ini >nul 2>&1
+	call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul 2>&1
 	call config\tc.bat
 	REM if exist config\ae.ini (
 		REM set "RESET=[97m"
@@ -868,9 +868,9 @@ if /i "%cl%"=="N" (
 	)
 if /i "%cl%"=="GB" goto start
 set /p cc=Custom Color: 
-call ini.bat /i hex /s TerminalColor /v %cc% config\settings.ini >nul 2>&1
+call ini.bat /i hex /s Visuals /v %cc% config\settings.ini >nul 2>&1
 color %cc%
-call ini.bat /i coloring /s TerminalTextColoring /v false config\settings.ini >nul 2>&1
+call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1
 call config\tcoff.bat
 timeout 3 >nul
 goto start

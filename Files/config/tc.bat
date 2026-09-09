@@ -1,4 +1,4 @@
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s TerminalColor config\settings.ini') do set color=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do set color=%%x
 set "WHITE=[37m"
 set "Black=[30m"
 set "Dark_Blue=[34m"
