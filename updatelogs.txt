@@ -1,1 +1,2 @@
-Fixed the installer to work properly with the new settings
+Add configurable disclaimer gating
+This commit adds a new Visuals setting to control disclaimer visibility and exposes it through `discon` and `discoff` commands. The startup flow now skips the disclaimer screen when disabled, and menu routing respects the new setting. Default config values were also updated to match the new behavior. Also updated `sc` and the script initialization.

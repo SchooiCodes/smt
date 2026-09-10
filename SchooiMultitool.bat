@@ -163,10 +163,12 @@ if "%internet%"=="c" (
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. & set disclaimers=%%x
+if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
-goto rpoint
+if "%disclaimers%"=="true" (goto rpoint) else (goto start)
 
 REM :rpoint
 REM REM Anti-Piracy
@@ -249,7 +251,9 @@ if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto
 if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start
-if /i "%choice%"=="mdoff" call ini.bat /i resizing /s Visuals /v false config\settings.ini >nul & set resizing=false & mode con cols=120 lines=30 & goto start
+if /i "%choice%"=="mdoff" call ini.bat /i resizing /s Visuals /v false config\settings.ini >nul & set "resizing=false" & mode con cols=120 lines=30 & goto start
+if /i "%choice%"=="discon" call ini.bat /i disclaimers /s Visuals /v true config\settings.ini >nul & set "disclaimers=true" & goto start
+if /i "%choice%"=="discoff" call ini.bat /i disclaimers /s Visuals /v false config\settings.ini >nul & set "disclaimers=false" & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
@@ -304,7 +308,7 @@ if /i "%ch%"=="C" set findstring=
 if "%ch%"=="/" set /p "findstring=Enter search term: "
 if "%ch%"=="/" set findstring=^| find /I "%findstring%"
 if "%ch%"=="1" goto Apps
-if "%ch%"=="2" goto Danger
+if "%ch%"=="2" if "%disclaimers%"=="true" (goto ddisc) else (goto Danger)
 if "%ch%"=="3" goto Network
 if "%ch%"=="4" goto fixes
 if "%ch%"=="5" goto cracks
@@ -462,8 +466,7 @@ if "%appch%"=="58" start Apps\spct.bat
 if "%appch%"=="59" start Apps\wkt.bat
 goto apps
 
-:danger
-if "%resizing%"=="true" mode con cols=80 lines=30
+:ddisc
 set "dotheyknow="
 cls
 call logo.bat
@@ -480,6 +483,10 @@ echo You are responsible for complying with all applicable laws.
 echo %BRIGHT_RED%==============================%RESET%
 set /p "dotheyknow=Type "%BRIGHT_RED%I KNOW WHAT I AM DOING%RESET%" to proceed, or leave blank to go back > "
 if /i NOT "%dotheyknow%"=="I KNOW WHAT I AM DOING" cls & goto tools
+goto danger
+
+:danger
+if "%resizing%"=="true" mode con cols=80 lines=30
 cls
 call logo.bat
 echo.
@@ -892,6 +899,8 @@ echo %Bright_CYAN%tcon%RESET% - enables terminal text coloring
 echo %Bright_CYAN%tcoff%RESET% - disables terminal text coloring
 echo %Bright_CYAN%mdon%RESET% - enables automatic window resizing
 echo %Bright_CYAN%mdoff%RESET% - disables automatic window resizing
+echo %Bright_CYAN%discon%RESET% - enables disclaimer visibility
+echo %Bright_CYAN%discoff%RESET% - disables disclaimer visibility
 echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
