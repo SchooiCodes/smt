@@ -247,7 +247,7 @@ if /i "%choice%"=="cl" goto color
 if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
-if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt/releases & goto start
+if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt & goto start
 if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start

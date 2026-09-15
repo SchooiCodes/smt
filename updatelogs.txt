@@ -1,1 +1,1 @@
-Added Windhawk
+Changed the link for the `git` option (releases are not used anymore)
