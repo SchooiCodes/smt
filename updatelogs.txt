@@ -1,1 +1,2 @@
-Changed the link for the `git` option (releases are not used anymore)
+Added `-w/--website` and the `web` options that open the SMT website (smtweb.gleeze.com)
+Also made the README compare v2.2 to main

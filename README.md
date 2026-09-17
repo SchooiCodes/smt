@@ -5,10 +5,11 @@
 	<img src="https://img.shields.io/github/languages/top/SchooiCodes/smt" alt="GitHub top language">
     <img src="https://img.shields.io/github/commit-activity/w/SchooiCodes/smt" alt="GitHub commit activity">
     <img src="https://img.shields.io/github/v/tag/SchooiCodes/smt" alt="GitHub Version">
-	<img src="https://img.shields.io/github/commits-since/SchooiCodes/smt/latest" alt="GitHub commits since tagged version">
+	<img src="https://img.shields.io/github/commits-since/SchooiCodes/smt/v2.2" alt="GitHub commits since tagged version">
 	<img src="https://img.shields.io/github/languages/code-size/SchooiCodes/smt" alt="GitHub code size in bytes">
     <img src="https://img.shields.io/github/downloads/SchooiCodes/smt/total" alt="GitHub Downloads (all assets, all releases)">
     <img src="https://img.shields.io/github/license/SchooiCodes/smt" alt="GitHub License">
+    <a href=https://smtweb.gleeze.com><img src="https://img.shields.io/badge/website-here-purple" alt="smtweb.gleeze.com"></a>
 </p>
 
 About
@@ -104,6 +105,7 @@ C:\Program Files\SMT>SchooiMultitool.bat --debug
 | p / portable | Creates an SMT portable zip |          
 | f / feedback | Opens the feedback form |          
 | i / install | Installs SMT |          
+| w / website | Opens the SMT website |          
 | 32 / system32 | Adds SMT to PATH (old, happens automatically) |
 | pf / program-files | Adds SMT to `C:\Program Files` and creates a shortcut on the desktop (old, use [exe installer](https://github.com/SchooiCodes/smt/blob/main/Schooi's%20Multitool%20Setup.exe) instead)
 | na / no-admin | Runs SMT without admin if it is installed in an admin folder (e.g. `C:\Program Files`) |

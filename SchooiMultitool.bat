@@ -30,6 +30,10 @@ if "%1"=="-i" call :install & goto :EOF
 if "%1"=="/i" call :install & goto :EOF
 if "%1"=="--install" call :install & goto :EOF
 if "%1"=="/install" call :install & goto :EOF
+if "%1"=="-w" start https://smtweb.gleeze.com & goto :EOF
+if "%1"=="/w" start https://smtweb.gleeze.com & goto :EOF
+if "%1"=="--website" start https://smtweb.gleeze.com & goto :EOF
+if "%1"=="/website" start https://smtweb.gleeze.com & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
@@ -248,6 +252,7 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt & goto start
+if /i "%choice%"=="web"  start https://smtweb.gleeze.com & goto start
 if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start
@@ -907,6 +912,7 @@ echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
 echo %Bright_CYAN%git%RESET% - opens the github page for this tool
+echo %Bright_CYAN%web%RESET% - opens the website for this tool
 REM echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
 echo %Bright_CYAN%rs%RESET% - restarts Schooi's Multitool
 echo %Bright_CYAN%edit%RESET% - opens SchooiMultitool.bat in Notepad
@@ -1004,6 +1010,8 @@ echo.
 echo  -f, /f, --feedback, /feedback     Opens the feedback form
 echo.
 echo  -i, /i, --install, /install       Installs SMT
+echo.
+echo  -w, /w, --website, /website       Opens the SMT website
 echo.
 echo  -32, /32, --system32,             Adds SMT to the path (old, superseeded by automatic path addition on first boot)
 echo  /system32
