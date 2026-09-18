@@ -9,7 +9,7 @@
 	<img src="https://img.shields.io/github/languages/code-size/SchooiCodes/smt" alt="GitHub code size in bytes">
     <img src="https://img.shields.io/github/downloads/SchooiCodes/smt/total" alt="GitHub Downloads (all assets, all releases)">
     <img src="https://img.shields.io/github/license/SchooiCodes/smt" alt="GitHub License">
-    <a href=https://smtweb.gleeze.com><img src="https://img.shields.io/badge/website-here-purple" alt="smtweb.gleeze.com"></a>
+    <a href=https://smt.xubi.org><img src="https://img.shields.io/badge/website-here-purple" alt="smt.xubi.org"></a>
 </p>
 
 About

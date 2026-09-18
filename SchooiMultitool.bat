@@ -30,10 +30,10 @@ if "%1"=="-i" call :install & goto :EOF
 if "%1"=="/i" call :install & goto :EOF
 if "%1"=="--install" call :install & goto :EOF
 if "%1"=="/install" call :install & goto :EOF
-if "%1"=="-w" start https://smtweb.gleeze.com & goto :EOF
-if "%1"=="/w" start https://smtweb.gleeze.com & goto :EOF
-if "%1"=="--website" start https://smtweb.gleeze.com & goto :EOF
-if "%1"=="/website" start https://smtweb.gleeze.com & goto :EOF
+if "%1"=="-w" start https://smt.xubi.org & goto :EOF
+if "%1"=="/w" start https://smt.xubi.org & goto :EOF
+if "%1"=="--website" start https://smt.xubi.org & goto :EOF
+if "%1"=="/website" start https://smt.xubi.org & goto :EOF
 if "%1"=="-na" set elevate=false
 if "%1"=="/na" set elevate=false
 if "%1"=="--noadmin" set elevate=false
@@ -252,7 +252,7 @@ if /i "%choice%"=="shutdown" shutdown -s -t 0
 if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt & goto start
-if /i "%choice%"=="web"  start https://smtweb.gleeze.com & goto start
+if /i "%choice%"=="web"  start https://smt.xubi.org & goto start
 if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
 if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
 if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start
