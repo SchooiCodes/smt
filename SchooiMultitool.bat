@@ -405,6 +405,7 @@ echo 57. Spotify %findstring%
 echo 58. Spicetify (Spotify with no ads + enhancements) %findstring%
 echo 59. WakaTime for Windows %findstring%
 echo 60. Windhawk %findstring%
+echo 61. VS Code %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -471,6 +472,7 @@ if "%appch%"=="57" start Apps\spt.bat
 if "%appch%"=="58" start Apps\spct.bat
 if "%appch%"=="59" start Apps\wkt.bat
 if "%appch%"=="60" start Apps\whk.bat
+if "%appch%"=="61" start Apps\vsc.bat
 goto apps
 
 :ddisc
