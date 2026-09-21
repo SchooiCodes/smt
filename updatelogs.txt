@@ -1,1 +1,2 @@
-Added VS Code
+Oops..
+Escaped VS Code download link :(
