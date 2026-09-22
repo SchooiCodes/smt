@@ -1,2 +1,1 @@
-Oops..
-Escaped VS Code download link :(
+Added uv
