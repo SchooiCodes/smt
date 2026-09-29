@@ -1,1 +1,2 @@
-Fixed disclaimer visibility
+Installer re-compilation
+Added new `/NOLAUNCH` setup flag :)
