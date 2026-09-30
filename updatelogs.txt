@@ -1,2 +1,1 @@
-Installer re-compilation
-Added new `/NOLAUNCH` setup flag :)
+Fixed Spotify installer to run as non-admin
