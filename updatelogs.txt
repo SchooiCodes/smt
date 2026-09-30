@@ -1,1 +1,1 @@
-Fixed Spotify installer to run as non-admin
+Added Supermium

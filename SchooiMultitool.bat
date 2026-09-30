@@ -407,6 +407,7 @@ echo 59. WakaTime for Windows %findstring%
 echo 60. Windhawk %findstring%
 echo 61. VS Code %findstring%
 echo 62. uv %findstring%
+echo 63. Supermium (Chromium fork for legacy machines) %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -475,6 +476,7 @@ if "%appch%"=="59" start Apps\wkt.bat
 if "%appch%"=="60" start Apps\whk.bat
 if "%appch%"=="61" start Apps\vsc.bat
 if "%appch%"=="62" start Apps\uv.bat
+if "%appch%"=="63" start Apps\spm.bat
 goto apps
 
 :ddisc
