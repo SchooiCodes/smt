@@ -1,2 +1,2 @@
-Fixed Tron
-Split it in two due to unknown access denied bug on tron's resources folder. Also fixed the autorun.
+Modernized Firefox Installer
+Simplified and bumped to latest installer format.
