@@ -1,2 +1,1 @@
-Modernized Firefox Installer
-Simplified and bumped to latest installer format.
+Added K-Lite Codec Pack (Standard)
