@@ -1,2 +1,1 @@
-Simplified + improved tron
-Replaced the torrent flow with the extractable executable, improved mainscript verbosity, cleanup, and clarity. Added AV disclaimer. Made instructions readable.
+Added Revo Uninstaller and Lightshot

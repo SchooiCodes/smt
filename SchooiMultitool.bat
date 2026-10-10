@@ -409,6 +409,8 @@ echo 61. VS Code %findstring%
 echo 62. uv %findstring%
 echo 63. Supermium (Chromium fork for legacy machines) %findstring%
 echo 64. K-Lite Codec Pack Standard %findstring%
+echo 65. Lightshot %findstring%
+echo 66. Revo Uninstaller %findstring%
 echo.
 set /p appch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%appch%"=="B" cls & goto tools
@@ -479,6 +481,8 @@ if "%appch%"=="61" start Apps\vsc.bat
 if "%appch%"=="62" start Apps\uv.bat
 if "%appch%"=="63" start Apps\spm.bat
 if "%appch%"=="64" start Apps\klc.bat
+if "%appch%"=="65" start Apps\lst.bat
+if "%appch%"=="66" start Apps\rvu.bat
 goto apps
 
 :ddisc
