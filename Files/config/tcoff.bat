@@ -25,5 +25,6 @@ set "GRADIENT_SCHOOI=Schooi"
 set "GRADIENT_YOUTUBE=SchooiYT"
 set "GRADIENT_GITHUB=SchooiCodes"
 set "GRADIENT_LINE============================"
+set "GRADIENT_LINE===================================="
 REM call ini.bat /i coloring /s Visuals /v false config\settings.ini
 goto :EOF

@@ -169,6 +169,8 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\se
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. & set disclaimers=%%x
 if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. & set feedback=%%x
+if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
@@ -206,6 +208,25 @@ echo For complete functionality, consider switching to Windows 10 or later.
 pause
 goto start
 
+:feedback
+set "feedbackprompted=true"
+if "%resizing%"=="true" mode con cols=75 lines=16
+title [SMT ^| %version%] Feedback Request
+cls
+call logo.bat
+chcp 65001 >nul
+echo.
+echo %BRIGHT_RED%I NEED YOUR HELP%RESET% - Feedback Request
+echo %GRADIENT_LINE2%
+echo Hey there! %GOLD%Thank you for using SMT%RESET% %BRIGHT_RED%^<3%RESET%
+echo Schooi's Multitool is a project driven by %BRIGHT_CYAN%one%RESET% man.
+echo User feedback would %BRIGHT_GREEN2%greatly%RESET% help the development of this project.
+set /p openfeedback=Would you like to open the %CYAN%feedback form%RESET%? ([%BRIGHT_GREEN%Y%RESET%]es/[%BRIGHT_RED%N%RESET%]o/[%BRIGHT_CYAN%D%RESET%]on't show again): 
+if /i "%openfeedback%"=="Y" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
+if /i "%openfeedback%"=="N" goto start
+if /i "%openfeedback%"=="D" call ini.bat /i feedback /s Visuals /v false config\settings.ini >nul & set "feedback=false" & goto start
+goto feedback
+
 :rpoint
 if "%resizing%"=="true" mode con cols=75 lines=16
 title [SMT ^| %version%] Restore Point
@@ -219,6 +240,8 @@ cls
 if %WINDOWSVER% LEQ 6 goto compatibility
 
 :start
+if "%feedback%"=="true" if not "%feedbackprompted%"=="true" set /a r=%RANDOM% %% 7 & if "%r%"=="0" goto feedback
+set "feedbackprompted=false"
 if "%resizing%"=="true" mode con cols=80 lines=23
 REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
@@ -259,10 +282,13 @@ if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\sett
 if /i "%choice%"=="mdoff" call ini.bat /i resizing /s Visuals /v false config\settings.ini >nul & set "resizing=false" & mode con cols=120 lines=30 & goto start
 if /i "%choice%"=="discon" call ini.bat /i disclaimers /s Visuals /v true config\settings.ini >nul & set "disclaimers=true" & goto start
 if /i "%choice%"=="discoff" call ini.bat /i disclaimers /s Visuals /v false config\settings.ini >nul & set "disclaimers=false" & goto start
+if /i "%choice%"=="feedbackon" call ini.bat /i feedback /s Visuals /v true config\settings.ini >nul & set "feedback=true" & goto start
+if /i "%choice%"=="feedbackoff" call ini.bat /i feedback /s Visuals /v false config\settings.ini >nul & set "feedback=false" & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
 if /i "%choice%"=="forceupd" echo forced>config\version & start restart.bat & exit
+if /i "%choice%"=="forcefeedback" goto feedback
 if /i "%choice%"=="port" start createportable & goto start
 if NOT "%choice%"=="" %choice%
 if %ERRORLEVEL% EQU 0 pause >nul
@@ -920,6 +946,8 @@ echo %Bright_CYAN%mdon%RESET% - enables automatic window resizing
 echo %Bright_CYAN%mdoff%RESET% - disables automatic window resizing
 echo %Bright_CYAN%discon%RESET% - enables disclaimer visibility
 echo %Bright_CYAN%discoff%RESET% - disables disclaimer visibility
+echo %Bright_CYAN%feedbackon%RESET% - enables feedback prompting
+echo %Bright_CYAN%feedbackoff%RESET% - disables feedback prompting
 echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
@@ -929,6 +957,7 @@ REM echo %Bright_CYAN%credits%RESET% - shows credits for tools I did not make
 echo %Bright_CYAN%rs%RESET% - restarts Schooi's Multitool
 echo %Bright_CYAN%edit%RESET% - opens SchooiMultitool.bat in Notepad
 echo %Bright_CYAN%forceupd%RESET% - forces a software update and restarts
+echo %Bright_CYAN%forcefeedback%RESET% - forces a feedback prompt
 echo %Bright_CYAN%port%RESET% - creates a Schooi's Multitool portable zip
 pause >nul
 goto start
