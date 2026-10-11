@@ -1,2 +1,2 @@
-Added feedback prompting, new menu commands and settings
-There is now a 1/7 chance you will get prompted to send feedback while on the main menu. A new feedback function has been added with colors and gradients. New setting called `feedback` in `Visuals` that enables/disables prompting, and `feedbackon`, `feedbackoff` as well as `forcefeedback` to go alongside it. Also added new check on boot.
+NEW SMT LOGO!!!
+Enjoy the 22kb file I spent 3 hours making ;-;
