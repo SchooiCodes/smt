@@ -1,1 +1,2 @@
-Polished new icon
+Added a settings menu, a new setting, and some fixes
+There is now a new Settings option to the main menu, along with a helper to flip INI values consistently for settings toggles. It also adds a new setting, `devsettings`, that enables developer settings toggling. This commit also fixes several boolean comparisons used during startup so true/false state is read and written correctly ('true' instead of 'true ')

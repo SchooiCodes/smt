@@ -85,19 +85,18 @@ for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Curre
 if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
 cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
 if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do color %%x & set color=%%x & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (set coloring=%%x &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " call config\tc.bat
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do color %%x & set "color=%%x" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (set "coloring=%%x" &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" call config\tc.bat
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set "policy=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
 if "%policy%"=="Unrestricted" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
 if NOT "%policy%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do set portable=%%x & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
-if "%portable%"=="false " echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
-if "%portable%"=="true " echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
-if "%portable%"=="false " FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do set inpath=%%x & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-set "inpath=%inpath: =%"
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do set "portable=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+if "%portable%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
+if "%portable%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
+if "%portable%"=="false" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do set "inpath=%%x" & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 if /i "%inpath%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 if /i "%inpath%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
 if /i "%inpath%"=="false" set "OLD_DATA="
@@ -145,7 +144,7 @@ if "%internet%"=="c" (
 							echo [~] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
 							call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul
 						)
-						if /i "%inpath%"=="true " (
+						if /i "%inpath%"=="true" (
 							echo [~] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
 							call ini.bat /i smtinpath /s System /v true config\settings.ini >nul
 						)
@@ -165,11 +164,11 @@ if "%internet%"=="c" (
 		)
 	)
 )
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set resizing=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set "resizing=%%x"
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. & set disclaimers=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. & set "disclaimers=%%x"
 if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. & set feedback=%%x
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. & set "feedback=%%x"
 if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
@@ -242,7 +241,7 @@ if %WINDOWSVER% LEQ 6 goto compatibility
 :start
 if "%feedback%"=="true" if not "%feedbackprompted%"=="true" set /a r=%RANDOM% %% 7 & if "%r%"=="0" goto feedback
 set "feedbackprompted=false"
-if "%resizing%"=="true" mode con cols=80 lines=23
+if "%resizing%"=="true" mode con cols=80 lines=24
 REM FOR /F "tokens=* delims=" %%x in (config\color.ini) DO color %%x
 title SMT ^| %version%
 cls
@@ -258,12 +257,14 @@ REM echo 4. Restart this script (to apply any changes)
 echo 2. View info about this script
 echo 3. View credits
 echo 4. Send feedback
+echo 5. Settings
 echo.
 set /p choice=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%choice%"=="1" goto tools
 if /i "%choice%"=="2" goto info
 if /i "%choice%"=="3" goto credits
 if /i "%choice%"=="4" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
+if /i "%choice%"=="5" goto settings
 if /i "%choice%"=="%username%On" @echo on & goto start
 if /i "%choice%"=="%username%Off" @echo off & goto start
 if /i "%choice%"=="sc" goto secrets
@@ -779,6 +780,63 @@ if "%funch%"=="1" start speak.bat
 if "%funch%"=="2" start CommandLineGame.bat
 if "%funch%"=="3" start sut.bat
 goto fun
+
+:settings
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i devsettings /s Visuals config\settings.ini') do set "devset=%%x"
+set "usetc=0"
+title [SMT ^| %version%] Settings
+cls
+call logo.bat
+if %WINDOWSVER% GEQ 10 (
+	echo %CYAN%┌──────────┐%RESET%
+	echo %CYAN%│%RESET% Settings %CYAN%│%RESET%
+	echo %CYAN%└──────────┘%RESET%
+) else (
+	echo Settings
+	echo ========
+)
+REM if %WINDOWSVER% GEQ 10 echo %CYAN%┌───┬──────────────────────────┐%RESET%
+REM if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back                  %CYAN%│%RESET%
+REM if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% D %CYAN%│%RESET% Toggle Developer Mode    %CYAN%│%RESET%
+REM if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴──────────────────────────┘%RESET%
+echo B. Go Back
+echo 1. Terminal color                 [%GOLD%%color%%RESET%]
+if /i "%coloring%"=="true"     echo 2. Terminal Text Coloring         [%BRIGHT_GREEN2%%coloring%%RESET%]
+if /i "%coloring%"=="false"    echo 2. Terminal Text Coloring         [%BRIGHT_RED%%coloring%%RESET%]
+if /i "%resizing%"=="true"     echo 3. Terminal Window Resizing       [%BRIGHT_GREEN2%%resizing%%RESET%]
+if /i "%resizing%"=="false"    echo 3. Terminal Window Resizing       [%BRIGHT_RED%%resizing%%RESET%]
+if /i "%disclaimers%"=="true"  echo 4. Disclaimers                    [%BRIGHT_GREEN2%%disclaimers%%RESET%]
+if /i "%disclaimers%"=="false" echo 4. Disclaimers                    [%BRIGHT_RED%%disclaimers%%RESET%]
+if /i "%feedback%"=="true"     echo 5. Feedback Prompts               [%BRIGHT_GREEN2%%feedback%%RESET%]
+if /i "%feedback%"=="false"    echo 5. Feedback Prompts               [%BRIGHT_RED%%feedback%%RESET%]
+if /i "%devset%"=="true"       echo 6. Settings Developer Mode        [%BRIGHT_GREEN2%%devset%%RESET%]
+if /i "%devset%"=="false"      echo 6. Settings Developer Mode        [%BRIGHT_RED%%devset%%RESET%]
+if "%devset%"=="true" if /i "%portable%"=="true"     echo 7. IsPortable                     [%BRIGHT_GREEN2%%portable%%RESET%]
+if "%devset%"=="true" if /i "%portable%"=="false"    echo 7. IsPortable                     [%BRIGHT_RED%%portable%%RESET%]
+if "%devset%"=="true" if /i "%inpath%"=="true"       echo 8. smtInPath                      [%BRIGHT_GREEN2%%inpath%%RESET%]
+if "%devset%"=="true" if /i "%inpath%"=="false"      echo 8. smtInPath                      [%BRIGHT_RED%%inpath%%RESET%]
+if "%devset%"=="true" if /i "%sent%"=="true"         echo 9. usagePingSent                  [%BRIGHT_GREEN2%%sent%%RESET%]
+if "%devset%"=="true" if /i "%sent%"=="false"        echo 9. usagePingSent                  [%BRIGHT_RED%%sent%%RESET%]
+echo.
+set /p setch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
+if /i "%setch%"=="B" goto start
+if /i "%setch%"=="1" set /p "cl=New value: "
+if /i "%setch%"=="1" call set_setting hex Visuals color %cl%
+if /i "%setch%"=="1" if "%coloring%"=="true" if /i "%cl%"=="0f" set "usetc=1"
+if /i "%setch%"=="1" if "%coloring%"=="true" if /i "%cl%"=="07" set "usetc=1"
+if /i "%setch%"=="1" if "%usetc%"=="1" (call config\tc.bat) else (call config\tcoff.bat)
+if /i "%setch%"=="1" color %color%
+if /i "%setch%"=="2" call set_setting coloring Visuals coloring %coloring%
+if /i "%setch%"=="2" if "%coloring%"=="true" (call config\tc.bat) else (call config\tcoff.bat)
+if /i "%setch%"=="3" call set_setting resizing Visuals resizing %resizing%
+if /i "%setch%"=="3" if "%resizing%"=="false" mode con cols=120 lines=30
+if /i "%setch%"=="4" call set_setting disclaimers Visuals disclaimers %disclaimers%
+if /i "%setch%"=="5" call set_setting feedback Visuals feedback %feedback%
+if /i "%setch%"=="6" call set_setting devsettings Visuals devset %devset%
+if "%devset%"=="true" if /i "%setch%"=="7" call set_setting isportable System portable %portable%
+if "%devset%"=="true" if /i "%setch%"=="8" call set_setting smtinpath System inpath %inpath%
+if "%devset%"=="true" if /i "%setch%"=="9" call set_setting usagepingsent System sent %sent%
+goto settings
                                  
 :info
 if not "%calced%"=="1" call :calctools
@@ -839,7 +897,7 @@ del "%TEMP%\temp.txt"
 set /a toolcount=%toolCount%-1
 echo %toolcount%>>"%TEMP%\toolnum.txt"
 endlocal
-FOR /F "tokens=* delims=" %%x in ('type "%TEMP%\toolnum.txt"') DO set toolcount=%%x
+FOR /F "tokens=* delims=" %%x in ('type "%TEMP%\toolnum.txt"') DO set "toolcount=%%x"
 del "%TEMP%\toolnum.txt"
 goto info
 
