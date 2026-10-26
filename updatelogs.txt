@@ -1,1 +1,2 @@
-Fixed the installer not merging settings properly
+Fixed some installers' de-escalation
+SPT and SPCT
