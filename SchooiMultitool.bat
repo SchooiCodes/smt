@@ -91,20 +91,21 @@ for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Curre
 if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
 cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
 if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i verboseboot /s system config\settings.ini') do set "verboseboot=%%x"
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do (
-	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
 	color %%x
 	set "color=%%x" 
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..
 	set "coloring=%%x" 
 )
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" (
-	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 	call config\tc.bat
 ) else (
-	echo [-] Windows version is not 10+, disabling text coloring.. 
+	if "%verboseboot%"=="true" echo [-] Windows version is not 10+, disabling text coloring.. 
 	call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1
 	call config\tcoff.bat
 )
@@ -118,18 +119,20 @@ if NOT "%policy%"=="Unrestricted" (
 	powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; 
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
 	set "portable=%%x" 
 )
-if "%portable%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
-if "%portable%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
+if "%verboseboot%"=="true" (
+	if "%portable%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
+	if "%portable%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
+)
 if "%portable%"=="false" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do (
 	set "inpath=%%x" 
-	if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
+	if not "%%x"=="skip" if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 )
 if not defined OLD_DATA set OLD_DATA=Placeholder
 if /i "%inpath%"=="false" (
-	echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
 	set "OLD_DATA="
 	set "OLD_TYPE=REG_SZ"
 	if "%elevated%"=="true" (
@@ -147,7 +150,7 @@ if /i "%inpath%"=="false" (
 	call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
 )
 if /i "%inpath%"=="true" (
-	echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
 	echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 )
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
@@ -202,20 +205,20 @@ if "%internet%"=="c" (
 	)
 )
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. 
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. 
 	set "resizing=%%x"
 )
-if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
+if "%verboseboot%"=="true" if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. 
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. 
 	set "disclaimers=%%x"
 )
-if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
+if "%verboseboot%"=="true" if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
 FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do (
-	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. 
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. 
 	set "feedback=%%x"
 )
-if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
+if "%verboseboot%"=="true" if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
@@ -269,7 +272,7 @@ echo User feedback would %BRIGHT_GREEN2%greatly%RESET% help the development of t
 set /p openfeedback=Would you like to open the %CYAN%feedback form%RESET%? ([%BRIGHT_GREEN%Y%RESET%]es/[%BRIGHT_RED%N%RESET%]o/[%BRIGHT_CYAN%D%RESET%]on't show again): 
 if /i "%openfeedback%"=="Y" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
 if /i "%openfeedback%"=="N" goto start
-if /i "%openfeedback%"=="D" call ini.bat /i feedback /s Visuals /v false config\settings.ini >nul & set "feedback=false" & goto start
+if /i "%openfeedback%"=="D" call set_setting feedback System feedback %feedback% & goto start
 goto feedback
 
 :rpoint
@@ -323,14 +326,16 @@ if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt & goto start
 if /i "%choice%"=="web"  start https://smt.xubi.org & goto start
-if /i "%choice%"=="tcon" call ini.bat /i coloring /s Visuals /v true config\settings.ini >nul & call config\tc.bat
-if /i "%choice%"=="tcoff" call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul & call config\tcoff.bat
-if /i "%choice%"=="mdon" call ini.bat /i resizing /s Visuals /v true config\settings.ini >nul & set "resizing=true" & goto start
-if /i "%choice%"=="mdoff" call ini.bat /i resizing /s Visuals /v false config\settings.ini >nul & set "resizing=false" & mode con cols=120 lines=30 & goto start
-if /i "%choice%"=="discon" call ini.bat /i disclaimers /s Visuals /v true config\settings.ini >nul & set "disclaimers=true" & goto start
-if /i "%choice%"=="discoff" call ini.bat /i disclaimers /s Visuals /v false config\settings.ini >nul & set "disclaimers=false" & goto start
-if /i "%choice%"=="feedbackon" call ini.bat /i feedback /s Visuals /v true config\settings.ini >nul & set "feedback=true" & goto start
-if /i "%choice%"=="feedbackoff" call ini.bat /i feedback /s Visuals /v false config\settings.ini >nul & set "feedback=false" & goto start
+if /i "%choice%"=="tcon" call set_setting coloring Visuals coloring false & call config\tc.bat
+if /i "%choice%"=="tcoff" call set_setting coloring Visuals coloring true & call config\tcoff.bat
+if /i "%choice%"=="mdon" call set_setting resizing Visuals resizing false & goto start
+if /i "%choice%"=="mdoff" call set_setting resizing Visuals resizing true & mode con cols=120 lines=30 & goto start
+if /i "%choice%"=="discon" call set_setting disclaimers Visuals disclaimers true & goto start
+if /i "%choice%"=="discoff" call set_setting disclaimers Visuals disclaimers true & goto start
+if /i "%choice%"=="feedbackon" call set_setting feedback Visuals feedback false & goto start
+if /i "%choice%"=="feedbackoff" call set_setting feedback Visuals feedback true & goto start
+if /i "%choice%"=="verbbooton" call set_setting verboseboot System verboseboot false & goto start
+if /i "%choice%"=="verbbootoff" call set_setting verboseboot System verboseboot true & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
@@ -863,6 +868,8 @@ if "%devset%"=="true" if /i "%inpath%"=="true"       echo 8. smtInPath          
 if "%devset%"=="true" if /i "%inpath%"=="false"      echo 8. smtInPath                      [%BRIGHT_RED%%inpath%%RESET%]
 if "%devset%"=="true" if /i "%sent%"=="true"         echo 9. usagePingSent                  [%BRIGHT_GREEN2%%sent%%RESET%]
 if "%devset%"=="true" if /i "%sent%"=="false"        echo 9. usagePingSent                  [%BRIGHT_RED%%sent%%RESET%]
+if "%devset%"=="true" if /i "%verboseboot%"=="true"  echo 10. verboseBoot                   [%BRIGHT_GREEN2%%verboseboot%%RESET%]
+if "%devset%"=="true" if /i "%verboseboot%"=="false" echo 10. verboseBoot                   [%BRIGHT_RED%%verboseboot%%RESET%]
 echo.
 set /p setch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%setch%"=="B" goto start
@@ -882,6 +889,7 @@ if /i "%setch%"=="6" call set_setting devsettings Visuals devset %devset%
 if "%devset%"=="true" if /i "%setch%"=="7" call set_setting isportable System portable %portable%
 if "%devset%"=="true" if /i "%setch%"=="8" call set_setting smtinpath System inpath %inpath%
 if "%devset%"=="true" if /i "%setch%"=="9" call set_setting usagepingsent System sent %sent%
+if "%devset%"=="true" if /i "%setch%"=="10" call set_setting verboseboot System verboseboot %verboseboot%
 goto settings
                                  
 :info
@@ -1052,6 +1060,8 @@ echo %Bright_CYAN%discon%RESET% - enables disclaimer visibility
 echo %Bright_CYAN%discoff%RESET% - disables disclaimer visibility
 echo %Bright_CYAN%feedbackon%RESET% - enables feedback prompting
 echo %Bright_CYAN%feedbackoff%RESET% - disables feedback prompting
+echo %Bright_CYAN%verbbooton%RESET% - enables verbose boot init
+echo %Bright_CYAN%verbbootoff%RESET% - disables verbose boot init
 echo %Bright_CYAN%shutdown%RESET% - shuts down your device
 echo %Bright_CYAN%restart%RESET% - restarts your device
 echo %Bright_CYAN%bios%RESET% - restarts to the bios
