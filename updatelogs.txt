@@ -1,2 +1,2 @@
-Fixed some installers' de-escalation
-SPT and SPCT
+Title: Tidied up the boot sequence's code
+Description: Fixed formatting, cleanup

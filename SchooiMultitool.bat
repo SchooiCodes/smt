@@ -77,7 +77,13 @@ if "%elevate%"=="true" (
 )
 net session >nul 2>&1 && set "elevated=true" || set "elevated=false"
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Fetching OS info..
-for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(if "%%i"=="Version" (set windowsver=%%j) else (set windowsver=%%i))
+for /f "tokens=4-7 delims=[.] " %%i in ('ver') do @(
+	if "%%i"=="Version" (
+		set windowsver=%%j
+	) else (
+		set windowsver=%%i
+	)
+)
 for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName ^| find "ProductName"') do set "ProductName=%%b"
 for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v CurrentBuild ^| find "CurrentBuild"') do set "CurrentBuild=%%b"
 for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v DisplayVersion ^| find "DisplayVersion"') do set "DisplayVersion=%%b"
@@ -85,34 +91,65 @@ for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Curre
 if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
 cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
 if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do color %%x & set "color=%%x" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (set "coloring=%%x" &  echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..)
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" call config\tc.bat
-if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
-if %WINDOWSVER% LEQ 6 echo [-] Windows version is not 10+, disabling text coloring.. & call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1 & call config\tcoff.bat
-FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do set "policy=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do (
+	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+	color %%x
+	set "color=%%x" 
+)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..
+	set "coloring=%%x" 
+)
+if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" (
+	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
+	call config\tc.bat
+) else (
+	echo [-] Windows version is not 10+, disabling text coloring.. 
+	call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1
+	call config\tcoff.bat
+)
+FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking Powershell execution policy..
+	set "policy=%%x"
+)
 if "%policy%"=="Unrestricted" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Current Powershell execution policy is OK.
-if NOT "%policy%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; & echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do set "portable=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+if NOT "%policy%"=="Unrestricted" (
+	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
+	powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; 
+)
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+	set "portable=%%x" 
+)
 if "%portable%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
 if "%portable%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
-if "%portable%"=="false" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do set "inpath=%%x" & if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-if /i "%inpath%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
-if /i "%inpath%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
-if /i "%inpath%"=="false" set "OLD_DATA="
-if /i "%inpath%"=="false" set "OLD_TYPE=REG_SZ"
-if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
-if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
-if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
-if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if "%portable%"=="false" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do (
+	set "inpath=%%x" 
+	if not "%%x"=="skip" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
+)
 if not defined OLD_DATA set OLD_DATA=Placeholder
-if /i "%inpath%"=="false" if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%
-if /i "%inpath%"=="false" if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
-if /i "%inpath%"=="false" echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
-if /i "%inpath%"=="false" if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-if /i "%inpath%"=="false" if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-if /i "%inpath%"=="false" call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
-if /i "%inpath%"=="true" echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
+if /i "%inpath%"=="false" (
+	echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
+	set "OLD_DATA="
+	set "OLD_TYPE=REG_SZ"
+	if "%elevated%"=="true" (
+		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+	) else (
+		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+	)
+	if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%
+	if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
+	echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
+	if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+	if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+	call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
+)
+if /i "%inpath%"=="true" (
+	echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
+	echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
+)
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
@@ -164,11 +201,20 @@ if "%internet%"=="c" (
 		)
 	)
 )
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. & set "resizing=%%x"
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. 
+	set "resizing=%%x"
+)
 if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. & set "disclaimers=%%x"
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. 
+	set "disclaimers=%%x"
+)
 if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. & set "feedback=%%x"
+FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do (
+	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. 
+	set "feedback=%%x"
+)
 if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
 timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
