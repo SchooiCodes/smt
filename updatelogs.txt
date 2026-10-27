@@ -1,2 +1,2 @@
-Title: Added new `verboseboot` setting, tidied up menu commands.
-Description: New `verboseboot` dev setting in Settings menu, as well as `verbbooton` and `verbbootoff` commands in the main menu. Enabling this setting shows the original boot initialization sequence, while disabling it strips out developer info. Also made the rest of the settings menu commands use the new `set_setting.bat`.
+Title: Fixed a tiny bug
+Description: Spacing remnant from old boot init var handling

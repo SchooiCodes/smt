@@ -173,7 +173,7 @@ if "%internet%"=="c" (
 				setlocal enabledelayedexpansion
 				choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] "
 				if "!ERRORLEVEL!"=="1" (
-					if "%portable%"=="false " (
+					if "%portable%"=="false" (
 						if not exist "%TEMP%\smt" md "%TEMP%\smt"
 						copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 						start /WAIT /MIN "" add_exclusion.bat
