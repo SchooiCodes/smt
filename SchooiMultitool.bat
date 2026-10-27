@@ -122,44 +122,44 @@ FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\s
 	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
 	set "portable=%%x" 
 )
-if "%verboseboot%"=="true" (
-	if "%portable%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
-	if "%portable%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
-)
-if "%portable%"=="false" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do (
-	set "inpath=%%x" 
-	if not "%%x"=="skip" if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-)
-if not defined OLD_DATA set OLD_DATA=Placeholder
-if /i "%inpath%"=="false" (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
-	set "OLD_DATA="
-	set "OLD_TYPE=REG_SZ"
-	if "%elevated%"=="true" (
-		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
-		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
-	) else (
-		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
-		for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if NOT "%portable%"=="true" (
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
+	FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do (
+		set "inpath=%%x" 
+		if not "%%x"=="skip" if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 	)
-	if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%
-	if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
-	echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
-	if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-	if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
-	call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
+) else (
+	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
 )
-if /i "%inpath%"=="true" (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
-	echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
-)
+if /i "%inpath%"=="false" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not in the PATH! Adding SMT to it..
+if /i "%inpath%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is in the PATH.
+if /i "%inpath%"=="false" set "OLD_DATA="
+if /i "%inpath%"=="false" set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_SZ"
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" for /f "tokens=1,2,*" %%a in ('reg query "HKEY_CURRENT_USER\Environment" /v Path 2^>nul') do if /i "%%b"=="REG_EXPAND_SZ" set "OLD_DATA=%%c" & set "OLD_TYPE=REG_EXPAND_SZ"
+if not defined OLD_DATA set OLD_DATA=Placeholder
+if /i "%inpath%"=="false" if "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%
+if /i "%inpath%"=="false" if NOT "%OLD_DATA:~-1%"==";" set OLD_DATA=%OLD_DATA%;
+if /i "%inpath%"=="false" echo Old PATH EnvVar:>config\old_path.txt & echo.>>config\old_path.txt & echo %OLD_DATA%>>config\old_path.txt
+if /i "%inpath%"=="false" if "%elevated%"=="true" reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if /i "%inpath%"=="false" if NOT "%elevated%"=="true" reg add "HKEY_CURRENT_USER\Environment" /v Path /t %OLD_TYPE% /d "%OLD_DATA%C:\Program Files\SMT;" /f >nul
+if /i "%inpath%"=="false" call ini.bat /i smtinpath /s System /v true config\settings.ini >nul & set "inpath=true"
+if /i "%inpath%"=="true" echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
 if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepingsent /s System config\settings.ini') do set "sent=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent..
 if "%internet%"=="c" (
-	if /i NOT "%sent%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. & curl -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" >nul 2>&1 & call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul 
-	if /i "%sent%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
+	if /i "%sent%"=="false" (
+		echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. 
+		curl -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" >nul 2>&1 
+		call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul 
+		set "sent=true"
+	) else (
+		echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
+	)
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
 	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://counter-api.schooicodes.workers.dev/count/smt/pings).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)
 	echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for updates..
@@ -173,7 +173,7 @@ if "%internet%"=="c" (
 				setlocal enabledelayedexpansion
 				choice /c YN /t 30 /D Y /N /M "[?] Would you like to install it now? [Y/N] "
 				if "!ERRORLEVEL!"=="1" (
-					if "%portable%"=="false" (
+					if NOT "%portable%"=="true" (
 						if not exist "%TEMP%\smt" md "%TEMP%\smt"
 						copy /y NUL "%TEMP%\SMT\SkipMSGBox" >nul
 						start /WAIT /MIN "" add_exclusion.bat
@@ -272,7 +272,7 @@ echo User feedback would %BRIGHT_GREEN2%greatly%RESET% help the development of t
 set /p openfeedback=Would you like to open the %CYAN%feedback form%RESET%? ([%BRIGHT_GREEN%Y%RESET%]es/[%BRIGHT_RED%N%RESET%]o/[%BRIGHT_CYAN%D%RESET%]on't show again): 
 if /i "%openfeedback%"=="Y" start https://forms.gle/kFFZmknQRkGaZA2y5 & goto start
 if /i "%openfeedback%"=="N" goto start
-if /i "%openfeedback%"=="D" call set_setting feedback System feedback %feedback% & goto start
+if /i "%openfeedback%"=="D" call setting flip feedback System feedback %feedback% & goto start
 goto feedback
 
 :rpoint
@@ -326,16 +326,16 @@ if /i "%choice%"=="restart" shutdown -r -t 0
 if /i "%choice%"=="bios" shutdown -r -fw -t 0
 if /i "%choice%"=="git" start https://github.com/SchooiCodes/smt & goto start
 if /i "%choice%"=="web"  start https://smt.xubi.org & goto start
-if /i "%choice%"=="tcon" call set_setting coloring Visuals coloring false & call config\tc.bat
-if /i "%choice%"=="tcoff" call set_setting coloring Visuals coloring true & call config\tcoff.bat
-if /i "%choice%"=="mdon" call set_setting resizing Visuals resizing false & goto start
-if /i "%choice%"=="mdoff" call set_setting resizing Visuals resizing true & mode con cols=120 lines=30 & goto start
-if /i "%choice%"=="discon" call set_setting disclaimers Visuals disclaimers true & goto start
-if /i "%choice%"=="discoff" call set_setting disclaimers Visuals disclaimers true & goto start
-if /i "%choice%"=="feedbackon" call set_setting feedback Visuals feedback false & goto start
-if /i "%choice%"=="feedbackoff" call set_setting feedback Visuals feedback true & goto start
-if /i "%choice%"=="verbbooton" call set_setting verboseboot System verboseboot false & goto start
-if /i "%choice%"=="verbbootoff" call set_setting verboseboot System verboseboot true & goto start
+if /i "%choice%"=="tcon" call setting set coloring Visuals coloring true & call config\tc.bat
+if /i "%choice%"=="tcoff" call setting set coloring Visuals coloring false & call config\tcoff.bat
+if /i "%choice%"=="mdon" call setting set resizing Visuals resizing true & goto start
+if /i "%choice%"=="mdoff" call setting set resizing Visuals resizing false & mode con cols=120 lines=30 & goto start
+if /i "%choice%"=="discon" call setting set disclaimers Visuals disclaimers true & goto start
+if /i "%choice%"=="discoff" call setting set disclaimers Visuals disclaimers false & goto start
+if /i "%choice%"=="feedbackon" call setting set feedback Visuals feedback true & goto start
+if /i "%choice%"=="feedbackoff" call setting set feedback Visuals feedback false & goto start
+if /i "%choice%"=="verbbooton" call setting set verboseboot System verboseboot true & goto start
+if /i "%choice%"=="verbbootoff" call setting set verboseboot System verboseboot false & goto start
 if /i "%choice%"=="update" echo. & type ..\updatelogs.txt & echo. & goto :EOF & goto start
 if /i "%choice%"=="edit" (cd .. & notepad.exe "SchooiMultitool.bat" & cd "Files") & goto start
 if /i "%choice%"=="rs" start restart.bat & exit
@@ -851,6 +851,7 @@ REM if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% B %CYAN%│%RESET% Go Back     
 REM if %WINDOWSVER% GEQ 10 echo %CYAN%│%RESET% D %CYAN%│%RESET% Toggle Developer Mode    %CYAN%│%RESET%
 REM if %WINDOWSVER% GEQ 10 echo %CYAN%└───┴──────────────────────────┘%RESET%
 echo B. Go Back
+echo R. Repair Settings File
 echo 1. Terminal color                 [%GOLD%%color%%RESET%]
 if /i "%coloring%"=="true"     echo 2. Terminal Text Coloring         [%BRIGHT_GREEN2%%coloring%%RESET%]
 if /i "%coloring%"=="false"    echo 2. Terminal Text Coloring         [%BRIGHT_RED%%coloring%%RESET%]
@@ -873,23 +874,34 @@ if "%devset%"=="true" if /i "%verboseboot%"=="false" echo 10. verboseBoot       
 echo.
 set /p setch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%setch%"=="B" goto start
+if /i "%setch%"=="R" (
+	start /MIN /WAIT "" powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/settings.ini -OutFile 'config\settings.ini'" 
+	call setting get isportable System portable
+	call setting get smtinpath System inpath
+	call setting get usagepingsent System sent
+	if NOT "%portable%"=="na" (call setting set isportable System portable %portable%) else (call setting set isportable System portable false)
+	if NOT "%inpath%"=="na" (call setting set smtinpath System inpath %inpath%) else (call setting set smtinpath System inpath false)
+	if NOT "%portable%"=="na" (call setting set usagepingsent System sent %sent%) else (call setting set usagepingsent System sent false)
+	start restart.bat 
+	exit
+)
 if /i "%setch%"=="1" set /p "cl=New value: "
-if /i "%setch%"=="1" call set_setting hex Visuals color %cl%
+if /i "%setch%"=="1" call setting flip hex Visuals color %cl%
 if /i "%setch%"=="1" if "%coloring%"=="true" if /i "%cl%"=="0f" set "usetc=1"
 if /i "%setch%"=="1" if "%coloring%"=="true" if /i "%cl%"=="07" set "usetc=1"
 if /i "%setch%"=="1" if "%usetc%"=="1" (call config\tc.bat) else (call config\tcoff.bat)
 if /i "%setch%"=="1" color %color%
-if /i "%setch%"=="2" call set_setting coloring Visuals coloring %coloring%
+if /i "%setch%"=="2" call setting flip coloring Visuals coloring %coloring%
 if /i "%setch%"=="2" if "%coloring%"=="true" (call config\tc.bat) else (call config\tcoff.bat)
-if /i "%setch%"=="3" call set_setting resizing Visuals resizing %resizing%
+if /i "%setch%"=="3" call setting flip resizing Visuals resizing %resizing%
 if /i "%setch%"=="3" if "%resizing%"=="false" mode con cols=120 lines=30
-if /i "%setch%"=="4" call set_setting disclaimers Visuals disclaimers %disclaimers%
-if /i "%setch%"=="5" call set_setting feedback Visuals feedback %feedback%
-if /i "%setch%"=="6" call set_setting devsettings Visuals devset %devset%
-if "%devset%"=="true" if /i "%setch%"=="7" call set_setting isportable System portable %portable%
-if "%devset%"=="true" if /i "%setch%"=="8" call set_setting smtinpath System inpath %inpath%
-if "%devset%"=="true" if /i "%setch%"=="9" call set_setting usagepingsent System sent %sent%
-if "%devset%"=="true" if /i "%setch%"=="10" call set_setting verboseboot System verboseboot %verboseboot%
+if /i "%setch%"=="4" call setting flip disclaimers Visuals disclaimers %disclaimers%
+if /i "%setch%"=="5" call setting flip feedback Visuals feedback %feedback%
+if /i "%setch%"=="6" call setting flip devsettings Visuals devset %devset%
+if "%devset%"=="true" if /i "%setch%"=="7" call setting flip isportable System portable %portable%
+if "%devset%"=="true" if /i "%setch%"=="8" call setting flip smtinpath System inpath %inpath%
+if "%devset%"=="true" if /i "%setch%"=="9" call setting flip usagepingsent System sent %sent%
+if "%devset%"=="true" if /i "%setch%"=="10" call setting flip verboseboot System verboseboot %verboseboot%
 goto settings
                                  
 :info

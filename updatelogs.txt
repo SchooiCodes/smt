@@ -1,2 +1,2 @@
-Title: Fixed a tiny bug
-Description: Spacing remnant from old boot init var handling
+Title: Added a Settingfile Repair function, enhanced setting tools, improved error handling on boot
+Description: Updated the startup and settings flow to use a new helper script, corrected boolean toggling for PATH and usage pings, and fixed several settings actions. This also adds a repair option for the settings file and removes the obsolete set_setting batch script in favor of the new robust implementation.
