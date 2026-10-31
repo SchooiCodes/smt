@@ -15,7 +15,7 @@ echo Press any key to proceed..
 pause >nul
 echo.
 echo Downloading Tron via self-extracting exe..
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm 'https://bmrf.org/repos/tron/Tron v12.0.8 (2025-01-09).exe' -OutFile 'tron.exe'" 
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm 'https://bmrf.org/repos/tron/Tron v12.0.8 (2026-10-30).exe' -OutFile 'tron.exe'" 
 echo Extracting Tron's files..
 start /MIN /WAIT "" "tron.exe"
 cd "tron"
