@@ -416,6 +416,7 @@ REM cls
 
 :apps
 if "%resizing%"=="true" mode con cols=80 lines=71
+title [SMT ^| %version%] Tools ^> Apps
 cls
 call logo.bat
 echo.
@@ -564,6 +565,7 @@ if "%appch%"=="66" start Apps\rvu.bat
 goto apps
 
 :ddisc
+title [SMT ^| %version%] Tools ^> Danger Zone ^> Disclaimer
 set "dotheyknow="
 cls
 call logo.bat
@@ -584,6 +586,7 @@ goto danger
 
 :danger
 if "%resizing%"=="true" mode con cols=80 lines=30
+title [SMT ^| %version%] Tools ^> Danger Zone
 cls
 call logo.bat
 echo.
@@ -614,6 +617,7 @@ goto danger
 
 :Network
 if "%resizing%"=="true" mode con cols=80 lines=34
+title [SMT ^| %version%] Tools ^> Network
 cls
 call logo.bat
 echo.
@@ -666,6 +670,7 @@ REM goto Performance
 
 :fixes
 if "%resizing%"=="true" mode con cols=80 lines=27
+title [SMT ^| %version%] Tools ^> Fixes
 cls
 call logo.bat
 echo.
@@ -692,6 +697,7 @@ goto fixes
 
 :cracks
 if "%resizing%"=="true" mode con cols=80 lines=27
+title [SMT ^| %version%] Tools ^> Cracks
 cls
 call logo.bat
 echo.
@@ -716,6 +722,7 @@ goto cracks
     
 :sysadmin
 if "%resizing%"=="true" mode con cols=80 lines=38
+title [SMT ^| %version%] Tools ^> System Administration
 cls
 call logo.bat
 echo.
@@ -765,6 +772,7 @@ goto sysadmin
         
 :utils
 if "%resizing%"=="true" mode con cols=80 lines=40
+title [SMT ^| %version%] Tools ^> Utilities
 cls
 call logo.bat
 echo.
@@ -814,6 +822,7 @@ goto utils
         		
 :fun
 if "%resizing%"=="true" mode con cols=80 lines=25
+title [SMT ^| %version%] Tools ^> Fun
 cls
 call logo.bat
 echo.
@@ -1053,6 +1062,7 @@ goto start
 
 :secrets
 if "%resizing%"=="true" mode con cols=80 lines=30
+title [SMT ^| %version%] Secrets
 cls
 call logo.bat
 echo.
@@ -1090,6 +1100,7 @@ goto start
 
 :credits
 if "%resizing%"=="true" mode con cols=117 lines=32
+title [SMT ^| %version%] Credits
 cls
 call logo.bat
 echo.
