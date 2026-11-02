@@ -1,15 +1,18 @@
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-title Geek Uninstaller Installation
+title Geek Uninstaller Installer
 if exist logo.bat call logo.bat & echo.
+echo Geek Uninstaller
+echo =================
+set "geek_start=geek"
 if "%~1"=="choco" goto geek
 set "GEEK_DIR=%appdata%\Geek Uninstaller"
 if not exist "%GEEK_DIR%" md "%GEEK_DIR%"
-where geek.exe
-if %ERRORLEVEL% NEQ 0 (echo Installing.. & call :winget) else (echo Already installed..)
+where geek.exe >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (call :winget) else (echo Already installed..)
 echo Starting..
-geek.exe
+%geek_start%
 timeout /t 5 >nul
 exit /b 0
 
@@ -18,6 +21,9 @@ winget --version >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (echo Winget not found. Using irm instead.. & call :irm & goto :EOF)
 echo Installing via winget..
 winget install --accept-package-agreements --accept-source-agreements --disable-interactivity --force -e --id GeekUninstaller.GeekUninstaller
+if %ERRORLEVEL% NEQ 0 (echo Winget install failed! Using irm instead.. & call :irm)
+call :refreshenv
+for /f %%a in ('where geek.exe') do set "geek_start=%%a"
 if %ERRORLEVEL% NEQ 0 (echo Winget install failed! Using irm instead.. & call :irm)
 goto :EOF
 
@@ -28,6 +34,7 @@ powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; Expand
 if %ERRORLEVEL% NEQ 0 (echo Extraction failed! Using choco instead.. & goto geek)
 del "%GEEK_DIR%\geek.zip"
 call :shortcut "%GEEK_DIR%\geek.exe"
+set "geek_start=%GEEK_DIR%\geek.exe"
 goto :EOF
 
 :shortcut
@@ -53,6 +60,7 @@ choco install geekuninstaller -y --force
 set "CHOCO_EXE=C:\ProgramData\chocolatey\lib\geekuninstaller\tools\geek.exe"
 if not exist "%CHOCO_EXE%" (echo Chocolatey install failed - geek.exe not found. & pause & exit /b 1)
 call :shortcut "%CHOCO_EXE%"
+set "geek_start=%CHOCO_EXE%"
 echo Starting..
 start "" "%CHOCO_EXE%"
 timeout /t 5 >nul
