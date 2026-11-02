@@ -2,10 +2,9 @@
 cd /d "%~dp0"
 title Tron - SMT
 if exist logo.bat call logo.bat & echo.
-echo THIS SCRIPT WILL AUTOMATICALLY RUN TRON.
-echo YOUR COMPUTER WILL AUTOMATICALLY RESTART.
-echo PLEASE CLOSE ALL APPS BEFORE PROCEEDING.
-echo RUNNING TRON CAN TAKE FROM 3 TO 10 HOURS.
+echo This script will automatically run Tron, a script made by u/vocatus. (r/TronScript)
+echo YOUR COMPUTER WILL AUTOMATICALLY RESTART. PLEASE CLOSE ALL APPS BEFORE PROCEEDING.
+echo Estimated runtime: 3-10 hours.
 echo.
 echo IMPORTANT: Your antivirus may flag Tron's files.
 echo If that happens, disable Real Time Protection, and run this tool again.
@@ -15,9 +14,10 @@ echo Press any key to proceed..
 pause >nul
 echo.
 echo Downloading Tron via self-extracting exe..
-powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm 'https://bmrf.org/repos/tron/Tron v12.0.8 (2026-10-30).exe' -OutFile 'tron.exe'" 
+powershell -Command "$ProgressPreference = 'SilentlyContinue'; irm 'https://bmrf.org/repos/tron/Tron v13.0.0 (2026-10-30).exe' -OutFile 'tron.exe'" 
 echo Extracting Tron's files..
 start /MIN /WAIT "" "tron.exe"
+if not exist tron echo Something went wrong! Please retry. & pause & exit
 cd "tron"
 echo Checking for pre-existing desktop files..
 if exist "%USERPROFILE%\Desktop\tron.bat" echo "%USERPROFILE%\Desktop\tron.bat" already exists. Renaming to tron.bat.old.. & ren "%USERPROFILE%\Desktop\tron.bat" tron.bat.old >nul
