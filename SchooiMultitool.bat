@@ -153,12 +153,13 @@ if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] Y
 if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepingsent /s System config\settings.ini') do set "sent=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent..
 if "%internet%"=="c" (
 	if /i "%sent%"=="false" (
-		echo %RESET%[%BRIGHT_RED%-%RESET%] Usage ping has not been sent, sending now.. 
-		curl -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" >nul 2>&1 
+		echo %RESET%[%BRIGHT_RED%-%RESET%] Installation ping has not been sent, sending now.. 
+		curl -s -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" -H "X-Device-Hostname: %USERNAME%@%COMPUTERNAME%" >nul 2>&1 
 		call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul 
 		set "sent=true"
 	) else (
-		echo %RESET%[%BRIGHT_GREEN%+%RESET%] Usage ping has already been sent.
+		echo %RESET%[%BRIGHT_GREEN%+%RESET%] Installation ping has already been sent, sending hearbeat..
+		curl -s -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" -H "X-Device-Hostname: %USERNAME%@%COMPUTERNAME%" -H "X-Device-Register-Only: true" >nul 2>&1
 	)
 	echo [%BRIGHT_YELLOW%~%RESET%] Fetching usage ping count.. 
 	for /f "tokens=* delims=" %%a in ('powershell -Command "$ProgressPreference = 'SilentlyContinue'; (irm https://counter-api.schooicodes.workers.dev/count/smt/pings).value"') do (set "pings=%%a" && echo [%BRIGHT_GREEN%+%RESET%] Total usage pings: %%a)

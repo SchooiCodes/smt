@@ -1,1 +1,2 @@
-Title: Added proper titles to menu sections
+Title: Split pings to installation and usage
+Description: They now send the hostname of the machine, for dupe avoidance.
