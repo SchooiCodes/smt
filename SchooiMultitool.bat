@@ -91,22 +91,18 @@ for /f "tokens=2,*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Curre
 if %CurrentBuild% GEQ 22000 set "ProductName=%ProductName:Windows 10=Windows 11%
 cscript C:\Windows\System32\slmgr.vbs /xpr | find "The machine is permanently activated." >nul
 if %ERRORLEVEL% EQU 0 (set "win_activated=true") ELSE (set "win_activated=false")
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i verboseboot /s system config\settings.ini') do set "verboseboot=%%x"
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i hex /s Visuals config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
-	color %%x
-	set "color=%%x" 
-)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i coloring /s Visuals config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..
-	set "coloring=%%x" 
-)
+call setting.bat get verboseboot System verboseboot
+call setting.bat get hex Visuals color
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing color..
+color %color%
+call setting.bat get coloring Visuals coloring
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for text coloring..
 if %WINDOWSVER% GEQ 10 if "%coloring%"=="true" (
 	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] Windows version is 10+, enabling text coloring.. 
 	call config\tc.bat
 ) else (
 	if "%verboseboot%"=="true" echo [-] Windows version is not 10+, disabling text coloring.. 
-	call ini.bat /i coloring /s Visuals /v false config\settings.ini >nul 2>&1
+	call setting.bat flip coloring Visuals coloring %coloring% >nul 2>&1
 	call config\tcoff.bat
 )
 FOR /F "tokens=* delims=" %%x in ('powershell Get-ExecutionPolicy') do (
@@ -118,16 +114,12 @@ if NOT "%policy%"=="Unrestricted" (
 	echo %RESET%[%BRIGHT_GREEN%+%RESET%] Changing Powershell execution policy..
 	powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force; 
 )
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i isportable /s System config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
-	set "portable=%%x" 
-)
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if this SMT installation is a portable..
+call setting.bat get isportable System portable
+call setting.bat get smtinpath System inpath
 if NOT "%portable%"=="true" (
 	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_RED%-%RESET%] SMT is not a portable.
-	FOR /F "tokens=* delims=" %%x in ('call ini.bat /i smtinpath /s System config\settings.ini') do (
-		set "inpath=%%x" 
-		if not "%%x"=="skip" if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
-	)
+	if not "%inpath%"=="skip" if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if SMT is in the PATH..
 ) else (
 	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_GREEN%+%RESET%] SMT is a portable.
 )
@@ -150,13 +142,12 @@ if /i "%inpath%"=="true" echo @"%%~dp0SchooiMultitool.bat" %%*>..\SMT.bat
 echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for internet..
 ping -n 2 -w 700 1.1.1.1 | find "TTL=" >nul
 if "%ERRORLEVEL%"=="1" (set "internet=nc" & echo %RESET%[%BRIGHT_RED%-%RESET%] You are not connected to the internet.) else (set "internet=c" & echo %RESET%[%BRIGHT_GREEN%+%RESET%] You are connected to the internet.)
-if "%internet%"=="c" FOR /F "tokens=* delims=" %%x in ('call ini.bat /i usagepingsent /s System config\settings.ini') do set "sent=%%x" & echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent..
+if "%internet%"=="c" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking if a usage ping has been sent.. & call setting.bat get usagepingsent System sent
 if "%internet%"=="c" (
 	if /i "%sent%"=="false" (
 		echo %RESET%[%BRIGHT_RED%-%RESET%] Installation ping has not been sent, sending now.. 
 		curl -s -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" -H "X-Device-Hostname: %USERNAME%@%COMPUTERNAME%" >nul 2>&1 
-		call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul 
-		set "sent=true"
+		call setting.bat flip usagepingsent System sent %sent%
 	) else (
 		echo %RESET%[%BRIGHT_GREEN%+%RESET%] Installation ping has already been sent, sending hearbeat..
 		curl -s -X POST "https://counter-api.schooicodes.workers.dev/count/smt/pings" -H "X-Device-Hostname: %USERNAME%@%COMPUTERNAME%" -H "X-Device-Register-Only: true" >nul 2>&1
@@ -183,11 +174,11 @@ if "%internet%"=="c" (
 						rd /s /q "%TEMP%\SMT" >nul
 						if /i "%sent%"=="true" (
 							echo [~] Ensuring a usage ping doesn't get sent again.. ^(it has already been sent^)
-							call ini.bat /i usagepingsent /s System /v true config\settings.ini >nul
+							call setting.bat set usagepingsent System sent true
 						)
 						if /i "%inpath%"=="true" (
 							echo [~] Ensuring SMT doesn't get re-added to PATH.. ^(it has already been added^)
-							call ini.bat /i smtinpath /s System /v true config\settings.ini >nul
+							call setting.bat set smtinpath System inpath true
 						)
 						echo [+] SMT was updated, if the script doesn't automatically restart, start it again to continue.
 						timeout /t 5 /NOBREAK >nul
@@ -205,22 +196,25 @@ if "%internet%"=="c" (
 		)
 	)
 )
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i resizing /s Visuals config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. 
-	set "resizing=%%x"
-)
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for automatic window resizing.. 
+call setting.bat get resizing Visuals resizing
 if "%verboseboot%"=="true" if "%resizing%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Automatic window resizing enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Automatic window resizing disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i disclaimers /s Visuals config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. 
-	set "disclaimers=%%x"
-)
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for disclaimer visibility.. 
+call setting.bat get disclaimers Visuals disclaimers
 if "%verboseboot%"=="true" if "%disclaimers%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Disclaimer visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Disclaimer visibility disabled.)
-FOR /F "tokens=* delims=" %%x in ('call ini.bat /i feedback /s Visuals config\settings.ini') do (
-	if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. 
-	set "feedback=%%x"
-)
+if "%verboseboot%"=="true" echo %RESET%[%BRIGHT_YELLOW%~%RESET%] Checking for feedback prompt visibility.. 
+call setting.bat get feedback Visuals feedback
 if "%verboseboot%"=="true" if "%feedback%"=="true" (echo %RESET%[%BRIGHT_GREEN%+%RESET%] Feedback prompt visibility enabled.) else (echo %RESET%[%BRIGHT_RED%-%RESET%] Feedback prompt visibility disabled.)
-timeout /t 3 /NOBREAK >nul
+if "%verboseboot%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%color%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%coloring%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%portable%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%inpath%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%sent%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%resizing%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%disclaimers%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+if "%feedback%"=="na" echo %RESET%[%BRIGHT_RED%-%RESET%] Settingfile corruption found! Running repair.. & call :repair
+REM timeout /t 3 /NOBREAK >nul
 REM set old_dir=%~dp0\Files
 set scriptpath=%cd%
 if "%disclaimers%"=="true" (goto rpoint) else (goto start)
@@ -885,15 +879,7 @@ echo.
 set /p setch=%BRIGHT_GREEN%%username%@smt%RESET%:%BRIGHT_BLUE%~%BRIGHT_WHITE%$ 
 if /i "%setch%"=="B" goto start
 if /i "%setch%"=="R" (
-	start /MIN /WAIT "" powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/settings.ini -OutFile 'config\settings.ini'" 
-	call setting get isportable System portable
-	call setting get smtinpath System inpath
-	call setting get usagepingsent System sent
-	if NOT "%portable%"=="na" (call setting set isportable System portable %portable%) else (call setting set isportable System portable false)
-	if NOT "%inpath%"=="na" (call setting set smtinpath System inpath %inpath%) else (call setting set smtinpath System inpath false)
-	if NOT "%portable%"=="na" (call setting set usagepingsent System sent %sent%) else (call setting set usagepingsent System sent false)
-	start restart.bat 
-	exit
+	call :repair
 )
 if /i "%setch%"=="1" set /p "cl=New value: "
 if /i "%setch%"=="1" call setting flip hex Visuals color %cl%
@@ -913,6 +899,17 @@ if "%devset%"=="true" if /i "%setch%"=="8" call setting flip smtinpath System in
 if "%devset%"=="true" if /i "%setch%"=="9" call setting flip usagepingsent System sent %sent%
 if "%devset%"=="true" if /i "%setch%"=="10" call setting flip verboseboot System verboseboot %verboseboot%
 goto settings
+
+:repair
+start /MIN /WAIT "" powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ProgressPreference = 'SilentlyContinue'; irm https://raw.githubusercontent.com/SchooiCodes/smt/main/Files/config/settings.ini -OutFile 'config\settings.ini'" 
+call setting get isportable System portable
+call setting get smtinpath System inpath
+call setting get usagepingsent System sent
+if NOT "%portable%"=="na" (call setting set isportable System portable %portable%) else (call setting set isportable System portable false)
+if NOT "%inpath%"=="na" (call setting set smtinpath System inpath %inpath%) else (call setting set smtinpath System inpath false)
+if NOT "%portable%"=="na" (call setting set usagepingsent System sent %sent%) else (call setting set usagepingsent System sent false)
+start restart.bat 
+exit
                                  
 :info
 if not "%calced%"=="1" call :calctools

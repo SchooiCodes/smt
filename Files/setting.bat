@@ -1,4 +1,4 @@
-REM call settings.bat flip/set Setting Section var %var%
+REM call settings.bat flip/set/get Setting Section var (%var%)
 REM echo %1 %2 %3 %4 %5
 set "varname=%4"
 set "new_state=%5"
@@ -9,7 +9,7 @@ if "%1"=="flip" (
 ) else if "%1"=="set" (
 	call :set %2 %3
 ) else if "%1"=="get" (
-	set "%3=na"
+	set "%4=na"
 	FOR /F "tokens=* delims=" %%x in ('call ini.bat /i %2 /s %3 config\settings.ini') do set "%4=%%x"
 )
 goto :EOF
