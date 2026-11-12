@@ -1,2 +1,2 @@
-Title: Ported the boot sequence to the new setting system and added an auto-repairing mechanism
-Description: Also removed that annoying 3 second timeout after boot finishes
+Title: Updated uxm_r
+Description: Synced the miner remover with the current repo state (/uxm_r)
