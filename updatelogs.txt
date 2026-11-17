@@ -1,2 +1,2 @@
-Title: Updated uxm_r
-Description: Synced the miner remover with the current repo state (/uxm_r)
+Title: Added MegaTemp_Rust
+Description: Faster version of MegaTemp. Recommended.
